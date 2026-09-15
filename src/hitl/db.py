@@ -9,10 +9,10 @@ from __future__ import annotations
 import json
 import sqlite3
 from datetime import UTC, datetime
-from enum import Enum
+from enum import StrEnum
 
 
-class RequestStatus(str, Enum):
+class RequestStatus(StrEnum):
     RECEIVED = "RECEIVED"
     PROPOSED = "PROPOSED"
     AWAITING_APPROVAL = "AWAITING_APPROVAL"
@@ -182,7 +182,9 @@ def execute_request(conn: sqlite3.Connection, request_id: str) -> str:
     if current != RequestStatus.APPROVED:
         raise IllegalTransitionError(f"cannot execute {request_id} from {current}")
 
-    amount = row["approved_amount"] if row["approved_amount"] is not None else row["proposal_amount"]
+    amount = (
+        row["approved_amount"] if row["approved_amount"] is not None else row["proposal_amount"]
+    )
     now = _now()
     conn.execute("BEGIN IMMEDIATE")
     try:
@@ -197,7 +199,10 @@ def execute_request(conn: sqlite3.Connection, request_id: str) -> str:
         conn.execute(
             """INSERT INTO audit_log (ts, request_id, from_status, to_status, actor, detail)
                VALUES (?, ?, ?, ?, ?, ?)""",
-            (now, request_id, current.value, RequestStatus.EXECUTED.value, "system", "ledger entry applied"),
+            (
+                now, request_id, current.value, RequestStatus.EXECUTED.value,
+                "system", "ledger entry applied",
+            ),
         )
         conn.commit()
         return "executed"

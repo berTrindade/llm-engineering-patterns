@@ -1,7 +1,7 @@
 """The agent's proposal step: read a request and the policy, propose an action.
 
-Invalid model output is returned as a ProposalResult with ok=False and an error, never
-guessed into a plausible-looking proposal.
+Invalid model output is returned as a ProposalResult with ok=False and an error, never guessed
+into a plausible-looking proposal.
 """
 
 from __future__ import annotations

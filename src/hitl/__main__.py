@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import sqlite3
 import sys
 import time
 import uuid
@@ -31,7 +32,7 @@ def _policy_text() -> str:
     return Path(path).read_text()
 
 
-def _connect() -> "sqlite3.Connection":  # noqa: F821 - typing only, avoids unused import
+def _connect() -> sqlite3.Connection:
     conn = db.get_connection(_db_path())
     db.init_db(conn)
     return conn

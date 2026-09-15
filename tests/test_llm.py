@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 
 import httpx
-import pytest
 
 from hitl import llm
 

@@ -91,7 +91,7 @@ def test_crash_between_process_and_approval_and_between_approval_and_execution(
     monkeypatch.setenv("HITL_POLICY_PATH", str(POLICY_PATH))
     _submit_requests(tmp_path, base_env)
 
-    # --- Kill #1: mid-batch, right after every request reaches AWAITING_APPROVAL. ---
+    # Kill #1: mid-batch, right after every request reaches AWAITING_APPROVAL.
     process_env = {
         **base_env,
         "LLM_FIXTURE": str(FIXTURES / "proposal_approve_batch.json"),
@@ -130,7 +130,7 @@ def test_crash_between_process_and_approval_and_between_approval_and_execution(
         )
     conn.close()
 
-    # --- Kill #2: immediately after approval, before execution. ---
+    # Kill #2: immediately after approval, before execution.
     resume_env = {
         **base_env,
         "HITL_TEST_HANG_BEFORE_EXECUTE": "1",
@@ -143,7 +143,7 @@ def test_crash_between_process_and_approval_and_between_approval_and_execution(
     conn.close()
     assert ledger_count == 0, "nothing should have executed before the resume hook hung"
 
-    # --- Restart: run resume for real, twice, to prove idempotence. ---
+    # Restart: run resume for real, twice, to prove idempotence.
     rc = main(["resume"])
     assert rc == 0
     rc = main(["resume"])

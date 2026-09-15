@@ -2,7 +2,7 @@
 policy-derived expected action for each case.
 
 `EVAL_LIMIT` (int env var) caps how many cases run and switches the results filename to
-`results/smoke-<date>.json`, use it to smoke-test against a shared Ollama instance instead of
+`results/smoke-<date>.json`, so it can smoke-test against a shared Ollama instance instead of
 running all 20 cases.
 """
 
@@ -75,8 +75,12 @@ def run_assessment(cases_path: str | Path = DEFAULT_CASES_PATH, limit: int | Non
         "cases_run": n,
         "proposal_accuracy": (len(correct) / n) if n else 0.0,
         "invalid_output_rate": (len(invalid) / n) if n else 0.0,
-        "mean_latency_ms": statistics.mean(c["latency_ms"] for c in per_case) if per_case else 0.0,
-        "mean_total_tokens": statistics.mean(c["total_tokens"] for c in per_case) if per_case else 0.0,
+        "mean_latency_ms": (
+            statistics.mean(c["latency_ms"] for c in per_case) if per_case else 0.0
+        ),
+        "mean_total_tokens": (
+            statistics.mean(c["total_tokens"] for c in per_case) if per_case else 0.0
+        ),
     }
 
     return {"summary": summary, "cases": per_case}
