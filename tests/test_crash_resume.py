@@ -113,22 +113,14 @@ def test_crash_between_process_and_approval_and_between_approval_and_execution(
         ]
     conn.close()
 
-    # Human decisions: approve 3, reject 2. Done directly through db.py, same as approve/reject
-    # would be called from a fresh CLI invocation after a restart.
-    conn = sqlite3.connect(db_path)
-    conn.row_factory = sqlite3.Row
+    # Human decisions: approve 3, reject 2, through the same CLI a person uses, against the
+    # same database the killed subprocess left behind.
     for request_id in APPROVE_IDS:
-        db.transition(
-            conn, request_id, db.RequestStatus.APPROVED, actor="human:Priya",
-            detail="approved by Priya", approved_by="Priya",
-        )
+        rc = main(["approve", request_id, "--by", "Priya"])
+        assert rc == 0
     for request_id in REJECT_IDS:
-        db.transition(
-            conn, request_id, db.RequestStatus.REJECTED, actor="human:Priya",
-            detail="rejected by Priya: over budget", rejected_by="Priya",
-            reject_reason="over budget",
-        )
-    conn.close()
+        rc = main(["reject", request_id, "--by", "Priya", "--reason", "over budget"])
+        assert rc == 0
 
     # Kill #2: immediately after approval, before execution.
     resume_env = {
@@ -171,4 +163,15 @@ def test_crash_between_process_and_approval_and_between_approval_and_execution(
             assert previous["to_status"] == current["from_status"], (
                 f"audit gap for {request_id}: {previous['to_status']} -> {current['from_status']}"
             )
+
+    # The human decision itself, not just the eventual outcome, must name who made it.
+    for request_id in APPROVE_IDS:
+        log = db.get_audit_log(conn, request_id)
+        approved_entry = next(e for e in log if e["to_status"] == db.RequestStatus.APPROVED.value)
+        assert approved_entry["actor"] == "human:Priya"
+    for request_id in REJECT_IDS:
+        log = db.get_audit_log(conn, request_id)
+        rejected_entry = next(e for e in log if e["to_status"] == db.RequestStatus.REJECTED.value)
+        assert rejected_entry["actor"] == "human:Priya"
+
     conn.close()
