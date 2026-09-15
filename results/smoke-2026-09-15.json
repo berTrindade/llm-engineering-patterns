@@ -1,0 +1,59 @@
+{
+  "task_count": 3,
+  "success_count": 2,
+  "success_rate": 0.6666666666666666,
+  "by_category": {
+    "simple": {
+      "total": 3,
+      "success": 2,
+      "success_rate": 0.6666666666666666
+    }
+  },
+  "mean_tool_calls": 3.0,
+  "mean_iterations": 4.0,
+  "recovered_error_count": 0,
+  "failures_by_type": {
+    "wrong_end_state": 1
+  },
+  "mean_latency_ms": 11398.764042013985,
+  "mean_prompt_tokens": 4920.0,
+  "mean_completion_tokens": 276.3333333333333,
+  "tasks": [
+    {
+      "task_id": "s01",
+      "category": "simple",
+      "success": false,
+      "failure_type": "wrong_end_state",
+      "tool_call_count": 3,
+      "iterations": 4,
+      "recovered_error_count": 0,
+      "prompt_tokens": 4736,
+      "completion_tokens": 268,
+      "latency_ms": 11606.178250018274
+    },
+    {
+      "task_id": "s02",
+      "category": "simple",
+      "success": true,
+      "failure_type": null,
+      "tool_call_count": 3,
+      "iterations": 4,
+      "recovered_error_count": 0,
+      "prompt_tokens": 4955,
+      "completion_tokens": 280,
+      "latency_ms": 10571.160876002978
+    },
+    {
+      "task_id": "s03",
+      "category": "simple",
+      "success": true,
+      "failure_type": null,
+      "tool_call_count": 3,
+      "iterations": 4,
+      "recovered_error_count": 0,
+      "prompt_tokens": 5069,
+      "completion_tokens": 281,
+      "latency_ms": 12018.953000020701
+    }
+  ]
+}

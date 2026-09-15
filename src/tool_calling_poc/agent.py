@@ -36,9 +36,23 @@ class AgentResult:
 
 
 def default_system_prompt(state: OfficeState) -> str:
+    people_lines = "\n".join(
+        f"- {person.id}: {person.name} ({person.timezone}, "
+        f"working hours {person.working_hours[0]}-{person.working_hours[1]} local)"
+        for person in state.people.values()
+    )
+    room_lines = "\n".join(
+        f"- {room.id}: {room.name} (capacity {room.capacity}, "
+        f"equipment: {', '.join(room.equipment) or 'none'})"
+        for room in state.rooms.values()
+    )
     return (
         "You are a scheduling assistant for Harbour Street Studio. "
         f"The current date and time is {state.now.isoformat()}. "
+        "The tools take person and room ids, not names, so use this roster to resolve any name "
+        "a request gives you to its id:\n\n"
+        f"People:\n{people_lines}\n\n"
+        f"Rooms:\n{room_lines}\n\n"
         "Use the tools to check room capacity, equipment and everyone's availability before "
         "booking. If a request cannot be satisfied within the rules, explain why instead of "
         "booking something that breaks them."
