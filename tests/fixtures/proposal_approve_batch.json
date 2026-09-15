@@ -1,0 +1,6 @@
+{
+  "content": "{\"action\": \"approve\", \"amount\": 30.0, \"policy_clauses\": [\"meals limit \\u00a375\"], \"rationale\": \"within category limit, receipt provided\"}",
+  "prompt_tokens": 180,
+  "completion_tokens": 34,
+  "model": "qwen3:8b"
+}

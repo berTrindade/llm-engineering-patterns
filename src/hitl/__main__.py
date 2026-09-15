@@ -137,12 +137,14 @@ def cmd_reject(args: argparse.Namespace) -> int:
 def cmd_resume(args: argparse.Namespace) -> int:
     conn = _connect()
     approved = db.list_requests(conn, db.RequestStatus.APPROVED)
+    conn.close()
 
     if os.environ.get("HITL_TEST_HANG_BEFORE_EXECUTE") == "1":
         _touch_marker()
         while True:
             time.sleep(3600)
 
+    conn = _connect()
     for row in approved:
         outcome = db.execute_request(conn, row["id"])
         print(f"{row['id']}: {outcome}")
