@@ -125,10 +125,15 @@ def format_table(aggregates: dict) -> str:
     return "\n".join(lines)
 
 
+def _prices_by_model(cheap_model: str, strong_model: str) -> dict:
+    role_prices = load_prices()
+    return {cheap_model: role_prices["cheap"], strong_model: role_prices["strong"]}
+
+
 def _run_full(limit: int | None) -> dict:
     cheap_model = os.environ.get("CHEAP_MODEL", "qwen3:8b")
     strong_model = os.environ.get("STRONG_MODEL", "qwen3.5:35b")
-    prices = load_prices()
+    prices = _prices_by_model(cheap_model, strong_model)
     questions = load_questions(limit=limit)
 
     all_results: list[CaseResult] = []
@@ -160,7 +165,7 @@ def _run_full(limit: int | None) -> dict:
 def _run_demo() -> None:
     cheap_model = os.environ.get("CHEAP_MODEL", "qwen3:8b")
     strong_model = os.environ.get("STRONG_MODEL", "qwen3.5:35b")
-    prices = load_prices()
+    prices = _prices_by_model(cheap_model, strong_model)
     question = load_questions(limit=1)[0]
 
     print(f"Question: {question.question}\n")
