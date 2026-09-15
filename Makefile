@@ -12,10 +12,13 @@ data:
 index:
 	uv run python scripts/build_index.py
 
-run:
+index/embeddings.json:
+	uv run python scripts/build_index.py
+
+run: index/embeddings.json
 	uv run python -m rag_poc.cli
 
-eval:
+eval: index/embeddings.json
 	uv run python evals/run.py
 
 test:
