@@ -29,6 +29,9 @@ class AgentResult:
     iterations: int = 0
     tool_call_count: int = 0
     recovered_error_count: int = 0
+    prompt_tokens: int = 0
+    completion_tokens: int = 0
+    latency_ms: float = 0.0
     stopped_reason: Literal["final_message", "iteration_cap"] = "iteration_cap"
 
 
@@ -61,6 +64,9 @@ def run_agent_loop(
     for iteration in range(1, max_iterations + 1):
         result.iterations = iteration
         response = chat_fn(messages=messages, tools=tools, model=model)
+        result.prompt_tokens += response.prompt_tokens
+        result.completion_tokens += response.completion_tokens
+        result.latency_ms += response.latency_ms
 
         if not response.tool_calls:
             result.final_message = response.content

@@ -57,6 +57,8 @@ def test_happy_path_one_tool_call_then_final_message():
     assert result.recovered_error_count == 0
     assert result.trace[0].tool_name == "list_rooms"
     assert result.trace[0].is_error is False
+    assert result.prompt_tokens == 20  # 10 + 10 across the two model calls
+    assert result.completion_tokens == 10  # 5 + 5
 
 
 def test_recovers_from_invalid_tool_arguments():
