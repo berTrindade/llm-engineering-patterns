@@ -1,0 +1,29 @@
+[project]
+name = "evals-and-judge-poc"
+version = "0.1.0"
+description = "Evals and LLM-as-judge POC: deterministic scorers, an LLM judge, human labels and position-bias checking over invented support bot replies."
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.27",
+    "pydantic>=2.7",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/evals_judge"]
