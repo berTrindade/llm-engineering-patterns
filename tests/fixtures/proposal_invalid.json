@@ -1,0 +1,6 @@
+{
+  "content": "{\"amount\": 42.5, \"rationale\": \"missing the action field\"}",
+  "prompt_tokens": 190,
+  "completion_tokens": 20,
+  "model": "qwen3:8b"
+}
