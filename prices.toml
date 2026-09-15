@@ -1,0 +1,11 @@
+# Illustrative USD-per-million-token prices. Local Ollama models have no real bill;
+# these numbers exist so token counts have a cost figure to compare. Swap LLM_BASE_URL
+# for a paid provider and edit this file with its real prices to get real numbers.
+
+[models.cheap]
+input_per_million = 0.10
+output_per_million = 0.30
+
+[models.strong]
+input_per_million = 0.60
+output_per_million = 2.00
