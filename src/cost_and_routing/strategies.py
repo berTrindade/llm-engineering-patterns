@@ -29,6 +29,7 @@ class CaseResult:
     completion_tokens: int
     confidence: float | None
     failure_reason: str | None
+    answer: str = ""
 
 
 def _single_model_result(
@@ -55,6 +56,7 @@ def _single_model_result(
             completion_tokens=0,
             confidence=None,
             failure_reason=f"{type(exc).__name__}: {exc}",
+            answer="",
         )
 
     return CaseResult(
@@ -69,6 +71,7 @@ def _single_model_result(
         completion_tokens=response.completion_tokens,
         confidence=None,
         failure_reason=None,
+        answer=response.content,
     )
 
 
@@ -109,6 +112,7 @@ def run_routed(
                     completion_tokens=0,
                     confidence=None,
                     failure_reason=f"{type(exc).__name__}: {exc}",
+                    answer="",
                 )
             )
             continue
@@ -132,6 +136,7 @@ def run_routed(
                 completion_tokens=completion_tokens,
                 confidence=routed.cheap_attempt.confidence,
                 failure_reason=routed.cheap_attempt.failure_reason,
+                answer=routed.final_answer,
             )
         )
     return results

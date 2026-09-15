@@ -4,9 +4,13 @@ strong model is only called when confidence is low or the cheap model asks for i
 
 import json
 from dataclasses import dataclass
+from pathlib import Path
 
 from cost_and_routing.llm import LLMResponse, chat_completion
 from cost_and_routing.pricing import ModelPrice, cost_usd
+
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+_DEFAULT_POLICY_PATH = _REPO_ROOT / "data" / "policy.md"
 
 CHEAP_SCHEMA = {
     "type": "json_schema",
@@ -24,10 +28,18 @@ CHEAP_SCHEMA = {
     },
 }
 
+def load_policy(path: str | Path = _DEFAULT_POLICY_PATH) -> str:
+    return Path(path).read_text()
+
+
+POLICY = load_policy()
+
 SYSTEM_PROMPT = (
     "You are a support assistant for Fernway Travel, an invented travel booking company. "
-    "Answer the customer's question using the policy facts you know. If you are not "
-    "confident in the answer, set a low confidence or set needs_escalation to true."
+    "Answer strictly and only from the policy below; do not use any outside knowledge. "
+    "If the policy does not cover the question, or you are not confident in the answer, "
+    "set a low confidence or set needs_escalation to true.\n\n"
+    f"Policy:\n{POLICY}"
 )
 
 
