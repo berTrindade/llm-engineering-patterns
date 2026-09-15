@@ -1,0 +1,12 @@
+{
+  "id": "ref-001",
+  "type": "refund",
+  "reason": "item arrived damaged",
+  "amount": 64.99,
+  "purchase_price": 64.99,
+  "purchase_date": "2026-09-01",
+  "request_date": "2026-09-10",
+  "sale_item": false,
+  "description": "ceramic vase, damaged in transit",
+  "submitted_by": "Priya Shah"
+}
