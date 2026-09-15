@@ -25,8 +25,8 @@ class ChatResult:
 
 
 def _from_fixture(fixture_path: str) -> ChatResult:
-    # Test-only bypass so unit tests and the crash test need no live model;
-    # a fake HTTP server would be more code for the same guarantee.
+    # Test-only bypass: unit tests and the crash test set LLM_FIXTURE so they run
+    # deterministically without a live model, instead of standing up a fake HTTP server.
     data = json.loads(open(fixture_path).read())
     return ChatResult(
         content=data["content"],
