@@ -1,0 +1,55 @@
+{
+  "metrics": {
+    "hit_rate_at_5": 1.0,
+    "citation_correctness": 0.7777777777777778,
+    "correct_refusal_rate": null,
+    "false_refusal_rate": 0.0,
+    "mean_latency_ms": 7315.263292005208,
+    "mean_tokens": 856.6666666666666,
+    "failing_ids": []
+  },
+  "cases": [
+    {
+      "id": "q01",
+      "answerable": true,
+      "hit_at_5": true,
+      "citation_correct_share": 1.0,
+      "refused": false,
+      "correct": true,
+      "latency_ms": 2343.6014170001727,
+      "prompt_tokens": 773,
+      "completion_tokens": 50,
+      "failed": false,
+      "failure_reason": null
+    },
+    {
+      "id": "q02",
+      "answerable": true,
+      "hit_at_5": true,
+      "citation_correct_share": 0.3333333333333333,
+      "refused": false,
+      "correct": true,
+      "latency_ms": 15152.500542011694,
+      "prompt_tokens": 802,
+      "completion_tokens": 212,
+      "failed": false,
+      "failure_reason": null
+    },
+    {
+      "id": "q03",
+      "answerable": true,
+      "hit_at_5": true,
+      "citation_correct_share": 1.0,
+      "refused": false,
+      "correct": true,
+      "latency_ms": 4449.687917003757,
+      "prompt_tokens": 668,
+      "completion_tokens": 65,
+      "failed": false,
+      "failure_reason": null
+    }
+  ],
+  "cheap_model": "qwen3:8b",
+  "embed_model": "nomic-embed-text",
+  "smoke": true
+}

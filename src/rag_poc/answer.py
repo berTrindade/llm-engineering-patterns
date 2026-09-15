@@ -37,12 +37,14 @@ class AnswerResult(BaseModel):
 
 def _build_prompt(question: str, retrieved: list[tuple[Chunk, float]]) -> str:
     chunk_lines = "\n\n".join(
-        f"[{i + 1}] id={chunk.id}\nheading: {chunk.heading_path}\n{chunk.text}"
-        for i, (chunk, _score) in enumerate(retrieved)
+        f'chunk_id: "{chunk.id}"\nheading: {chunk.heading_path}\ntext: {chunk.text}'
+        for chunk, _score in retrieved
     )
     return (
         f"Guidance chunks:\n\n{chunk_lines}\n\n"
         f"Question: {question}\n\n"
+        "In `citations`, put the exact chunk_id string(s) you relied on, copied verbatim - never "
+        "a number or a shortened form.\n"
         f'If the chunks do not answer the question, respond with answer="{REFUSAL_ANSWER}", '
         "citations=[], refused=true."
     )
