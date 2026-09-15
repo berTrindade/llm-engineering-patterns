@@ -28,15 +28,21 @@ FARE_BAGGAGE = {
 }
 
 FARE_CANCELLATION = {
-    "Basic": "non-refundable",
+    "Basic": "non-refundable|not refundable|no refund|cannot be refunded",
     "Standard": "£75",
     "Flex": "£25",
 }
 
 FARE_CHANGE = {
-    "Basic": "changes not permitted",
+    "Basic": (
+        "changes not permitted|cannot be changed|no changes allowed|"
+        "changes are not allowed|changing is not permitted"
+    ),
     "Standard": "£45",
-    "Flex": "no change fee",
+    "Flex": (
+        "no change fee|change fee is waived|no fee to change|£0 change fee|"
+        "change fee does not apply"
+    ),
 }
 
 
@@ -196,7 +202,10 @@ def _simple_lookup_questions() -> list[Question]:
         {
             "id": "seat-selection-standard-flex",
             "question": "Does a Standard fare include free seat selection at booking?",
-            "required_facts": ["free seat selection"],
+            "required_facts": [
+                "free seat selection|seat selection is free|no charge for seat selection|"
+                "complimentary seat selection"
+            ],
             "difficulty": "simple_lookup",
         }
     )
@@ -215,7 +224,10 @@ def _simple_lookup_questions() -> list[Question]:
                 "Can an extra checked bag be added on the day of travel, or must it be "
                 "booked in advance?"
             ),
-            "required_facts": ["booked in advance"],
+            "required_facts": [
+                "booked in advance|must be pre-booked|cannot be added on the day of travel|"
+                "book it before the day of travel"
+            ],
             "difficulty": "simple_lookup",
         }
     )
@@ -304,7 +316,10 @@ def _multi_step_questions() -> list[Question]:
                 "My Flex fare departs in 20 days and I want to cancel now. What "
                 "cancellation fee applies?"
             ),
-            "required_facts": ["waived"],
+            "required_facts": [
+                "waived|fee is waived|no fee is charged|fee does not apply|"
+                "no cancellation fee applies"
+            ],
             "difficulty": "multi_step_calculation",
         },
         {
@@ -408,7 +423,10 @@ def _policy_exception_questions() -> list[Question]:
                 "I have a documented medical need and a Basic fare. Can I bring an extra "
                 "bag, and does it cost anything?"
             ),
-            "required_facts": ["medical", "free of charge"],
+            "required_facts": [
+                "medical",
+                "free of charge|at no cost|no additional cost|no extra charge|complimentary",
+            ],
             "difficulty": "policy_exception",
         },
         {
@@ -417,7 +435,11 @@ def _policy_exception_questions() -> list[Question]:
                 "Fernway cancelled my flight. What refund am I entitled to, and is there "
                 "a cancellation fee?"
             ),
-            "required_facts": ["full refund", "no cancellation fee"],
+            "required_facts": [
+                "full refund|refunded in full|100% refund|entire fare refunded",
+                "no cancellation fee|cancellation fee is waived|no fee to cancel|"
+                "cancellation fee does not apply",
+            ],
             "difficulty": "policy_exception",
         },
         {
@@ -435,7 +457,10 @@ def _policy_exception_questions() -> list[Question]:
                 "I have a Standard fare and was denied boarding due to overbooking. What "
                 "am I entitled to?"
             ),
-            "required_facts": ["full refund", "£150"],
+            "required_facts": [
+                "full refund|refunded in full|100% refund|entire fare refunded",
+                "£150",
+            ],
             "difficulty": "policy_exception",
         },
         {
@@ -450,7 +475,10 @@ def _policy_exception_questions() -> list[Question]:
         {
             "id": "exception-basic-no-changes",
             "question": "Can I change my Basic fare flight at all?",
-            "required_facts": ["not permitted"],
+            "required_facts": [
+                "not permitted|cannot be changed|no changes allowed|"
+                "changes are not allowed|not possible to change"
+            ],
             "difficulty": "policy_exception",
         },
         {
@@ -458,7 +486,10 @@ def _policy_exception_questions() -> list[Question]:
             "question": (
                 "My flight departs in 30 hours. Can I still request a name change?"
             ),
-            "required_facts": ["not permit", "48 hours"],
+            "required_facts": [
+                "not permit|cannot|can't|not allowed|not possible",
+                "48 hours",
+            ],
             "difficulty": "policy_exception",
         },
         {
@@ -476,7 +507,10 @@ def _policy_exception_questions() -> list[Question]:
                 "I have a documented medical need on a Basic fare. Am I still limited to "
                 "the standard cabin bag size for my medical bag?"
             ),
-            "required_facts": ["exempt"],
+            "required_facts": [
+                "exempt|not subject to the size limit|no size restriction applies|"
+                "allowed without the standard limit"
+            ],
             "difficulty": "policy_exception",
         },
         {
@@ -485,7 +519,11 @@ def _policy_exception_questions() -> list[Question]:
                 "If Fernway cancels a Basic fare flight, does the usual non-refundable "
                 "rule still apply?"
             ),
-            "required_facts": ["full refund", "regardless of fare type"],
+            "required_facts": [
+                "full refund|refunded in full|100% refund|entire fare refunded",
+                "regardless of fare type|even for a Basic fare|no matter the fare type|"
+                "applies to all fare types",
+            ],
             "difficulty": "policy_exception",
         },
         {
