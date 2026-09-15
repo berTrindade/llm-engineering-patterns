@@ -1,0 +1,269 @@
+{
+  "thread_id": "ticket-0019",
+  "facts": {
+    "account_id": "ACC-2498",
+    "plan_name": "Growth",
+    "error_code": "ERR-170",
+    "timezone": "Asia/Singapore"
+  },
+  "turns": [
+    {
+      "role": "user",
+      "content": "Hi there, our account (ACC-2498) is on Growth and something has gone wrong."
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks for reaching out. Could you tell me the exact error code you're seeing, and what time zone you're in so I can check the logs?"
+    },
+    {
+      "role": "user",
+      "content": "We saw ERR-170 pop up. For the logs, we're on Asia/Singapore."
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks, I've noted that and I'm looking into it now."
+    },
+    {
+      "role": "user",
+      "content": "Is there a mobile app or is it browser only right now?"
+    },
+    {
+      "role": "assistant",
+      "content": "Browser only for now, but the pages are responsive on mobile."
+    },
+    {
+      "role": "user",
+      "content": "Is there a way to send a payment reminder automatically?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, reminders can be scheduled 3, 7 and 14 days after the due date."
+    },
+    {
+      "role": "user",
+      "content": "Do you have an API for pulling invoice data into our own dashboard?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, there's a REST API, the docs are linked from the Developer settings page."
+    },
+    {
+      "role": "user",
+      "content": "Can late fees be added automatically to overdue invoices?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, you can set a flat fee or a percentage under Settings > Late Fees."
+    },
+    {
+      "role": "user",
+      "content": "Does Ledgerline support recurring invoices for retainer clients?"
+    },
+    {
+      "role": "assistant",
+      "content": "It does, you can set a monthly or weekly schedule when creating an invoice."
+    },
+    {
+      "role": "user",
+      "content": "Do you support VAT reverse charge for EU clients?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, tick the reverse charge box on the client's tax settings."
+    },
+    {
+      "role": "user",
+      "content": "Is there a mobile app or is it browser only right now?"
+    },
+    {
+      "role": "assistant",
+      "content": "Browser only for now, but the pages are responsive on mobile."
+    },
+    {
+      "role": "user",
+      "content": "What's the limit on how many clients I can add?"
+    },
+    {
+      "role": "assistant",
+      "content": "There's no hard limit on the number of clients you can add."
+    },
+    {
+      "role": "user",
+      "content": "Does Ledgerline support recurring invoices for retainer clients?"
+    },
+    {
+      "role": "assistant",
+      "content": "It does, you can set a monthly or weekly schedule when creating an invoice."
+    },
+    {
+      "role": "user",
+      "content": "Is there a way to send a payment reminder automatically?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, reminders can be scheduled 3, 7 and 14 days after the due date."
+    },
+    {
+      "role": "user",
+      "content": "Is there a mobile app or is it browser only right now?"
+    },
+    {
+      "role": "assistant",
+      "content": "Browser only for now, but the pages are responsive on mobile."
+    },
+    {
+      "role": "user",
+      "content": "Is there a mobile app or is it browser only right now?"
+    },
+    {
+      "role": "assistant",
+      "content": "Browser only for now, but the pages are responsive on mobile."
+    },
+    {
+      "role": "user",
+      "content": "Do you support VAT reverse charge for EU clients?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, tick the reverse charge box on the client's tax settings."
+    },
+    {
+      "role": "user",
+      "content": "How long do you keep sent invoices in the archive?"
+    },
+    {
+      "role": "assistant",
+      "content": "Sent invoices are kept indefinitely unless you delete them yourself."
+    },
+    {
+      "role": "user",
+      "content": "Is there a mobile app or is it browser only right now?"
+    },
+    {
+      "role": "assistant",
+      "content": "Browser only for now, but the pages are responsive on mobile."
+    },
+    {
+      "role": "user",
+      "content": "Is there a mobile app or is it browser only right now?"
+    },
+    {
+      "role": "assistant",
+      "content": "Browser only for now, but the pages are responsive on mobile."
+    },
+    {
+      "role": "user",
+      "content": "Do you support VAT reverse charge for EU clients?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, tick the reverse charge box on the client's tax settings."
+    },
+    {
+      "role": "user",
+      "content": "How do refunds show up on the client's statement?"
+    },
+    {
+      "role": "assistant",
+      "content": "Refunds appear as a negative line item on the next statement we generate."
+    },
+    {
+      "role": "user",
+      "content": "What's the limit on how many clients I can add?"
+    },
+    {
+      "role": "assistant",
+      "content": "There's no hard limit on the number of clients you can add."
+    },
+    {
+      "role": "user",
+      "content": "Is there a mobile app or is it browser only right now?"
+    },
+    {
+      "role": "assistant",
+      "content": "Browser only for now, but the pages are responsive on mobile."
+    },
+    {
+      "role": "user",
+      "content": "How do refunds show up on the client's statement?"
+    },
+    {
+      "role": "assistant",
+      "content": "Refunds appear as a negative line item on the next statement we generate."
+    },
+    {
+      "role": "user",
+      "content": "Is there a mobile app or is it browser only right now?"
+    },
+    {
+      "role": "assistant",
+      "content": "Browser only for now, but the pages are responsive on mobile."
+    },
+    {
+      "role": "user",
+      "content": "Can late fees be added automatically to overdue invoices?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, you can set a flat fee or a percentage under Settings > Late Fees."
+    },
+    {
+      "role": "user",
+      "content": "How long do you keep sent invoices in the archive?"
+    },
+    {
+      "role": "assistant",
+      "content": "Sent invoices are kept indefinitely unless you delete them yourself."
+    },
+    {
+      "role": "user",
+      "content": "Is there a dark mode in the Ledgerline app?"
+    },
+    {
+      "role": "assistant",
+      "content": "Not yet, it's on our roadmap but I don't have a date to share."
+    },
+    {
+      "role": "user",
+      "content": "What's the limit on how many clients I can add?"
+    },
+    {
+      "role": "assistant",
+      "content": "There's no hard limit on the number of clients you can add."
+    },
+    {
+      "role": "user",
+      "content": "Can late fees be added automatically to overdue invoices?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, you can set a flat fee or a percentage under Settings > Late Fees."
+    },
+    {
+      "role": "user",
+      "content": "Quick one while we're at it: can I export my invoices as CSV instead of PDF?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, the invoice list has an Export as CSV option in the top right corner."
+    },
+    {
+      "role": "user",
+      "content": "Can I attach a PDF contract to an invoice?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, the attachment option is below the line items when you edit an invoice."
+    },
+    {
+      "role": "user",
+      "content": "Can you confirm for our records what account ID, plan, error code and time zone you have noted for this ticket?"
+    }
+  ],
+  "expected_facts": [
+    "ACC-2498",
+    "Growth",
+    "ERR-170",
+    "Asia/Singapore"
+  ]
+}

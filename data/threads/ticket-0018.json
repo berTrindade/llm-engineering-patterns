@@ -1,0 +1,269 @@
+{
+  "thread_id": "ticket-0018",
+  "facts": {
+    "account_id": "ACC-2404",
+    "plan_name": "Scale",
+    "error_code": "ERR-425",
+    "timezone": "America/New_York"
+  },
+  "turns": [
+    {
+      "role": "user",
+      "content": "Hi, I'm having trouble with our account. Our account ID is ACC-2404 and we're on the Scale plan."
+    },
+    {
+      "role": "assistant",
+      "content": "Got it, thanks. What error code did the app show, and which time zone should I use when I check the activity log?"
+    },
+    {
+      "role": "user",
+      "content": "It showed ERR-425. Our time zone is America/New_York."
+    },
+    {
+      "role": "assistant",
+      "content": "Thank you, that's logged on our side. Give me a moment to investigate."
+    },
+    {
+      "role": "user",
+      "content": "Quick one while we're at it: can I export my invoices as CSV instead of PDF?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, the invoice list has an Export as CSV option in the top right corner."
+    },
+    {
+      "role": "user",
+      "content": "What's the limit on how many clients I can add?"
+    },
+    {
+      "role": "assistant",
+      "content": "There's no hard limit on the number of clients you can add."
+    },
+    {
+      "role": "user",
+      "content": "Do you support VAT reverse charge for EU clients?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, tick the reverse charge box on the client's tax settings."
+    },
+    {
+      "role": "user",
+      "content": "Can I customise the email subject line when sending an invoice?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, under Settings > Email Templates you can edit the subject line."
+    },
+    {
+      "role": "user",
+      "content": "Do you support VAT reverse charge for EU clients?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, tick the reverse charge box on the client's tax settings."
+    },
+    {
+      "role": "user",
+      "content": "What's the limit on how many clients I can add?"
+    },
+    {
+      "role": "assistant",
+      "content": "There's no hard limit on the number of clients you can add."
+    },
+    {
+      "role": "user",
+      "content": "Can late fees be added automatically to overdue invoices?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, you can set a flat fee or a percentage under Settings > Late Fees."
+    },
+    {
+      "role": "user",
+      "content": "Quick one while we're at it: can I export my invoices as CSV instead of PDF?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, the invoice list has an Export as CSV option in the top right corner."
+    },
+    {
+      "role": "user",
+      "content": "Quick one while we're at it: can I export my invoices as CSV instead of PDF?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, the invoice list has an Export as CSV option in the top right corner."
+    },
+    {
+      "role": "user",
+      "content": "What's the limit on how many clients I can add?"
+    },
+    {
+      "role": "assistant",
+      "content": "There's no hard limit on the number of clients you can add."
+    },
+    {
+      "role": "user",
+      "content": "Quick one while we're at it: can I export my invoices as CSV instead of PDF?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, the invoice list has an Export as CSV option in the top right corner."
+    },
+    {
+      "role": "user",
+      "content": "Do you have an API for pulling invoice data into our own dashboard?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, there's a REST API, the docs are linked from the Developer settings page."
+    },
+    {
+      "role": "user",
+      "content": "Do you have an API for pulling invoice data into our own dashboard?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, there's a REST API, the docs are linked from the Developer settings page."
+    },
+    {
+      "role": "user",
+      "content": "Does Ledgerline support recurring invoices for retainer clients?"
+    },
+    {
+      "role": "assistant",
+      "content": "It does, you can set a monthly or weekly schedule when creating an invoice."
+    },
+    {
+      "role": "user",
+      "content": "Can late fees be added automatically to overdue invoices?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, you can set a flat fee or a percentage under Settings > Late Fees."
+    },
+    {
+      "role": "user",
+      "content": "How long do you keep sent invoices in the archive?"
+    },
+    {
+      "role": "assistant",
+      "content": "Sent invoices are kept indefinitely unless you delete them yourself."
+    },
+    {
+      "role": "user",
+      "content": "Can I add a second team member to review invoices before they go out?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, go to Settings > Team and send an invite with the Reviewer role."
+    },
+    {
+      "role": "user",
+      "content": "Can I change the currency symbol on my invoice template?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, under Settings > Invoice Template there's a currency dropdown."
+    },
+    {
+      "role": "user",
+      "content": "What's the limit on how many clients I can add?"
+    },
+    {
+      "role": "assistant",
+      "content": "There's no hard limit on the number of clients you can add."
+    },
+    {
+      "role": "user",
+      "content": "How long do you keep sent invoices in the archive?"
+    },
+    {
+      "role": "assistant",
+      "content": "Sent invoices are kept indefinitely unless you delete them yourself."
+    },
+    {
+      "role": "user",
+      "content": "Can I change the currency symbol on my invoice template?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, under Settings > Invoice Template there's a currency dropdown."
+    },
+    {
+      "role": "user",
+      "content": "How long do you keep sent invoices in the archive?"
+    },
+    {
+      "role": "assistant",
+      "content": "Sent invoices are kept indefinitely unless you delete them yourself."
+    },
+    {
+      "role": "user",
+      "content": "Does Ledgerline support recurring invoices for retainer clients?"
+    },
+    {
+      "role": "assistant",
+      "content": "It does, you can set a monthly or weekly schedule when creating an invoice."
+    },
+    {
+      "role": "user",
+      "content": "Do you have an API for pulling invoice data into our own dashboard?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, there's a REST API, the docs are linked from the Developer settings page."
+    },
+    {
+      "role": "user",
+      "content": "Can late fees be added automatically to overdue invoices?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, you can set a flat fee or a percentage under Settings > Late Fees."
+    },
+    {
+      "role": "user",
+      "content": "How long do you keep sent invoices in the archive?"
+    },
+    {
+      "role": "assistant",
+      "content": "Sent invoices are kept indefinitely unless you delete them yourself."
+    },
+    {
+      "role": "user",
+      "content": "How do refunds show up on the client's statement?"
+    },
+    {
+      "role": "assistant",
+      "content": "Refunds appear as a negative line item on the next statement we generate."
+    },
+    {
+      "role": "user",
+      "content": "Is there a way to send a payment reminder automatically?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, reminders can be scheduled 3, 7 and 14 days after the due date."
+    },
+    {
+      "role": "user",
+      "content": "Can I attach a PDF contract to an invoice?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, the attachment option is below the line items when you edit an invoice."
+    },
+    {
+      "role": "user",
+      "content": "Can you confirm for our records what account ID, plan, error code and time zone you have noted for this ticket?"
+    }
+  ],
+  "expected_facts": [
+    "ACC-2404",
+    "Scale",
+    "ERR-425",
+    "America/New_York"
+  ]
+}

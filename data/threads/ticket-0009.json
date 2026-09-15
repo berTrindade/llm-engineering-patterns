@@ -1,0 +1,189 @@
+{
+  "thread_id": "ticket-0009",
+  "facts": {
+    "account_id": "ACC-1250",
+    "plan_name": "Growth",
+    "error_code": "ERR-672",
+    "timezone": "America/New_York"
+  },
+  "turns": [
+    {
+      "role": "user",
+      "content": "Hello, we need help on our Growth plan. For reference our account ID is ACC-1250."
+    },
+    {
+      "role": "assistant",
+      "content": "Sorry to hear that. Can you share the error code shown and your time zone, so I can pull the right logs?"
+    },
+    {
+      "role": "user",
+      "content": "It showed ERR-672. Our time zone is America/New_York."
+    },
+    {
+      "role": "assistant",
+      "content": "Thank you, that's logged on our side. Give me a moment to investigate."
+    },
+    {
+      "role": "user",
+      "content": "Can late fees be added automatically to overdue invoices?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, you can set a flat fee or a percentage under Settings > Late Fees."
+    },
+    {
+      "role": "user",
+      "content": "What's the limit on how many clients I can add?"
+    },
+    {
+      "role": "assistant",
+      "content": "There's no hard limit on the number of clients you can add."
+    },
+    {
+      "role": "user",
+      "content": "Can I customise the email subject line when sending an invoice?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, under Settings > Email Templates you can edit the subject line."
+    },
+    {
+      "role": "user",
+      "content": "Can late fees be added automatically to overdue invoices?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, you can set a flat fee or a percentage under Settings > Late Fees."
+    },
+    {
+      "role": "user",
+      "content": "Do you support VAT reverse charge for EU clients?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, tick the reverse charge box on the client's tax settings."
+    },
+    {
+      "role": "user",
+      "content": "Is there a dark mode in the Ledgerline app?"
+    },
+    {
+      "role": "assistant",
+      "content": "Not yet, it's on our roadmap but I don't have a date to share."
+    },
+    {
+      "role": "user",
+      "content": "Is there a way to send a payment reminder automatically?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, reminders can be scheduled 3, 7 and 14 days after the due date."
+    },
+    {
+      "role": "user",
+      "content": "Can I change the currency symbol on my invoice template?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, under Settings > Invoice Template there's a currency dropdown."
+    },
+    {
+      "role": "user",
+      "content": "Is there a way to send a payment reminder automatically?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, reminders can be scheduled 3, 7 and 14 days after the due date."
+    },
+    {
+      "role": "user",
+      "content": "Is there a dark mode in the Ledgerline app?"
+    },
+    {
+      "role": "assistant",
+      "content": "Not yet, it's on our roadmap but I don't have a date to share."
+    },
+    {
+      "role": "user",
+      "content": "Can I add a second team member to review invoices before they go out?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, go to Settings > Team and send an invite with the Reviewer role."
+    },
+    {
+      "role": "user",
+      "content": "Can I customise the email subject line when sending an invoice?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, under Settings > Email Templates you can edit the subject line."
+    },
+    {
+      "role": "user",
+      "content": "How do refunds show up on the client's statement?"
+    },
+    {
+      "role": "assistant",
+      "content": "Refunds appear as a negative line item on the next statement we generate."
+    },
+    {
+      "role": "user",
+      "content": "What's the limit on how many clients I can add?"
+    },
+    {
+      "role": "assistant",
+      "content": "There's no hard limit on the number of clients you can add."
+    },
+    {
+      "role": "user",
+      "content": "Can I add a second team member to review invoices before they go out?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, go to Settings > Team and send an invite with the Reviewer role."
+    },
+    {
+      "role": "user",
+      "content": "Is there a way to send a payment reminder automatically?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, reminders can be scheduled 3, 7 and 14 days after the due date."
+    },
+    {
+      "role": "user",
+      "content": "Can late fees be added automatically to overdue invoices?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, you can set a flat fee or a percentage under Settings > Late Fees."
+    },
+    {
+      "role": "user",
+      "content": "Do you support VAT reverse charge for EU clients?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, tick the reverse charge box on the client's tax settings."
+    },
+    {
+      "role": "user",
+      "content": "How do refunds show up on the client's statement?"
+    },
+    {
+      "role": "assistant",
+      "content": "Refunds appear as a negative line item on the next statement we generate."
+    },
+    {
+      "role": "user",
+      "content": "One last thing before we wrap up: could you read back our account ID, plan, the error code from earlier, and our time zone?"
+    }
+  ],
+  "expected_facts": [
+    "ACC-1250",
+    "Growth",
+    "ERR-672",
+    "America/New_York"
+  ]
+}
