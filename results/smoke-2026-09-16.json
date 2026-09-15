@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-15",
+  "date": "2026-09-16",
   "cheap_model": "qwen3:8b",
   "strong_model": "qwen3:8b",
   "question_count": 3,
@@ -7,67 +7,67 @@
     "always_cheap|None": {
       "strategy": "always_cheap",
       "threshold": null,
-      "accuracy": 0.6666666666666666,
+      "accuracy": 1.0,
       "escalation_rate": 0.0,
-      "total_cost_usd": 0.0015926,
-      "cost_per_correct": 0.0007963,
-      "mean_latency_ms": 14543.790986329745,
-      "mean_tokens": 793.0
+      "total_cost_usd": 0.0015686,
+      "cost_per_correct": 0.0005228666666666667,
+      "mean_latency_ms": 1578.7781246666175,
+      "mean_tokens": 789.0
     },
     "always_strong|None": {
       "strategy": "always_strong",
       "threshold": null,
-      "accuracy": 0.6666666666666666,
+      "accuracy": 1.0,
       "escalation_rate": 0.0,
-      "total_cost_usd": 0.0015926,
-      "cost_per_correct": 0.0007963,
-      "mean_latency_ms": 1231.3413336766341,
-      "mean_tokens": 793.0
+      "total_cost_usd": 0.0015945999999999998,
+      "cost_per_correct": 0.0005315333333333333,
+      "mean_latency_ms": 714.4944030054224,
+      "mean_tokens": 793.3333333333334
     },
     "routed|0.5": {
       "strategy": "routed",
       "threshold": 0.5,
-      "accuracy": 0.6666666666666666,
+      "accuracy": 1.0,
       "escalation_rate": 0.0,
-      "total_cost_usd": 0.0017486,
-      "cost_per_correct": 0.0008743,
-      "mean_latency_ms": 1575.4288056632504,
-      "mean_tokens": 819.0
+      "total_cost_usd": 0.0017345999999999998,
+      "cost_per_correct": 0.0005782,
+      "mean_latency_ms": 1140.7010416684595,
+      "mean_tokens": 816.6666666666666
     },
     "routed|0.7": {
       "strategy": "routed",
       "threshold": 0.7,
-      "accuracy": 0.6666666666666666,
+      "accuracy": 1.0,
       "escalation_rate": 0.0,
-      "total_cost_usd": 0.0017305999999999999,
-      "cost_per_correct": 0.0008652999999999999,
-      "mean_latency_ms": 1200.4671113293928,
-      "mean_tokens": 816.0
+      "total_cost_usd": 0.0017446,
+      "cost_per_correct": 0.0005815333333333333,
+      "mean_latency_ms": 1164.4591670046793,
+      "mean_tokens": 818.3333333333334
     },
     "routed|0.9": {
       "strategy": "routed",
       "threshold": 0.9,
-      "accuracy": 0.6666666666666666,
+      "accuracy": 1.0,
       "escalation_rate": 0.0,
-      "total_cost_usd": 0.0017086,
-      "cost_per_correct": 0.0008543,
-      "mean_latency_ms": 1110.5419996699009,
-      "mean_tokens": 812.3333333333334
+      "total_cost_usd": 0.0017106,
+      "cost_per_correct": 0.0005702,
+      "mean_latency_ms": 1063.7170553333515,
+      "mean_tokens": 812.6666666666666
     }
   },
   "calibration": {
     "0.0-0.5": null,
     "0.5-0.7": null,
     "0.7-0.9": null,
-    "0.9-1.0": 0.6666666666666666
+    "0.9-1.0": 1.0
   },
   "thinking_tokens_check": {
     "question": "On a Basic fare I want extra-legroom seat selection and one extra checked bag booked in advance. What is the combined cost?",
-    "completion_tokens_reasoning_effort_omitted": 364,
-    "completion_tokens_reasoning_effort_none": 41,
-    "cost_usd_reasoning_effort_omitted": 0.0001846,
-    "cost_usd_reasoning_effort_none": 8.83e-05,
-    "cost_difference_usd": 9.629999999999998e-05
+    "completion_tokens_reasoning_effort_omitted": 332,
+    "completion_tokens_reasoning_effort_none": 58,
+    "cost_usd_reasoning_effort_omitted": 0.000175,
+    "cost_usd_reasoning_effort_none": 9.340000000000001e-05,
+    "cost_difference_usd": 8.159999999999999e-05
   },
   "cases": [
     {
@@ -77,12 +77,12 @@
       "correct": true,
       "escalated": false,
       "cost_usd": 0.0005380000000000001,
-      "latency_ms": 3881.6291249968344,
+      "latency_ms": 2217.7099580003414,
       "prompt_tokens": 760,
       "completion_tokens": 41,
       "confidence": null,
       "failure_reason": null,
-      "answer": "The combined cost for an extra-legroom seat on a Basic fare is \u00a325. An extra checked bag booked in advance costs \u00a335. Therefore, the combined cost is \u00a360."
+      "answer": "The combined cost for an extra-legroom seat on a Basic fare is \u00a325. The extra checked bag can be added for \u00a335. Therefore, the combined cost is \u00a360."
     },
     {
       "question_id": "basic-cabin-bag-dimensions",
@@ -91,7 +91,7 @@
       "correct": true,
       "escalated": false,
       "cost_usd": 0.0005034,
-      "latency_ms": 24831.11841698701,
+      "latency_ms": 1850.2917080040788,
       "prompt_tokens": 749,
       "completion_tokens": 27,
       "confidence": null,
@@ -102,15 +102,15 @@
       "question_id": "exception-name-change-within-48-hours",
       "strategy": "always_cheap",
       "threshold": null,
-      "correct": false,
+      "correct": true,
       "escalated": false,
-      "cost_usd": 0.0005512,
-      "latency_ms": 14918.625417005387,
+      "cost_usd": 0.0005272,
+      "latency_ms": 668.3327079954324,
       "prompt_tokens": 752,
-      "completion_tokens": 50,
+      "completion_tokens": 38,
       "confidence": null,
       "failure_reason": null,
-      "answer": "No, you cannot request a name change within 48 hours of departure. Since your flight departs in 30 hours, you must request the name change at least 48 hours before departure to avoid the \u00a330 fee."
+      "answer": "No, you cannot request a name change within 48 hours of departure. Since your flight departs in 30 hours, it is too late to request a name change."
     },
     {
       "question_id": "multi-basic-legroom-and-extra-bag",
@@ -118,13 +118,13 @@
       "threshold": null,
       "correct": true,
       "escalated": false,
-      "cost_usd": 0.000544,
-      "latency_ms": 1364.7120420064311,
+      "cost_usd": 0.000546,
+      "latency_ms": 828.0620840087067,
       "prompt_tokens": 760,
-      "completion_tokens": 44,
+      "completion_tokens": 45,
       "confidence": null,
       "failure_reason": null,
-      "answer": "The combined cost for an extra-legroom seat selection on a Basic fare is \u00a325. Additionally, an extra checked bag booked in advance costs \u00a335. Therefore, the combined cost is \u00a360."
+      "answer": "The combined cost for an extra-legroom seat on a Basic fare is \u00a325, and the cost for one extra checked bag booked in advance is \u00a335. Therefore, the combined cost is \u00a360."
     },
     {
       "question_id": "basic-cabin-bag-dimensions",
@@ -133,7 +133,7 @@
       "correct": true,
       "escalated": false,
       "cost_usd": 0.0005034,
-      "latency_ms": 1005.6048750120681,
+      "latency_ms": 499.25029200676363,
       "prompt_tokens": 749,
       "completion_tokens": 27,
       "confidence": null,
@@ -144,10 +144,10 @@
       "question_id": "exception-name-change-within-48-hours",
       "strategy": "always_strong",
       "threshold": null,
-      "correct": false,
+      "correct": true,
       "escalated": false,
       "cost_usd": 0.0005451999999999999,
-      "latency_ms": 1323.707084011403,
+      "latency_ms": 816.1708330007968,
       "prompt_tokens": 752,
       "completion_tokens": 47,
       "confidence": null,
@@ -160,13 +160,13 @@
       "threshold": 0.5,
       "correct": true,
       "escalated": false,
-      "cost_usd": 0.000598,
-      "latency_ms": 1896.5575839974917,
+      "cost_usd": 0.000594,
+      "latency_ms": 1279.5449170080246,
       "prompt_tokens": 760,
-      "completion_tokens": 71,
-      "confidence": 100.0,
+      "completion_tokens": 69,
+      "confidence": 0.95,
       "failure_reason": null,
-      "answer": "The combined cost for an extra-legroom seat on a Basic fare is \u00a325, and the cost for one extra checked bag booked in advance is \u00a335. Therefore, the total combined cost is \u00a360."
+      "answer": "The combined cost for an extra-legroom seat on a Basic fare is \u00a325, and an extra checked bag booked in advance is \u00a335. Therefore, the total combined cost is \u00a360."
     },
     {
       "question_id": "basic-cabin-bag-dimensions",
@@ -175,10 +175,10 @@
       "correct": true,
       "escalated": false,
       "cost_usd": 0.0005453999999999999,
-      "latency_ms": 1357.116125000175,
+      "latency_ms": 881.6032500035362,
       "prompt_tokens": 749,
       "completion_tokens": 48,
-      "confidence": 1.0,
+      "confidence": 0.95,
       "failure_reason": null,
       "answer": "The maximum dimensions of the small bag allowed on a Basic fare are 40 x 20 x 25 cm."
     },
@@ -186,15 +186,15 @@
       "question_id": "exception-name-change-within-48-hours",
       "strategy": "routed",
       "threshold": 0.5,
-      "correct": false,
+      "correct": true,
       "escalated": false,
-      "cost_usd": 0.0006052,
-      "latency_ms": 1472.6127079920843,
+      "cost_usd": 0.0005951999999999999,
+      "latency_ms": 1260.9549579938175,
       "prompt_tokens": 752,
-      "completion_tokens": 77,
+      "completion_tokens": 72,
       "confidence": 0.95,
       "failure_reason": null,
-      "answer": "No, you cannot request a name change within 48 hours of departure. Since your flight departs in 30 hours, you must request the name change at least 48 hours before departure, which is not possible in this case."
+      "answer": "No, you cannot request a name change within 48 hours of departure. Since your flight departs in 30 hours, you must request the name change at least 48 hours before departure to be eligible."
     },
     {
       "question_id": "multi-basic-legroom-and-extra-bag",
@@ -202,13 +202,13 @@
       "threshold": 0.7,
       "correct": true,
       "escalated": false,
-      "cost_usd": 0.000586,
-      "latency_ms": 1294.2001670016907,
+      "cost_usd": 0.0005920000000000001,
+      "latency_ms": 1258.3568340050988,
       "prompt_tokens": 760,
-      "completion_tokens": 65,
+      "completion_tokens": 68,
       "confidence": 0.95,
       "failure_reason": null,
-      "answer": "For a Basic fare, the cost for an extra-legroom seat is \u00a325. An extra checked bag can be added for \u00a335. The combined cost is \u00a360."
+      "answer": "The combined cost for an extra-legroom seat on a Basic fare is \u00a325, and an extra checked bag booked in advance is \u00a335. Therefore, the total cost is \u00a360."
     },
     {
       "question_id": "basic-cabin-bag-dimensions",
@@ -217,7 +217,7 @@
       "correct": true,
       "escalated": false,
       "cost_usd": 0.0005453999999999999,
-      "latency_ms": 921.3777919940185,
+      "latency_ms": 897.0011250057723,
       "prompt_tokens": 749,
       "completion_tokens": 48,
       "confidence": 0.95,
@@ -228,12 +228,12 @@
       "question_id": "exception-name-change-within-48-hours",
       "strategy": "routed",
       "threshold": 0.7,
-      "correct": false,
+      "correct": true,
       "escalated": false,
-      "cost_usd": 0.0005991999999999999,
-      "latency_ms": 1385.8233749924693,
+      "cost_usd": 0.0006072,
+      "latency_ms": 1338.0195420031669,
       "prompt_tokens": 752,
-      "completion_tokens": 74,
+      "completion_tokens": 78,
       "confidence": 0.95,
       "failure_reason": null,
       "answer": "No, you cannot request a name change within 48 hours of departure. Since your flight departs in 30 hours, you are within the 48-hour window and must request the name change at least 48 hours before departure."
@@ -244,13 +244,13 @@
       "threshold": 0.9,
       "correct": true,
       "escalated": false,
-      "cost_usd": 0.000586,
-      "latency_ms": 1255.779540995718,
+      "cost_usd": 0.000594,
+      "latency_ms": 1248.477291999734,
       "prompt_tokens": 760,
-      "completion_tokens": 65,
-      "confidence": 1.0,
+      "completion_tokens": 69,
+      "confidence": 0.95,
       "failure_reason": null,
-      "answer": "The combined cost for an extra-legroom seat on a Basic fare is \u00a325, and an extra checked bag booked in advance is \u00a335. Therefore, the total cost is \u00a360."
+      "answer": "The combined cost for an extra-legroom seat on a Basic fare is \u00a325, and an extra checked bag booked in advance is \u00a335. Therefore, the total combined cost is \u00a360."
     },
     {
       "question_id": "basic-cabin-bag-dimensions",
@@ -258,11 +258,11 @@
       "threshold": 0.9,
       "correct": true,
       "escalated": false,
-      "cost_usd": 0.0005434,
-      "latency_ms": 902.2659170004772,
+      "cost_usd": 0.0005453999999999999,
+      "latency_ms": 875.1296659902437,
       "prompt_tokens": 749,
-      "completion_tokens": 47,
-      "confidence": 1.0,
+      "completion_tokens": 48,
+      "confidence": 0.95,
       "failure_reason": null,
       "answer": "The maximum dimensions of the small bag allowed on a Basic fare are 40 x 20 x 25 cm."
     },
@@ -270,15 +270,15 @@
       "question_id": "exception-name-change-within-48-hours",
       "strategy": "routed",
       "threshold": 0.9,
-      "correct": false,
+      "correct": true,
       "escalated": false,
-      "cost_usd": 0.0005792,
-      "latency_ms": 1173.5805410135072,
+      "cost_usd": 0.0005712,
+      "latency_ms": 1067.5442080100765,
       "prompt_tokens": 752,
-      "completion_tokens": 64,
+      "completion_tokens": 60,
       "confidence": 0.95,
       "failure_reason": null,
-      "answer": "No, you cannot request a name change within 48 hours of departure. Since your flight departs in 30 hours, it is too late to request a name change."
+      "answer": "No, you cannot request a name change within 48 hours of departure. Since your flight departs in 30 hours, you must request the name change before that time."
     }
   ]
 }

@@ -55,7 +55,9 @@ Not yet run in full. Run `make eval`.
   real cost numbers.
 - [src/cost_and_routing/scoring.py](src/cost_and_routing/scoring.py) normalises an answer
   (case, currency formatting, small number words) and checks that every `required_facts`
-  string from [data/questions.jsonl](data/questions.jsonl) appears in it.
+  entry from [data/questions.jsonl](data/questions.jsonl) appears in it. A required fact can
+  list alternative wordings separated by `|`, satisfied when any one of them appears, so the
+  score tests whether the fact was stated, not which words the model chose to state it.
 - [src/cost_and_routing/routing.py](src/cost_and_routing/routing.py) has the cheap model
   answer with a `json_schema` response of `{answer, confidence, needs_escalation}`, and
   escalates to the strong model when confidence is below a threshold or
@@ -76,12 +78,14 @@ Not yet run in full. Run `make eval`.
   powered benchmark.
 - Prices in `prices.toml` are illustrative, not real provider prices; local models have no
   real bill.
-- Scoring is exact substring matching after normalisation, so an answer that gets the
-  substance right but does not use the exact required phrase is marked wrong even if a human
-  reader would accept it. In a smoke run every strategy answered "can I change my name 30
-  hours before departure" correctly in substance (explaining the change is not allowed) but
-  never used the dataset's required phrase "not permit", so all five strategy rows mark that
-  case wrong. This is a dataset/scorer strictness limit, not a routing or cost bug.
+- Scoring is substring matching after normalisation. A required fact can list alternative
+  wordings separated by `|` (for example `"not permit|cannot|can't|not allowed|not possible"`),
+  which is satisfied when any alternative appears, so a correctly-worded paraphrase is not
+  marked wrong just for using different phrasing. The alternatives are deliberately specific
+  (never a bare "yes" or "no") to avoid the opposite failure: a required fact that is too loose
+  and accepts a wrong answer. What this cannot catch is an answer that contains the right fact
+  alongside a wrong claim elsewhere in the same answer, since a match only checks that the fact
+  is present, not that the rest of the answer is consistent with it.
 - The smoke command (`EVAL_LIMIT=3 STRONG_MODEL=qwen3:8b`) sets the cheap and strong model to
   the same model so the 35B model is not loaded during development; its cost and escalation
   figures are not meaningful, only `make eval`'s full run with distinct models is.
