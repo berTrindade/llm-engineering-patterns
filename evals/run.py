@@ -34,12 +34,16 @@ class TaskOutcome:
     category: str
     success: bool
     failure_type: str | None
+    reason: str | None
     tool_call_count: int
     iterations: int
     recovered_error_count: int
     prompt_tokens: int
     completion_tokens: int
     latency_ms: float
+    final_message: str | None
+    stopped_reason: str | None
+    trace: list[dict]
 
 
 def classify_failure(
@@ -56,6 +60,18 @@ def classify_failure(
     return "wrong_end_state"
 
 
+def _trace_to_dicts(trace: list) -> list[dict]:
+    return [
+        {
+            "tool_name": step.tool_name,
+            "arguments": step.arguments,
+            "result_or_error": step.result_or_error,
+            "is_error": step.is_error,
+        }
+        for step in trace
+    ]
+
+
 def run_task(
     task: dict, seed_state: OfficeState, chat_fn, model: str, max_iterations: int = 8
 ) -> TaskOutcome:
@@ -66,21 +82,25 @@ def run_task(
         result = run_agent_loop(
             state, task["request"], chat_fn, model=model, max_iterations=max_iterations
         )
-    except Exception:
+    except Exception as exc:
         return TaskOutcome(
             task_id=task["id"],
             category=task["category"],
             success=False,
             failure_type="model_error",
+            reason=f"{type(exc).__name__}: {exc}",
             tool_call_count=0,
             iterations=0,
             recovered_error_count=0,
             prompt_tokens=0,
             completion_tokens=0,
             latency_ms=0.0,
+            final_message=None,
+            stopped_reason=None,
+            trace=[],
         )
 
-    ok, _reason = check_end_state(state, original_ids, task["checks"])
+    ok, reason = check_end_state(state, original_ids, task["checks"])
     failure_type = classify_failure(
         result.stopped_reason, result.recovered_error_count, task["category"], ok
     )
@@ -90,12 +110,16 @@ def run_task(
         category=task["category"],
         success=ok,
         failure_type=failure_type,
+        reason=reason,
         tool_call_count=result.tool_call_count,
         iterations=result.iterations,
         recovered_error_count=result.recovered_error_count,
         prompt_tokens=result.prompt_tokens,
         completion_tokens=result.completion_tokens,
         latency_ms=result.latency_ms,
+        final_message=result.final_message,
+        stopped_reason=result.stopped_reason,
+        trace=_trace_to_dicts(result.trace),
     )
 
 
