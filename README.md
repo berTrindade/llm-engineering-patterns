@@ -76,9 +76,12 @@ Not yet run in full. Run `make eval`.
   powered benchmark.
 - Prices in `prices.toml` are illustrative, not real provider prices; local models have no
   real bill.
-- Scoring is exact substring matching after normalisation, so a correct answer phrased in a
-  way the normaliser does not cover (for example a synonym rather than a paraphrase of a
-  required fact) is marked wrong even if a human reader would accept it.
+- Scoring is exact substring matching after normalisation, so an answer that gets the
+  substance right but does not use the exact required phrase is marked wrong even if a human
+  reader would accept it. In a smoke run every strategy answered "can I change my name 30
+  hours before departure" correctly in substance (explaining the change is not allowed) but
+  never used the dataset's required phrase "not permit", so all five strategy rows mark that
+  case wrong. This is a dataset/scorer strictness limit, not a routing or cost bug.
 - The smoke command (`EVAL_LIMIT=3 STRONG_MODEL=qwen3:8b`) sets the cheap and strong model to
   the same model so the 35B model is not loaded during development; its cost and escalation
   figures are not meaningful, only `make eval`'s full run with distinct models is.
