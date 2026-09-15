@@ -1,0 +1,5 @@
+{
+  "chars_per_token": 2.2222222222222223,
+  "n_samples": 5,
+  "model": "qwen3:8b"
+}
