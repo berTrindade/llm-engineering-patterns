@@ -200,6 +200,15 @@ def generate_dataset(seed: int = 42, n: int = 60) -> list[ReplyCase]:
     return cases
 
 
+def load_dataset(path: Path = DATA_PATH) -> list[ReplyCase]:
+    cases = []
+    with path.open() as f:
+        for line in f:
+            if line.strip():
+                cases.append(ReplyCase(**json.loads(line)))
+    return cases
+
+
 def main() -> None:
     cases = generate_dataset()
     DATA_PATH.parent.mkdir(parents=True, exist_ok=True)

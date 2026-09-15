@@ -1,4 +1,4 @@
-from evals_judge.dataset import FLAW_TYPES, ReplyCase, generate_dataset
+from evals_judge.dataset import FLAW_TYPES, ReplyCase, generate_dataset, load_dataset
 
 
 def test_generate_dataset_is_deterministic():
@@ -38,3 +38,17 @@ def test_designed_labels_are_balanced():
     assert n_fail == 30
     for flaw in FLAW_TYPES:
         assert sum(1 for c in cases if c.flaw_type == flaw) == 6
+
+
+def test_load_dataset_round_trips_generated_file(tmp_path):
+    path = tmp_path / "replies.jsonl"
+    written = generate_dataset(seed=42, n=10)
+    import dataclasses
+    import json
+
+    with path.open("w") as f:
+        for case in written:
+            f.write(json.dumps(dataclasses.asdict(case)) + "\n")
+
+    loaded = load_dataset(path)
+    assert loaded == written
