@@ -5,7 +5,7 @@ is always kept and the estimate never exceeds budget_tokens.
 
 from __future__ import annotations
 
-from typing import Callable
+from collections.abc import Callable
 
 Estimator = Callable[[list[dict]], int]
 

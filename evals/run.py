@@ -12,7 +12,7 @@ import json
 import os
 import statistics
 from dataclasses import asdict, dataclass
-from datetime import date
+from datetime import UTC, datetime
 from pathlib import Path
 
 from context_window_poc.llm import chat_completion
@@ -188,7 +188,7 @@ def main() -> None:
     model = os.environ.get("CHEAP_MODEL", "qwen3:8b")
     limit = os.environ.get("EVAL_LIMIT")
     budgets = [int(b) for b in os.environ.get("EVAL_BUDGETS", "2000,4000,8000").split(",")]
-    results_file = os.environ.get("RESULTS_FILE", f"results/{date.today().isoformat()}.json")
+    results_file = os.environ.get("RESULTS_FILE", f"results/{datetime.now(UTC).date().isoformat()}.json")
 
     ratio = load_calibration()
 
@@ -215,7 +215,7 @@ def main() -> None:
     out_path.write_text(
         json.dumps(
             {
-                "generated_at": date.today().isoformat(),
+                "generated_at": datetime.now(UTC).date().isoformat(),
                 "model": model,
                 "budgets": budgets,
                 "n_threads": len(threads),
