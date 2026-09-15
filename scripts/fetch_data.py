@@ -14,7 +14,7 @@ SNAPSHOT_PATH = Path(__file__).resolve().parent.parent / "data" / "snapshot.json
 
 
 def main() -> None:
-    fetch_date = datetime.date.today().isoformat()
+    fetch_date = datetime.datetime.now(tz=datetime.UTC).date().isoformat()
     all_chunks = []
 
     for path in PAGES:
