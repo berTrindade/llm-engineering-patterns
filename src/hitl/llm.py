@@ -41,7 +41,7 @@ def chat_completion(
     messages: list[dict],
     model: str,
     response_format: dict | None = None,
-    timeout: float = 60.0,
+    timeout: float = 180.0,
 ) -> ChatResult:
     fixture_path = os.environ.get("LLM_FIXTURE")
     if fixture_path:
