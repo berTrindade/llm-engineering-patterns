@@ -1,0 +1,7 @@
+{
+  "content": "{\"answer\": \"This looks like an exception case.\", \"confidence\": 0.95, \"needs_escalation\": true}",
+  "prompt_tokens": 120,
+  "completion_tokens": 26,
+  "latency_ms": 230.0,
+  "model": "cheap-test"
+}

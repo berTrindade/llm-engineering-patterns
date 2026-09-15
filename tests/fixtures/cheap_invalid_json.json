@@ -1,0 +1,7 @@
+{
+  "content": "Sorry, I cannot help with that right now.",
+  "prompt_tokens": 120,
+  "completion_tokens": 12,
+  "latency_ms": 200.0,
+  "model": "cheap-test"
+}

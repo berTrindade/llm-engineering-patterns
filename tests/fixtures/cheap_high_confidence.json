@@ -1,0 +1,7 @@
+{
+  "content": "{\"answer\": \"The Standard fare change fee is \\u00a345.\", \"confidence\": 0.9, \"needs_escalation\": false}",
+  "prompt_tokens": 120,
+  "completion_tokens": 30,
+  "latency_ms": 250.0,
+  "model": "cheap-test"
+}
