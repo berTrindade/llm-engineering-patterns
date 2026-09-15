@@ -58,6 +58,15 @@ def normalise(text: str) -> str:
     return result
 
 
+def _fact_satisfied(fact: str, normalised_answer: str) -> bool:
+    """A required fact written as "a|b|c" is satisfied when any alternative appears.
+    Alternatives are split before normalisation, since normalisation strips "|" along
+    with other punctuation.
+    """
+    alternatives = fact.split("|")
+    return any(normalise(alt) in normalised_answer for alt in alternatives)
+
+
 def is_correct(answer: str, required_facts: list[str]) -> bool:
     normalised_answer = normalise(answer)
-    return all(normalise(fact) in normalised_answer for fact in required_facts)
+    return all(_fact_satisfied(fact, normalised_answer) for fact in required_facts)

@@ -38,3 +38,22 @@ def test_is_correct_matches_number_word_variants() -> None:
 def test_is_correct_case_insensitive() -> None:
     answer = "STANDARD FARE INCLUDES ONE CHECKED BAG."
     assert is_correct(answer, ["Standard", "one checked bag"])
+
+
+def test_is_correct_matches_any_pipe_separated_alternative() -> None:
+    fact = "not permit|cannot|can't|not allowed|not possible"
+    assert is_correct("You cannot do that within 48 hours.", [fact])
+    assert is_correct("That is not allowed this close to departure.", [fact])
+    assert is_correct("It is not possible at this stage.", [fact])
+    assert is_correct("We can't process that now.", [fact])
+    assert is_correct("Fernway does not permit that.", [fact])
+
+
+def test_is_correct_false_when_no_pipe_alternative_present() -> None:
+    fact = "not permit|cannot|can't|not allowed|not possible"
+    assert not is_correct("Sure, that works fine.", [fact])
+
+
+def test_is_correct_plain_facts_without_pipe_still_work() -> None:
+    assert is_correct("The fee is £45.", ["£45"])
+    assert not is_correct("The fee is £50.", ["£45"])
