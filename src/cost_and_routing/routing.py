@@ -24,7 +24,7 @@ CHEAP_SCHEMA = {
     },
 }
 
-_SYSTEM_PROMPT = (
+SYSTEM_PROMPT = (
     "You are a support assistant for Fernway Travel, an invented travel booking company. "
     "Answer the customer's question using the policy facts you know. If you are not "
     "confident in the answer, set a low confidence or set needs_escalation to true."
@@ -53,7 +53,7 @@ class RoutedResult:
 def answer_cheap(question: str, model: str) -> Attempt:
     response = chat_completion(
         messages=[
-            {"role": "system", "content": _SYSTEM_PROMPT},
+            {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": question},
         ],
         model=model,
@@ -84,7 +84,7 @@ def answer_cheap(question: str, model: str) -> Attempt:
 def answer_strong(question: str, model: str) -> Attempt:
     response = chat_completion(
         messages=[
-            {"role": "system", "content": _SYSTEM_PROMPT},
+            {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": question},
         ],
         model=model,
