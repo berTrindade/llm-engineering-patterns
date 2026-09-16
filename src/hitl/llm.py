@@ -1,8 +1,7 @@
 """Thin httpx client for an OpenAI-compatible /chat/completions endpoint.
 
 Sends reasoning_effort: "none" by default. Verified on 2026-09-15 against Ollama 0.34.0 that
-this stops qwen3 thinking; a `/no_think` prompt suffix alone was not enough (a 20-token JSON
-answer reported 542 completion tokens without this field).
+this stops qwen3 thinking; a `/no_think` prompt suffix alone was not enough.
 """
 
 from __future__ import annotations

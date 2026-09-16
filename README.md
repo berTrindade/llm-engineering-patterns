@@ -75,9 +75,9 @@ audit log is complete and ordered.
 - **LLM client** (`src/hitl/llm.py`): a plain `httpx` POST to
   `{LLM_BASE_URL}/chat/completions` with `reasoning_effort: "none"`. Verified locally on
   2026-09-15 against Ollama 0.34.0 that this stops `qwen3` "thinking"; a `/no_think` prompt
-  suffix alone was not enough (a 20-token JSON answer reported 542 completion tokens without this
-  field). An `LLM_FIXTURE` env var swaps in a recorded response instead of calling the network,
-  which is what makes the crash test and unit tests deterministic and model-free.
+  suffix alone was not enough. An `LLM_FIXTURE` env var swaps in a recorded response instead of
+  calling the network, which is what makes the crash test and unit tests deterministic and
+  model-free.
 
 ## Limits
 
@@ -89,6 +89,6 @@ audit log is complete and ordered.
   named in the design spec. It does not fuzz arbitrary kill points, and it does not simulate a
   crash mid-`transition()` (SQLite's own transaction atomicity is what protects that path, not
   application code, so there is nothing extra to test there).
-- The proposal accuracy figure in `results/` only covers the accuracy of the agent's proposed
-  `action` against a policy-derived expected answer; it says nothing about how good the
-  `rationale` text is.
+- Once `make eval` has been run, the proposal accuracy figure it writes to `results/` will
+  only cover the accuracy of the agent's proposed `action` against a policy-derived expected
+  answer; it will say nothing about how good the `rationale` text is.
