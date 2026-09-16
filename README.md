@@ -27,11 +27,37 @@ endpoint configured through `.env` (copy `.env.example`).
 
 ## Result
 
-Not yet run in full. Run `make eval`.
+Full run on 2026-09-16: 40 questions (30 answerable, 10 unanswerable), `qwen3:8b` for
+answers and `nomic-embed-text` for retrieval, through local Ollama, with no failed calls.
+Raw output is in [results/2026-09-16.json](results/2026-09-16.json).
 
-A smoke run (`EVAL_LIMIT=3 make eval`, `CHEAP_MODEL` only) is in
-`results/smoke-<date>.json` and confirms the pipeline runs end to end; it is not the full-set
-headline result.
+| Metric | Value | Over |
+|---|---|---|
+| Hit rate at 5 | 29/30 (96.7%) | answerable questions |
+| Citation correctness | 77.8% | mean share of cited chunks from an expected page, answerable questions |
+| Correct refusal rate | 9/10 | unanswerable questions |
+| False refusal rate | 0/30 | answerable questions |
+| Mean latency | 3.8 s | all 40 |
+| Mean tokens | 973 (872 prompt, 101 completion) | all 40 |
+
+- **Retrieval was rarely the problem.** An expected page was in the top 5 for 29 of 30
+  answerable questions. The miss was q24 (tenant damage to a property).
+- **Citations were the weakest step.** 21 of 30 answers cited only chunks from an expected
+  page. Nine cited at least one chunk from elsewhere, and three of those (q04 on eviction
+  notice, q13 on rental income tax, q18 on student rights) cited none from an expected page.
+  The results file does not keep which chunks were cited, so whether those were wrong or
+  just from a different page that also covers the topic is not recorded.
+- **The model refused when it should, with one exception.** It declined 9 of the 10
+  unanswerable questions and none of the answerable ones. The miss was q34, which asks about
+  options against a specific named letting agent over a holding deposit. The guidance covers
+  holding deposits in general but not that agent, and the model answered instead of
+  refusing.
+- **Every refusal came from the model, not the similarity threshold.** No question scored
+  below 0.3, so the pre-model refusal path never fired on this set.
+
+What this does not measure: an answerable question counts as correct when it is not
+refused. Nothing checks that the answer text is right; that would need a reference answer
+per question or a judge (see `evals-and-judge-poc`).
 
 ## How it works
 
