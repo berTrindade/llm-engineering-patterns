@@ -30,11 +30,35 @@ Requires a local OpenAI-compatible server (Ollama by default) at `LLM_BASE_URL`.
 
 ## Result
 
-Not yet run in full. Run `make eval`.
+Full run on 2026-09-16: 50 cases per approach, `qwen3:8b` through local Ollama, with no
+failed calls. Raw output is in [results/2026-09-16.json](results/2026-09-16.json).
 
-A smoke run (`EVAL_LIMIT=3`, `CHEAP_MODEL` only) is committed at
-`results/smoke-<date>.json` to prove the pipeline runs end to end; it is not the headline
-result.
+| Approach | Valid first try | Valid after repair | Field accuracy | Prompt tokens | Completion tokens |
+|---|---|---|---|---|---|
+| prompt_only | 49/50 | 50/50 | 98.4% | 282 | 220 |
+| json_mode | 49/50 | 50/50 | 97.8% | 280 | 220 |
+| json_schema | 47/50 | 50/50 | 97.6% | 314 | 229 |
+
+Field accuracy is over 500 field checks per approach (10 fields per case). Token columns
+are means per case and include the repair call when there was one.
+
+- **On this model and data, the three approaches are close to indistinguishable.** Every
+  case produced a valid `Invoice` after at most one repair, and field accuracy differs by
+  4 checks out of 500 (8, 11 and 12 wrong fields). With 50 cases that gap is noise.
+- **Constrained decoding did not reduce invalid first replies here.** `json_schema` needed
+  the repair retry three times, the other two once each. The results file does not keep the
+  per-case replies, so the cause of those three is not recorded.
+- **The repair retry is what makes all three reliable.** Without it, validity would have
+  been 94% to 98%; with one retry it is 100%.
+- **The extra prompt tokens for `json_schema` probably come from its repairs.** A repair
+  call resends the original prompt, the first reply and the validation errors, so each one
+  costs several hundred prompt tokens; two extra repairs across 50 cases would explain most
+  of the 34-token gap. This is an inference: the results file does not split first-call and
+  repair tokens. `prompt_only` and `json_mode`, each with one repair, are within 3 tokens of
+  each other.
+
+Mean latency was 7.3 s for `prompt_only` and 6.1 s for the other two. The approaches ran one
+after another, `prompt_only` first, so that gap is not attributed to the approach.
 
 ## How it works
 
