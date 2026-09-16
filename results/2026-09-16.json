@@ -1,0 +1,233 @@
+{
+  "summary": {
+    "cases_run": 20,
+    "failures": 0,
+    "proposal_accuracy": 0.75,
+    "invalid_output_rate": 0.0,
+    "mean_latency_ms": 4364.303533350903,
+    "mean_total_tokens": 586.8
+  },
+  "cases": [
+    {
+      "id": "exp-e1",
+      "expected_action": "approve",
+      "actual_action": "approve",
+      "correct": true,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 5247.442958003376,
+      "total_tokens": 548
+    },
+    {
+      "id": "exp-e2",
+      "expected_action": "partial_refund",
+      "actual_action": "partial_refund",
+      "correct": true,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 6982.406874987646,
+      "total_tokens": 590
+    },
+    {
+      "id": "exp-e3",
+      "expected_action": "approve",
+      "actual_action": "reject",
+      "correct": false,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 5741.642959008459,
+      "total_tokens": 564
+    },
+    {
+      "id": "exp-e4",
+      "expected_action": "reject",
+      "actual_action": "reject",
+      "correct": true,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 4463.233959002537,
+      "total_tokens": 547
+    },
+    {
+      "id": "exp-e5",
+      "expected_action": "approve",
+      "actual_action": "approve",
+      "correct": true,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 6809.766500009573,
+      "total_tokens": 587
+    },
+    {
+      "id": "exp-e6",
+      "expected_action": "partial_refund",
+      "actual_action": "approve",
+      "correct": false,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 8964.104957995005,
+      "total_tokens": 621
+    },
+    {
+      "id": "exp-e7",
+      "expected_action": "approve",
+      "actual_action": "approve",
+      "correct": true,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 4896.312166005373,
+      "total_tokens": 552
+    },
+    {
+      "id": "exp-e8",
+      "expected_action": "reject",
+      "actual_action": "reject",
+      "correct": true,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 4227.044790997752,
+      "total_tokens": 542
+    },
+    {
+      "id": "exp-e9",
+      "expected_action": "approve",
+      "actual_action": "approve",
+      "correct": true,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 4534.004792003543,
+      "total_tokens": 542
+    },
+    {
+      "id": "exp-e10",
+      "expected_action": "partial_refund",
+      "actual_action": "approve",
+      "correct": false,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 4345.919291008613,
+      "total_tokens": 543
+    },
+    {
+      "id": "ref-r1",
+      "expected_action": "approve",
+      "actual_action": "approve",
+      "correct": true,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 3537.728542010882,
+      "total_tokens": 603
+    },
+    {
+      "id": "ref-r2",
+      "expected_action": "reject",
+      "actual_action": "approve",
+      "correct": false,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 2608.072417002404,
+      "total_tokens": 592
+    },
+    {
+      "id": "ref-r3",
+      "expected_action": "approve",
+      "actual_action": "approve",
+      "correct": true,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 3097.4497080023866,
+      "total_tokens": 611
+    },
+    {
+      "id": "ref-r4",
+      "expected_action": "reject",
+      "actual_action": "approve",
+      "correct": false,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 2961.6997919947607,
+      "total_tokens": 599
+    },
+    {
+      "id": "ref-r5",
+      "expected_action": "partial_refund",
+      "actual_action": "partial_refund",
+      "correct": true,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 3760.7139169995207,
+      "total_tokens": 636
+    },
+    {
+      "id": "ref-r6",
+      "expected_action": "approve",
+      "actual_action": "approve",
+      "correct": true,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 3066.074749993277,
+      "total_tokens": 607
+    },
+    {
+      "id": "ref-r7",
+      "expected_action": "approve",
+      "actual_action": "approve",
+      "correct": true,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 3317.6353339949856,
+      "total_tokens": 626
+    },
+    {
+      "id": "ref-r8",
+      "expected_action": "approve",
+      "actual_action": "approve",
+      "correct": true,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 3080.691791998106,
+      "total_tokens": 617
+    },
+    {
+      "id": "ref-r9",
+      "expected_action": "partial_refund",
+      "actual_action": "partial_refund",
+      "correct": true,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 3214.6168750041397,
+      "total_tokens": 619
+    },
+    {
+      "id": "ref-r10",
+      "expected_action": "reject",
+      "actual_action": "reject",
+      "correct": true,
+      "invalid": false,
+      "failed": false,
+      "error": null,
+      "latency_ms": 2429.5082909957273,
+      "total_tokens": 590
+    }
+  ],
+  "complete": true
+}

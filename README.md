@@ -43,10 +43,38 @@ uv run python -m hitl audit exp-001
 
 ## Result
 
-Not yet run in full. Run `make eval`.
+Full run on 2026-09-16: 20 requests (10 expense claims, 10 refunds), `qwen3:8b` through
+local Ollama, with no failed calls and no replies that failed schema validation. Raw output
+is in [results/2026-09-16.json](results/2026-09-16.json).
+
+The agent proposed the correct action for **15 of 20** requests.
+
+| Expected | Proposed approve | Proposed partial_refund | Proposed reject |
+|---|---|---|---|
+| approve (10) | 9 | 0 | 1 |
+| partial_refund (5) | 2 | 3 | 0 |
+| reject (5) | 2 | 0 | 3 |
+
+Every miss contradicts a rule stated plainly in `data/policy.md`:
+
+- **Over the category limit, approved in full:** a £200 office supplies claim (limit £150)
+  and a £340 software claim (limit £300).
+- **Outside the refund window, approved:** a standard-price lamp requested 40 days after
+  purchase (window 30 days) and a sale cushion cover requested 21 days after purchase
+  (window 14 days).
+- **Under the receipt threshold, rejected:** a £20 meal with no receipt, where a receipt is
+  only required over £25.
+
+Four of the five errors approve something the policy says to cap or refuse, the direction
+that costs money. That is the case for the approval step this repository builds: at this
+accuracy a proposal is a draft for a person to check, not a decision. Mean latency was 4.4 s
+and mean usage 587 tokens per proposal.
+
+The eval measures the proposal only. The approval workflow's guarantees are tested
+separately, without a model:
 
 The crash and resume test (`uv run pytest tests/test_crash_resume.py`) needs no model and runs in
-CI: it submits 5 requests, kills `python -m hitl process` with SIGKILL right after the whole
+CI (`.github/workflows/ci.yml`): it submits 5 requests, kills `python -m hitl process` with SIGKILL right after the whole
 batch reaches `AWAITING_APPROVAL`, approves 3 and rejects 2 directly against the database, kills
 `python -m hitl resume` with SIGKILL right before it executes anything, then restarts and runs
 `resume` twice. It asserts no request is lost, nothing is executed twice, and every request's
@@ -86,9 +114,9 @@ audit log is complete and ordered.
 - `resume` retries every `APPROVED` request every time it runs; there is no backoff or retry
   limit for a request that keeps failing at execution.
 - The crash test kills the process at two specific points chosen to match the two failure modes
-  named in the design spec. It does not fuzz arbitrary kill points, and it does not simulate a
+  described in the Problem section above. It does not fuzz arbitrary kill points, and it does not simulate a
   crash mid-`transition()` (SQLite's own transaction atomicity is what protects that path, not
   application code, so there is nothing extra to test there).
-- Once `make eval` has been run, the proposal accuracy figure it writes to `results/` will
-  only cover the accuracy of the agent's proposed `action` against a policy-derived expected
-  answer; it will say nothing about how good the `rationale` text is.
+- The proposal accuracy figure covers only the agent's proposed `action` against a
+  policy-derived expected answer. It does not check the proposed `amount` or how good the
+  `rationale` text is.
