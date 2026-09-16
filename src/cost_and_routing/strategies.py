@@ -7,8 +7,6 @@ recorded as an incorrect CaseResult with a reason, never raised past the loop.
 
 from dataclasses import dataclass
 
-import httpx
-
 from cost_and_routing.llm import chat_completion
 from cost_and_routing.pricing import ModelPrice, cost_usd
 from cost_and_routing.routing import SYSTEM_PROMPT, route
@@ -30,6 +28,7 @@ class CaseResult:
     confidence: float | None
     failure_reason: str | None
     answer: str = ""
+    failed: bool = False
 
 
 def _single_model_result(
@@ -43,7 +42,7 @@ def _single_model_result(
             ],
             model=model,
         )
-    except (httpx.HTTPError, KeyError) as exc:
+    except Exception as exc:  # noqa: BLE001 - recorded as a failed case, never swallowed
         return CaseResult(
             question_id=question.id,
             strategy=strategy,
@@ -57,6 +56,7 @@ def _single_model_result(
             confidence=None,
             failure_reason=f"{type(exc).__name__}: {exc}",
             answer="",
+            failed=True,
         )
 
     return CaseResult(
@@ -98,7 +98,7 @@ def run_routed(
     for question in questions:
         try:
             routed = route(question.question, cheap_model, strong_model, threshold, prices)
-        except httpx.HTTPError as exc:
+        except Exception as exc:  # noqa: BLE001 - recorded as a failed case, never swallowed
             results.append(
                 CaseResult(
                     question_id=question.id,
@@ -113,6 +113,7 @@ def run_routed(
                     confidence=None,
                     failure_reason=f"{type(exc).__name__}: {exc}",
                     answer="",
+                    failed=True,
                 )
             )
             continue

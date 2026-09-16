@@ -1,5 +1,6 @@
-from cost_and_routing.strategies import CaseResult
-from evals.run import aggregate, calibration_table
+from cost_and_routing.strategies import CaseResult, run_always_cheap, run_routed
+from evals.cases import Question
+from evals.run import aggregate, calibration_table, format_table
 
 
 def _case(
@@ -74,3 +75,28 @@ def test_calibration_table_buckets_by_confidence() -> None:
 
     assert buckets["0.5-0.7"] == 0.5
     assert buckets["0.9-1.0"] == 1.0
+
+
+def test_model_error_is_recorded_as_failed_case_not_raised(monkeypatch) -> None:
+    def broken(**kwargs):
+        raise RuntimeError("connection reset")
+
+    monkeypatch.setattr("cost_and_routing.strategies.chat_completion", broken)
+    monkeypatch.setattr("cost_and_routing.routing.chat_completion", broken)
+    question = Question(
+        id="q1", question="Can I cancel?", required_facts=["24 hours"], difficulty="easy"
+    )
+
+    cheap = run_always_cheap([question], "cheap-model", {})
+    routed = run_routed([question], "cheap-model", "strong-model", 0.7, {})
+
+    for result in (*cheap, *routed):
+        assert result.failed is True
+        assert result.correct is False
+        assert result.failure_reason == "RuntimeError: connection reset"
+
+    stats = aggregate(cheap + [_case(correct=True)])["always_cheap|None"]
+    assert stats["failures"] == 1
+    assert stats["accuracy"] == 0.5
+    assert stats["mean_latency_ms"] == 100.0
+    assert "always_cheap" in format_table({"always_cheap|None": stats})

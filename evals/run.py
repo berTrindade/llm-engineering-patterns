@@ -31,6 +31,8 @@ def aggregate(results: list[CaseResult]) -> dict:
     stats = {}
     for key, group in groups.items():
         n = len(group)
+        # Failed cases count as incorrect, but have no latency or tokens to average.
+        measured = [r for r in group if not r.failed]
         correct_n = sum(1 for r in group if r.correct)
         total_cost = sum(r.cost_usd for r in group)
         escalated_n = sum(1 for r in group if r.escalated)
@@ -41,10 +43,14 @@ def aggregate(results: list[CaseResult]) -> dict:
             "escalation_rate": escalated_n / n if n else 0.0,
             "total_cost_usd": total_cost,
             "cost_per_correct": (total_cost / correct_n) if correct_n else None,
-            "mean_latency_ms": sum(r.latency_ms for r in group) / n if n else 0.0,
-            "mean_tokens": sum(r.prompt_tokens + r.completion_tokens for r in group) / n
-            if n
-            else 0.0,
+            "mean_latency_ms": sum(r.latency_ms for r in measured) / len(measured)
+            if measured
+            else None,
+            "mean_tokens": sum(r.prompt_tokens + r.completion_tokens for r in measured)
+            / len(measured)
+            if measured
+            else None,
+            "failures": n - len(measured),
         }
     return stats
 
@@ -109,7 +115,7 @@ def thinking_tokens_check(question: str, model: str) -> dict:
 def format_table(aggregates: dict) -> str:
     header = (
         f"{'strategy':<14}{'threshold':<11}{'accuracy':<10}{'escalation':<12}"
-        f"{'cost_usd':<11}{'cost/correct':<14}{'latency_ms':<12}{'tokens':<8}"
+        f"{'cost_usd':<11}{'cost/correct':<14}{'latency_ms':<12}{'tokens':<8}{'failures':<8}"
     )
     lines = [header, "-" * len(header)]
     for stats in aggregates.values():
@@ -117,10 +123,12 @@ def format_table(aggregates: dict) -> str:
         cost_per_correct = (
             "-" if stats["cost_per_correct"] is None else f"{stats['cost_per_correct']:.5f}"
         )
+        latency = "-" if stats["mean_latency_ms"] is None else f"{stats['mean_latency_ms']:.0f}"
+        tokens = "-" if stats["mean_tokens"] is None else f"{stats['mean_tokens']:.0f}"
         lines.append(
             f"{stats['strategy']:<14}{threshold:<11}{stats['accuracy']:<10.2f}"
             f"{stats['escalation_rate']:<12.2f}{stats['total_cost_usd']:<11.5f}"
-            f"{cost_per_correct:<14}{stats['mean_latency_ms']:<12.0f}{stats['mean_tokens']:<8.0f}"
+            f"{cost_per_correct:<14}{latency:<12}{tokens:<8}{stats['failures']:<8}"
         )
     return "\n".join(lines)
 
@@ -130,36 +138,54 @@ def _prices_by_model(cheap_model: str, strong_model: str) -> dict:
     return {cheap_model: role_prices["cheap"], strong_model: role_prices["strong"]}
 
 
-def _run_full(limit: int | None) -> dict:
+def _run_full(limit: int | None, today: str, out_path: str) -> dict:
     cheap_model = os.environ.get("CHEAP_MODEL", "qwen3:8b")
     strong_model = os.environ.get("STRONG_MODEL", "qwen3.5:35b")
     prices = _prices_by_model(cheap_model, strong_model)
     questions = load_questions(limit=limit)
 
     all_results: list[CaseResult] = []
-    all_results += run_always_cheap(questions, cheap_model, prices)
-    all_results += run_always_strong(questions, strong_model, prices)
+    routed_by_threshold: dict[float, list[CaseResult]] = {t: [] for t in THRESHOLDS}
 
-    routed_by_threshold: dict[float, list[CaseResult]] = {}
+    def report(thinking_check: dict | None, complete: bool) -> dict:
+        return {
+            "date": today,
+            "cheap_model": cheap_model,
+            "strong_model": strong_model,
+            "question_count": len(questions),
+            "complete": complete,
+            "aggregates": aggregate(all_results),
+            "calibration": calibration_table(routed_by_threshold[CALIBRATION_THRESHOLD]),
+            "thinking_tokens_check": thinking_check,
+            "cases": [vars(r) for r in all_results],
+        }
+
+    # Rewritten after every case, so a run that dies or is killed keeps what it finished.
+    def record(result: CaseResult) -> None:
+        all_results.append(result)
+        with open(out_path, "w") as f:
+            json.dump(report(None, complete=False), f, indent=2)
+
+    for question in questions:
+        record(run_always_cheap([question], cheap_model, prices)[0])
+    for question in questions:
+        record(run_always_strong([question], strong_model, prices)[0])
     for threshold in THRESHOLDS:
-        routed_results = run_routed(questions, cheap_model, strong_model, threshold, prices)
-        routed_by_threshold[threshold] = routed_results
-        all_results += routed_results
+        for question in questions:
+            result = run_routed([question], cheap_model, strong_model, threshold, prices)[0]
+            routed_by_threshold[threshold].append(result)
+            record(result)
 
-    aggregates = aggregate(all_results)
-    calibration = calibration_table(routed_by_threshold[CALIBRATION_THRESHOLD])
-    thinking_check = thinking_tokens_check(questions[0].question, cheap_model)
+    try:
+        thinking_check = thinking_tokens_check(questions[0].question, cheap_model)
+    except Exception as exc:  # noqa: BLE001 - recorded in the report, never swallowed
+        thinking_check = {
+            "question": questions[0].question,
+            "failed": True,
+            "reason": f"{type(exc).__name__}: {exc}",
+        }
 
-    return {
-        "date": date.today().isoformat(),
-        "cheap_model": cheap_model,
-        "strong_model": strong_model,
-        "question_count": len(questions),
-        "aggregates": aggregates,
-        "calibration": calibration,
-        "thinking_tokens_check": thinking_check,
-        "cases": [vars(r) for r in all_results],
-    }
+    return report(thinking_check, complete=True)
 
 
 def _run_demo() -> None:
@@ -186,7 +212,12 @@ def main() -> None:
     limit_str = os.environ.get("EVAL_LIMIT")
     limit = int(limit_str) if limit_str else None
 
-    report = _run_full(limit)
+    today = date.today().isoformat()
+    os.makedirs("results", exist_ok=True)
+    filename = f"smoke-{today}.json" if limit else f"{today}.json"
+    out_path = os.path.join("results", filename)
+
+    report = _run_full(limit, today, out_path)
     print(format_table(report["aggregates"]))
     print("\nConfidence calibration (cheap model, accuracy by confidence bucket):")
     for bucket, acc in report["calibration"].items():
@@ -194,9 +225,6 @@ def main() -> None:
     print("\nThinking tokens check:")
     print(json.dumps(report["thinking_tokens_check"], indent=2))
 
-    os.makedirs("results", exist_ok=True)
-    filename = f"smoke-{report['date']}.json" if limit else f"{report['date']}.json"
-    out_path = os.path.join("results", filename)
     with open(out_path, "w") as f:
         json.dump(report, f, indent=2)
     print(f"\nwrote {out_path}")
