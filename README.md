@@ -45,8 +45,11 @@ Not yet run in full. Run `make eval`.
 - [src/cost_and_routing/llm.py](src/cost_and_routing/llm.py) calls
   `{LLM_BASE_URL}/chat/completions` directly with `httpx`. No provider SDK. Every call sends
   `"reasoning_effort": "none"` by default, which stops `qwen3` thinking; a `/no_think` prompt
-  suffix alone was not enough (a 20-token JSON answer reported 542 completion tokens without
-  it, verified 2026-09-15 against Ollama 0.34.0).
+  suffix alone was not enough (verified 2026-09-15 against Ollama 0.34.0). The
+  `thinking_tokens_check` block in
+  [results/smoke-2026-09-16.json](results/smoke-2026-09-16.json) records the measured
+  difference on one question: 332 completion tokens with `reasoning_effort` omitted, 58 with
+  it set to `"none"`.
 - [src/cost_and_routing/pricing.py](src/cost_and_routing/pricing.py) loads
   [prices.toml](prices.toml), USD per million input/output tokens, and multiplies by the
   recorded prompt and completion tokens per call. Local Ollama models have no real bill: the

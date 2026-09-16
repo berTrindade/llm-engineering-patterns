@@ -1,9 +1,11 @@
 """A small client for an OpenAI-compatible /v1/chat/completions endpoint.
 
 No provider SDK, no framework: the request body is visible here in full. Thinking is
-disabled by default by sending "reasoning_effort": "none", verified on 2026-09-15
+disabled by default by sending "reasoning_effort": "none". Verified on 2026-09-15
 against Ollama 0.34.0 that this stops qwen3 thinking; a /no_think prompt suffix alone
-left a 20-token JSON answer reporting 542 completion tokens.
+was not enough. The thinking_tokens_check block in results/smoke-2026-09-16.json records
+the measured difference on one question: 332 completion tokens with reasoning_effort
+omitted, 58 with it set to "none".
 """
 
 import os
