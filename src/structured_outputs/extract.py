@@ -29,6 +29,7 @@ class ExtractionResult:
     prompt_tokens: int
     completion_tokens: int
     latency_ms: float
+    failed: bool = False
 
 
 def _build_messages(email_text: str) -> list[dict]:

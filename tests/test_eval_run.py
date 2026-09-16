@@ -3,6 +3,8 @@ import json
 from contextlib import redirect_stdout
 from pathlib import Path
 
+import httpx
+
 from evals.run import load_cases, print_table, run_pipeline
 from structured_outputs.llm import LLMResponse
 
@@ -50,6 +52,30 @@ def test_run_pipeline_respects_limit():
 
     run_pipeline(FIXTURE_CASES, model="qwen3:8b", limit=1, call_fn=counting_call_fn)
     assert len(calls) == 3  # one case x three approaches
+
+
+def test_run_pipeline_records_failed_case_instead_of_raising(tmp_path):
+    def json_mode_times_out(**kwargs):
+        if kwargs["response_format"] == {"type": "json_object"}:
+            raise httpx.ReadTimeout("timed out")
+        return _always_valid_call_fn(**kwargs)
+
+    out_path = tmp_path / "results.json"
+    result = run_pipeline(
+        FIXTURE_CASES, model="qwen3:8b", call_fn=json_mode_times_out, out_path=out_path
+    )
+
+    json_mode = result["approaches"]["json_mode"]
+    assert json_mode["failures"] == 2
+    assert json_mode["valid_after_repair_rate"] == 0.0
+    assert json_mode["field_accuracy"] == 0.0
+    assert json_mode["mean_latency_ms"] is None
+    assert json_mode["failing_case_ids"][0]["reason"] == "ReadTimeout: timed out"
+    assert result["approaches"]["json_schema"]["failures"] == 0
+    assert result["approaches"]["json_schema"]["valid_first_try_rate"] == 1.0
+    checkpoint = json.loads(out_path.read_text())
+    assert checkpoint["complete"] is False
+    assert checkpoint["approaches"]["json_mode"]["failures"] == 2
 
 
 def test_print_table_lists_approach_names(capsys):

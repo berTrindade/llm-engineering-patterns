@@ -23,6 +23,10 @@ def _line_item_multiset(invoice: Invoice) -> Counter:
     )
 
 
+def _mean(values: list[float]) -> float | None:
+    return sum(values) / len(values) if values else None
+
+
 def score_case(ground_truth: Invoice, predicted: Invoice | None) -> dict[str, bool]:
     if predicted is None:
         return dict.fromkeys(FIELD_NAMES, False)
@@ -50,6 +54,9 @@ def aggregate(
     output: dict[str, dict] = {}
     for approach, approach_results in by_approach.items():
         n = len(approach_results)
+        # Failed cases have no latency or token counts, so they are left out of those means;
+        # they still count as invalid and wrong in the rates, and in failures.
+        measured = [r for r in approach_results if not r.failed]
         field_scores: list[bool] = []
         failing_case_ids = []
         for result in approach_results:
@@ -63,9 +70,10 @@ def aggregate(
             "valid_first_try_rate": sum(r.valid_first_try for r in approach_results) / n,
             "valid_after_repair_rate": sum(r.valid_after_repair for r in approach_results) / n,
             "field_accuracy": sum(field_scores) / len(field_scores) if field_scores else 0.0,
-            "mean_latency_ms": sum(r.latency_ms for r in approach_results) / n,
-            "mean_prompt_tokens": sum(r.prompt_tokens for r in approach_results) / n,
-            "mean_completion_tokens": sum(r.completion_tokens for r in approach_results) / n,
+            "mean_latency_ms": _mean([r.latency_ms for r in measured]),
+            "mean_prompt_tokens": _mean([r.prompt_tokens for r in measured]),
+            "mean_completion_tokens": _mean([r.completion_tokens for r in measured]),
+            "failures": n - len(measured),
             "failing_case_ids": failing_case_ids,
         }
     return output
