@@ -61,7 +61,7 @@ with a reason; nothing is silently dropped.
 - The dataset is templated, not written by real customers or a real support team; it is useful
   for measuring the evaluation method, not for judging real Northwind Home replies (Northwind
   Home is invented).
-- The headline number is judge agreement with human labels. Until Bernardo runs `make label`,
+- The headline number is judge agreement with human labels. Until `make label` has been run,
   there are no human labels and the table says so plainly instead of guessing.
 - The judge and the position-bias pairs share the same rubric and policy text, so a mistake in
   the rubric affects both; the deterministic scorers are the only fully independent check.
