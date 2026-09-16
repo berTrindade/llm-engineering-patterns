@@ -75,8 +75,11 @@ def summarise_older(
     }
 
     candidate = list(recent)
-    # if system + summary alone exceed budget_tokens this can't trim further;
-    # that ceiling is a real finding for very small budgets, not handled here.
+    # Ceiling: if the system prompt plus the summary alone already exceed
+    # budget_tokens, this loop empties candidate but still returns an over-budget
+    # result, since there is nothing left to trim. That only happens at budgets too
+    # small to hold a summary at all; the fix would be raising the budget or
+    # shortening what summarise_fn is allowed to return, not trimming further here.
     while candidate and estimator([system, summary_message] + candidate) > budget_tokens:
         candidate.pop(0)
 
