@@ -28,23 +28,40 @@ Needs a local Ollama running the models in `.env.example` (`qwen3:8b` by default
 
 Not yet run in full. Run `make eval`.
 
-A smoke run (`EVAL_LIMIT=3`, one budget, `CHEAP_MODEL` only) is in
-`results/smoke-<date>.json`, to confirm the pipeline runs end to end. It is not a
-result to draw conclusions from.
+A smoke run (`EVAL_LIMIT=1`, one budget, `CHEAP_MODEL` only) is in
+`results/smoke-<date>.json`, to confirm the pipeline runs end to end on one thread. It
+is one case per strategy, not a result to draw conclusions from: with only one thread
+there is no meaningful average, and it says nothing about how the strategies compare
+across the dataset.
 
 ## How it works
 
 - **Dataset**: `src/context_window_poc/generate_threads.py` deterministically generates
-  20 invented ticket threads (40-80 turns each, seeded, no LLM involved). Each thread
-  plants four facts (account ID, plan name, error code, time zone) in its first two
-  exchanges, fills the rest with unrelated invented support conversation, and closes
-  with a customer question that needs those four facts back.
+  20 invented ticket threads (roughly 53-69 turns each, seeded, no LLM involved). Each
+  thread plants four facts (account ID, plan name, error code, time zone) in its first
+  two exchanges, fills the rest with unrelated invented support conversation padded
+  with pasted log excerpts and invoice line items (the way a real agent pastes logs
+  while investigating), and closes with a customer question that needs those four
+  facts back. Full history lands at roughly 51,000-63,000 characters per thread,
+  around 12,000-16,000 real tokens on `qwen3:8b` (verified against local Ollama, whose
+  `context_length` for that model is 40960, so these prompts are not truncated). That
+  puts every thread well above the 8,000 token budget, so `token_budget` and
+  `summarise_older` actually have to trim or summarise something; a generator test
+  asserts every thread clears the largest budget by a wide margin.
 - **Token counting**: there is no local tokenizer for qwen models, so
-  [`tokens.py`](src/context_window_poc/tokens.py) estimates tokens as
-  `characters / chars_per_token` and separately records the real `prompt_tokens` the
-  API reports for every call. `make calibrate` fits `chars_per_token` from real usage on
-  a handful of prompts and writes it to `data/calibration.json`; the eval table reports
-  the estimator's error against the real count for every case.
+  [`tokens.py`](src/context_window_poc/tokens.py) estimates tokens with a small linear
+  model fitted on real usage: `tokens ~= a*chars + b*n_messages + c`. The
+  `b*n_messages` term exists because every message in a chat payload carries a fixed
+  chat-template overhead independent of its content, which a single chars-per-token
+  ratio (fitted only on short, few-message prompts) folds into the ratio and gets wrong
+  for prompts with a different message count. `make calibrate` fits `a`, `b` and `c` by
+  ordinary least squares on about 12 real calls spanning roughly 200 to 35,000
+  characters and a range of message counts, reports mean absolute percentage error on
+  a further 4 held-out prompts, and writes the fit to `data/calibration.json`. The eval
+  table reports the estimator's error against the real count for every case, and flags
+  any case where real `prompt_tokens` comes back below half the estimate, as a guard
+  against the server silently truncating the prompt rather than the estimator simply
+  being off.
 - **System prompt**: a fixed Ledgerline support-agent prompt is always sent and always
   counted against the budget; every strategy is required to keep it.
 - **Strategies** ([`strategies.py`](src/context_window_poc/strategies.py)), each a pure
@@ -65,17 +82,22 @@ result to draw conclusions from.
   share of the four expected fact values present in the final answer.
 - **Eval harness**: [`evals/run.py`](evals/run.py) runs every thread through every
   strategy and budget, scores each case, and prints strategy, budget, mean fact recall,
-  mean real prompt tokens, extra tokens spent on summaries, mean latency and mean
-  estimator error. Every failed case (bad output, timeout, exception) is recorded with
-  its reason and counted, never dropped silently.
+  mean real prompt tokens, extra tokens spent on summaries, mean latency, mean
+  estimator error and a count of possible truncations. Every failed case (bad output,
+  timeout, exception) is recorded with its reason and counted, never dropped silently.
 
 ## Limits
 
-- The estimator is a single global ratio (characters per token). It has no ceiling
-  guarantee against the real tokenizer: it will be systematically off for text that is
-  unusually dense in short tokens (numbers, IDs, code) or unusually sparse (long English
-  prose), and the calibration in `data/calibration.json` reflects only the handful of
-  prompts it was fitted on, not the full dataset.
+- The estimator is a 3-parameter linear model (`a*chars + b*n_messages + c`), not a
+  real tokenizer. It has no ceiling guarantee: it is fitted on English support-ticket
+  prose plus pasted logs and invoice lines, so it will be systematically off for text
+  with a very different character mix (dense numeric IDs, non-English text, code), and
+  the fit in `data/calibration.json` only covers the ~16 prompts it was trained and
+  tested on, not the full dataset. The held-out error percentage reported by
+  `make calibrate` is the honest ceiling on how far to trust it.
+- The truncation guard (real `prompt_tokens` well below the estimate) only catches
+  truncation large enough to look like estimator error; a small silent truncation could
+  still hide inside normal estimator noise.
 - 20 threads is a small sample; recall differences of a few percentage points between
   strategies are not statistically meaningful.
 - `summarise_older`'s recall depends partly on `CHEAP_MODEL`'s own summarisation
