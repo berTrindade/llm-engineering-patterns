@@ -6,7 +6,7 @@ Can a hand-written agent loop, with no agent framework and no provider SDK, reli
 scheduling request into the right calls to a set of tools, recover when it gets a tool call
 wrong, and correctly decline requests that cannot be satisfied? This proof of concept answers
 that with a meeting scheduler for an invented office, Harbour Street Studio: 5 rooms, 12 people
-across 4 time zones, and a small calendar. The loop, the tools, and the domain rules (room
+across 5 time zones, and a small calendar. The loop, the tools, and the domain rules (room
 capacity, double booking, working hours) are all written from scratch in this repository.
 
 ## Run it
@@ -72,6 +72,5 @@ result.
 - The failure classifier in `evals/run.py` is a set of heuristics on the trace (iteration cap,
   whether any tool call was recovered from, task category), not a certainty about why the model
   did what it did.
-- Only a 3-task smoke run against `CHEAP_MODEL` has been executed in this environment, because
-  Ollama is shared with other agents building sibling repositories. The full 30-task eval is
+- Only a 3-task smoke run against `CHEAP_MODEL` has been run so far. The full 30-task eval is
   implemented but has not been run.
