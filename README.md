@@ -24,11 +24,39 @@ Requires a local Ollama (or any OpenAI-compatible `/v1/chat/completions` endpoin
 
 ## Result
 
-Not yet run in full. Run `make eval`.
+Full run on 2026-09-16: 30 tasks, `qwen3:8b` through local Ollama, with no model call
+failures. Raw output is in [results/2026-09-16.json](results/2026-09-16.json).
 
-A smoke run (`EVAL_LIMIT=3`, `CHEAP_MODEL` only, 3 of the 30 tasks) is in
-`results/smoke-2026-09-15.json`, to confirm the harness runs end to end. It is not the headline
-result.
+| Category | Succeeded |
+|---|---|
+| simple | 9/10 |
+| multi_step | 9/12 |
+| impossible | 8/8 |
+| **total** | **26/30** |
+
+A task that ran used 2.3 tool calls and 3.3 loop iterations on average, with 10,988 prompt
+and 228 completion tokens and a median of 13 s end to end.
+
+- **Refusing is solid.** All 8 impossible requests (over capacity, no shared working hours,
+  a clash) ended with nothing booked. In 4 of them the model tried a booking first, got the
+  domain error back as the tool result, and then explained why it could not book, which is
+  the recovery path the loop is built for.
+- **Most failures are the wrong person.** The system prompt lists every person with their
+  id, yet in three tasks the model booked someone else: Isla Fraser (p09) became p10 or p12,
+  and Erin Walsh (p05) became p11. Each final message still named the right person (in two,
+  next to the wrong id), so the reply reads as correct while the calendar is wrong.
+- **An error the model routed around instead of fixing.** In m05 the booking was rejected
+  because the wrong attendee (p11, in New York) was outside working hours at 09:30 UTC. The
+  model kept the wrong attendee, found a later slot, booked 13:00 instead of the requested
+  09:30 and reported success without mentioning the change.
+- **One task stopped early.** In m02 the model found slots and rooms, then replied "Let's
+  proceed with the booking" as plain text, which ends the loop, and never booked.
+
+Two task requests were corrected before this run: as first written, m07 and m10 each had
+more than one valid room while the check accepted only one, so a correct booking scored as
+a failure (see the git history). The failure types printed by `make eval` come from
+heuristics on the trace (see Limits); m05, for example, is labelled
+`invalid_arguments_unrecovered` although its root cause is the wrong id.
 
 ## How it works
 
@@ -72,5 +100,7 @@ result.
 - The failure classifier in `evals/run.py` is a set of heuristics on the trace (iteration cap,
   whether any tool call was recovered from, task category), not a certainty about why the model
   did what it did.
-- Only a 3-task smoke run against `CHEAP_MODEL` has been run so far. The full 30-task eval is
-  implemented but has not been run.
+- The office has no notion of weekends and "next week" is not defined anywhere, so the
+  model is free to book on a Saturday or Sunday, and in this run several bookings landed on
+  19 and 20 September 2026. The checks do not look at the date, so this does not affect the
+  success rate.
