@@ -25,7 +25,48 @@ models named in `.env.example` pulled. Copy `.env.example` to `.env` to override
 
 ## Result
 
-Not yet run in full. Run `make eval`.
+Full run on 2026-09-16: 60 replies and 20 position-bias pairs, judged by `qwen3.5:35b`
+through local Ollama, with no failed judge calls. Raw output is in
+[results/2026-09-16.json](results/2026-09-16.json).
+
+**No human labels yet.** `make label` has not been run, so judge agreement with a human, the
+number this repository is built to report, is not available. Everything below compares
+against `designed_label`, the label the generator assigned when it injected (or did not
+inject) a flaw.
+
+Judge agreement with designed labels: **54/60 (90%)**.
+
+| Flaw type | Judge correct | Deterministic scorer that targets it |
+|---|---|---|
+| none (good reply) | 29/30 | all three pass all 30 |
+| rude_tone | 6/6 | none |
+| forbidden_promise | 6/6 | `no_forbidden_promise`: 6/6 |
+| wrong_policy_fact | 6/6 | none |
+| ignores_question | 6/6 | `order_number_echoed` also catches 6/6 |
+| missing_order_number | **1/6** | `order_number_echoed`: 6/6 |
+
+- **The judge's blind spot is the one thing a regex does perfectly.** On five of the six
+  replies with the order number removed, the judge passed the reply and its reason said the
+  reply "repeats the correct order number"; one reason quoted the number from the
+  customer's message as if the reply contained it. `order_number_echoed` caught all six. Neither check alone covers the set: the judge
+  catches tone, policy and relevance flaws no scorer can see, and the scorer catches the
+  omission the judge reads past.
+- **The earlier run hid this.** The first full run scored 6/6 on this flaw, but the
+  generator then left "about order your order" in those replies, an easy cue. Fixing the
+  wording (see the git history) removed the cue and exposed the miss.
+- **One false fail.** The judge failed good reply case-016, calling its "order over GBP 50"
+  wording a policy error. The reply asserts the order total without the customer stating
+  it, which is arguable, but the same template passed on the other good return replies.
+- **Position bias was low.** Across 20 pairs, the judge picked the designed better reply in
+  both orders 19 times; one pair (pair-001, forbidden promise) flipped. The first-shown reply
+  won 52.5% of the 40 trials, close to the 50% an unbiased judge would give.
+- **`length_within_bounds` flagged nothing.** Every reply, flawed or not, fell inside its
+  bounds, so on this data it adds no signal.
+
+The scorer agreement figures printed by `make eval` (70%, 60%, 50%) are each scorer against
+all 60 designed labels, so they mostly count the flaws a scorer was never meant to detect.
+Judge mean latency was 2.5 s per call (median 2.2 s; the first call, which loads the model,
+took 14 s), with 786 prompt and 73 completion tokens on average.
 
 ## How it works
 

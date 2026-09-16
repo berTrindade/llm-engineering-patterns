@@ -1,0 +1,1004 @@
+{
+  "summary": {
+    "n_cases": 60,
+    "per_scorer_agreement": {
+      "order_number_echoed": 0.7,
+      "no_forbidden_promise": 0.6,
+      "length_within_bounds": 0.5
+    },
+    "judge_vs_designed_agreement": 0.9,
+    "judge_errors": 0,
+    "judge_failures": 0,
+    "human_labelled_count": 0,
+    "human_kappa": null,
+    "human_status": "Human labels: 0 of 60, run `make label`",
+    "position_bias_flip_rate": 0.05,
+    "position_bias_first_position_win_share": 0.525,
+    "position_bias_failures": 0,
+    "judge_mean_latency_ms": 2511.2217944171184,
+    "judge_mean_prompt_tokens": 786.2,
+    "judge_mean_completion_tokens": 73.28333333333333
+  },
+  "judge_model": "qwen3.5:35b",
+  "n_cases": 60,
+  "smoke": false,
+  "complete": true,
+  "position_bias": {
+    "flip_rate": 0.05,
+    "first_position_win_share": 0.525,
+    "failures": 0,
+    "records": [
+      {
+        "pair_id": "pair-001",
+        "flaw_type": "forbidden_promise",
+        "run1_winner": "better",
+        "run2_winner": "worse",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": true
+      },
+      {
+        "pair_id": "pair-002",
+        "flaw_type": "wrong_policy_fact",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-003",
+        "flaw_type": "missing_order_number",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-004",
+        "flaw_type": "rude_tone",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-005",
+        "flaw_type": "forbidden_promise",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-006",
+        "flaw_type": "missing_order_number",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-007",
+        "flaw_type": "ignores_question",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-008",
+        "flaw_type": "rude_tone",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-009",
+        "flaw_type": "ignores_question",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-010",
+        "flaw_type": "wrong_policy_fact",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-011",
+        "flaw_type": "ignores_question",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-012",
+        "flaw_type": "wrong_policy_fact",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-013",
+        "flaw_type": "missing_order_number",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-014",
+        "flaw_type": "rude_tone",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-015",
+        "flaw_type": "rude_tone",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-016",
+        "flaw_type": "forbidden_promise",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-017",
+        "flaw_type": "missing_order_number",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-018",
+        "flaw_type": "forbidden_promise",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-019",
+        "flaw_type": "ignores_question",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-020",
+        "flaw_type": "wrong_policy_fact",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      }
+    ]
+  },
+  "judge_results": [
+    {
+      "case_id": "case-001",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply adheres to policy accuracy, correctly states the return window and free postage condition (assuming the premise of the order total is accepted), repeats the order number, makes no forbidden promises, maintains a professional tone, and directly answers the customer's question.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 14182.0368339977,
+      "prompt_tokens": 818,
+      "completion_tokens": 77,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-002",
+      "verdict": "fail",
+      "failed_criteria": [
+        "tone"
+      ],
+      "reason": "The opening phrase 'Honestly, this is obvious if you'd checked our policy first' is dismissive and rude, violating the professional tone requirement.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2742.4786250048783,
+      "prompt_tokens": 781,
+      "completion_tokens": 57,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-003",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately reflects the policy regarding damaged items (sending a photo, free replacement, no return required). It correctly repeats the order number and maintains a professional, courteous tone without making forbidden promises.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2681.3337089988636,
+      "prompt_tokens": 784,
+      "completion_tokens": 65,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-004",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately states the policy rule regarding personalised items, repeats the correct order number provided by the customer, avoids forbidden promises about non-faulty item refunds, maintains a professional tone, and directly answers the customer's question.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2288.901292005903,
+      "prompt_tokens": 782,
+      "completion_tokens": 71,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-005",
+      "verdict": "fail",
+      "failed_criteria": [
+        "policy_accuracy",
+        "forbidden_promise"
+      ],
+      "reason": "The reply incorrectly states the shop offers 'same-day delivery,' which the policy explicitly rules out, and thus makes a forbidden promise. Additionally, while it mentions standard delivery time correctly, promising free same-day delivery contradicts the policy entirely.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2507.017833995633,
+      "prompt_tokens": 801,
+      "completion_tokens": 82,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-006",
+      "verdict": "fail",
+      "failed_criteria": [
+        "tone"
+      ],
+      "reason": "The reply opens with a dismissive and rude remark ('Honestly, this is obvious if you'd checked our policy first'), which violates the professional and courteous tone requirement.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2304.8055420076707,
+      "prompt_tokens": 825,
+      "completion_tokens": 67,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-007",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately states the standard delivery window, correctly repeats the order number provided by the customer, does not make forbidden promises, maintains a professional tone, and directly answers the customer's question about arrival time.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2370.446707995143,
+      "prompt_tokens": 774,
+      "completion_tokens": 67,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-008",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately reflects the policy for damaged items (requesting photo and number, offering free replacement without return) and correctly repeats the order number NW-391476. The tone is professional, courteous, and directly answers the customer's question without making forbidden promises.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2754.8912500060396,
+      "prompt_tokens": 782,
+      "completion_tokens": 82,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-009",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately states the policy regarding personalised items, repeats the correct order number, does not make forbidden promises, maintains a professional tone, and directly answers the customer's question.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2226.7733749904437,
+      "prompt_tokens": 791,
+      "completion_tokens": 61,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-010",
+      "verdict": "fail",
+      "failed_criteria": [
+        "tone"
+      ],
+      "reason": "The reply begins with a dismissive and rude comment ('Honestly, this is obvious if you'd checked our policy first'), violating the requirement for professional and courteous communication.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 1992.8514170023846,
+      "prompt_tokens": 794,
+      "completion_tokens": 61,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-011",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately reflects the 30-day return window, the GBP 50 free postage threshold, and correctly repeats the order number NW-472528. It avoids forbidden promises, maintains a professional tone, and directly answers the customer's question about returning the wool throw.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2663.221875001909,
+      "prompt_tokens": 795,
+      "completion_tokens": 85,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-012",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately states the standard delivery window, repeats the correct order number, and maintains a professional tone without making forbidden promises.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 1824.7157500009052,
+      "prompt_tokens": 774,
+      "completion_tokens": 51,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-013",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately reflects the policy for damaged items, correctly repeats the order number provided by the customer, and maintains a professional and courteous tone while addressing the customer's question.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 1948.6121660011122,
+      "prompt_tokens": 781,
+      "completion_tokens": 60,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-014",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply correctly states the policy regarding personalised items and does not promise a refund for a non-faulty item. It also repeats the order number, maintains a professional tone, and directly answers the customer's question.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2104.168000005302,
+      "prompt_tokens": 793,
+      "completion_tokens": 69,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-015",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately repeats the order number and provides correct standard delivery details as per policy. It maintains a professional tone, addresses the customer's specific query about order status without making forbidden promises, and avoids any policy violations.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2434.384249994764,
+      "prompt_tokens": 783,
+      "completion_tokens": 69,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-016",
+      "verdict": "fail",
+      "failed_criteria": [
+        "policy_accuracy"
+      ],
+      "reason": "The reply incorrectly states that standard delivery includes free postage 'if your order was over GBP 50.' The policy clarifies that returns are free (the shop pays postage) only if the *order total* was over GBP 50, not the return postage fee itself. Additionally, the reply implies all scented candles are fully eligible for return without confirming if they fall under the 'personalised or made-to-order' exemption, which could be a risky assumption given the policy's strict rules on custom items.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 3672.876458003884,
+      "prompt_tokens": 818,
+      "completion_tokens": 132,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-017",
+      "verdict": "fail",
+      "failed_criteria": [
+        "policy_accuracy"
+      ],
+      "reason": "The reply incorrectly states that standard delivery takes 1 to 2 business days; according to the policy, standard delivery takes 3 to 5 business days. All other criteria are met.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2102.4482079956215,
+      "prompt_tokens": 772,
+      "completion_tokens": 67,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-018",
+      "verdict": "fail",
+      "failed_criteria": [
+        "tone"
+      ],
+      "reason": "The reply is dismissive and rude by telling the customer 'this is obvious if you'd checked our policy first,' which violates the requirement for a professional and courteous tone.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2081.0370419931132,
+      "prompt_tokens": 797,
+      "completion_tokens": 68,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-019",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately states the policy rule for personalised items, correctly repeats the order number provided by the customer, does not make any forbidden promises, maintains a professional and courteous tone, and directly answers the customer's question regarding the refund possibility.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2232.501416001469,
+      "prompt_tokens": 791,
+      "completion_tokens": 73,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-020",
+      "verdict": "fail",
+      "failed_criteria": [
+        "policy_accuracy",
+        "forbidden_promise"
+      ],
+      "reason": "The reply incorrectly states that standard delivery arrives 'within the same day of dispatch,' contradicting the policy which specifies 3 to 5 business days. It also falsely promises same-day delivery or a delivery window shorter than allowed, which violates the rule that the shop does not offer same-day delivery.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2783.7592079886235,
+      "prompt_tokens": 777,
+      "completion_tokens": 94,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-021",
+      "verdict": "fail",
+      "failed_criteria": [
+        "policy_accuracy",
+        "answers_question",
+        "order_number"
+      ],
+      "reason": "The reply fails to answer the customer's question about return eligibility or provide any policy details regarding returns, instead offering a generic closing statement without addressing the specific issue. Additionally, it does not repeat the provided order number (NW-684004) back to the customer as required when discussing a specific order.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2980.764249994536,
+      "prompt_tokens": 757,
+      "completion_tokens": 101,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-022",
+      "verdict": "fail",
+      "failed_criteria": [
+        "order_number"
+      ],
+      "reason": "The reply does not repeat the customer's order number (NW-817870) back to them, which is required when discussing a specific order. It also fails to address the specific delivery window question with the exact timeline mentioned in the policy, providing a vague 'soon' instead of the precise 3-5 business days as a status update rather than just general info.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 3197.3234159959247,
+      "prompt_tokens": 767,
+      "completion_tokens": 107,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-023",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately reflects the policy on damaged items, matches the order number provided by the customer, avoids forbidden promises, maintains a professional tone, and directly answers the customer's question about next steps.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2147.3742079979274,
+      "prompt_tokens": 781,
+      "completion_tokens": 65,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-024",
+      "verdict": "fail",
+      "failed_criteria": [
+        "tone"
+      ],
+      "reason": "The reply is dismissive and rude by stating 'Honestly, this is obvious if you'd checked our policy first,' which violates the requirement for a professional and courteous tone.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2066.327208012808,
+      "prompt_tokens": 800,
+      "completion_tokens": 62,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-025",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "",
+      "model": "qwen3.5:35b",
+      "latency_ms": 1245.3985000029206,
+      "prompt_tokens": 781,
+      "completion_tokens": 26,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-026",
+      "verdict": "fail",
+      "failed_criteria": [
+        "answers_question",
+        "policy_accuracy",
+        "order_number"
+      ],
+      "reason": "The reply fails to answer the customer's specific question about the return eligibility for the wool throw and does not repeat the order number (NW-520651) as required. Additionally, it provides no information regarding the 30-day return policy or free shipping thresholds, making it inaccurate and unhelpful.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 3199.5779999997467,
+      "prompt_tokens": 755,
+      "completion_tokens": 102,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-027",
+      "verdict": "fail",
+      "failed_criteria": [
+        "policy_accuracy"
+      ],
+      "reason": "The reply incorrectly states that standard delivery takes 1 to 2 business days, whereas the policy specifies a 3 to 5 business day window for standard delivery.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2260.0789999996778,
+      "prompt_tokens": 768,
+      "completion_tokens": 62,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-028",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply correctly repeats the order number, accurately reflects the policy for damaged items (sending a photo and receiving a free replacement without returning), maintains a professional tone, and directly answers the customer's question.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2242.3715420009103,
+      "prompt_tokens": 784,
+      "completion_tokens": 66,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-029",
+      "verdict": "fail",
+      "failed_criteria": [
+        "policy_accuracy",
+        "answers_question",
+        "forbidden_promise"
+      ],
+      "reason": "The reply fails to address the refund question for a personalized item by stating the policy that such items are non-refundable unless faulty, and ignores the specific order number provided. Instead of answering, it gives a generic response that could mislead the customer into thinking a refund is possible.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2806.9920419948176,
+      "prompt_tokens": 754,
+      "completion_tokens": 96,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-030",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately reflects the policy regarding standard delivery times and confirms the order number. It maintains a professional tone and directly addresses the customer's inquiry about the order status.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2210.710792001919,
+      "prompt_tokens": 787,
+      "completion_tokens": 59,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-031",
+      "verdict": "fail",
+      "failed_criteria": [
+        "tone"
+      ],
+      "reason": "The reply begins with a condescending remark ('Honestly, this is obvious...'), which violates the requirement for a professional and courteous tone.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2216.6872920060996,
+      "prompt_tokens": 829,
+      "completion_tokens": 61,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-032",
+      "verdict": "fail",
+      "failed_criteria": [
+        "answers_question",
+        "policy_accuracy"
+      ],
+      "reason": "The reply does not answer the customer's question about when their order will arrive, failing the 'answers_question' criterion. Additionally, it fails to state the standard delivery window (3-5 business days) as required by policy when discussing specific order details, violating 'policy_accuracy'.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 3059.3822079972597,
+      "prompt_tokens": 749,
+      "completion_tokens": 90,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-033",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately reflects the policy regarding damaged items, repeats the order number as required, does not make any forbidden promises, maintains a professional tone, and directly answers the customer's question about next steps.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2216.9393340009265,
+      "prompt_tokens": 782,
+      "completion_tokens": 66,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-034",
+      "verdict": "fail",
+      "failed_criteria": [
+        "policy_accuracy",
+        "order_number",
+        "answers_question"
+      ],
+      "reason": "The reply fails to repeat the customer's order number (NW-358607), does not address the specific question about refund eligibility for a personalised item, and incorrectly implies general returnability without stating the policy rule that personalised items cannot be refunded unless faulty.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2767.4049170018407,
+      "prompt_tokens": 754,
+      "completion_tokens": 91,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-035",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately states the policy's standard delivery window, repeats the customer's order number, and maintains a professional tone without making forbidden promises.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 1904.4301249959972,
+      "prompt_tokens": 783,
+      "completion_tokens": 54,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-036",
+      "verdict": "fail",
+      "failed_criteria": [
+        "policy_accuracy",
+        "forbidden_promise"
+      ],
+      "reason": "The reply incorrectly promises 'same-day delivery,' which is explicitly forbidden by the policy stating 'We do not offer same-day delivery.' Additionally, it fabricates a specific return postage condition (free due to an order total over GBP 50) without confirming if the customer's actual order meets this threshold, though the primary failure is the impossible promise.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 3427.82325000735,
+      "prompt_tokens": 830,
+      "completion_tokens": 105,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-037",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "",
+      "model": "qwen3.5:35b",
+      "latency_ms": 1302.084750001086,
+      "prompt_tokens": 770,
+      "completion_tokens": 26,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-038",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "",
+      "model": "qwen3.5:35b",
+      "latency_ms": 1382.7020410099067,
+      "prompt_tokens": 782,
+      "completion_tokens": 26,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-039",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately reflects the policy that personalised items cannot be returned unless faulty, repeats the correct order number, avoids forbidden promises, maintains a professional tone, and directly answers the customer's question about refunds.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2294.3120830022963,
+      "prompt_tokens": 789,
+      "completion_tokens": 66,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-040",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately states the standard delivery window (3 to 5 business days) matching policy, repeats the correct order number, avoids forbidden promises, maintains a professional tone, and directly answers the customer's question about order status.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2654.2084170068847,
+      "prompt_tokens": 787,
+      "completion_tokens": 71,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-041",
+      "verdict": "fail",
+      "failed_criteria": [
+        "policy_accuracy",
+        "forbidden_promise"
+      ],
+      "reason": "The reply incorrectly promises same-day delivery, which is explicitly forbidden in the policy, and claims return postage is free based on an order total over GBP 50 without verifying this fact from the customer's input. Additionally, it includes a promise of same-day delivery that violates the policy rule stating 'We do not offer same-day delivery'.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 3440.096166988951,
+      "prompt_tokens": 830,
+      "completion_tokens": 103,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-042",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately states the standard delivery window (3-5 business days) without making forbidden promises like same-day delivery. It correctly repeats the provided order number, maintains a professional tone, and directly answers the customer's question about arrival time.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2574.7243340010755,
+      "prompt_tokens": 770,
+      "completion_tokens": 74,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-043",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately follows policy regarding damaged items (requesting a photo, mentioning free replacement, and no return required), correctly repeats the order number NW-214975, makes no forbidden promises, maintains a professional tone, and directly answers the customer's question.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2390.2957499958575,
+      "prompt_tokens": 781,
+      "completion_tokens": 81,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-044",
+      "verdict": "fail",
+      "failed_criteria": [
+        "policy_accuracy",
+        "forbidden_promise"
+      ],
+      "reason": "The reply incorrectly states that personalised items can be returned within 30 days like other items, contradicting the policy which prohibits returns unless faulty or damaged. Additionally, it makes a forbidden promise by implying a return/refund is possible based on timing rather than the item's condition.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2229.1174170095474,
+      "prompt_tokens": 793,
+      "completion_tokens": 91,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-045",
+      "verdict": "fail",
+      "failed_criteria": [
+        "answers_question",
+        "policy_accuracy"
+      ],
+      "reason": "The reply fails to answer the customer's question regarding the status of order NW-930555, instead offering a generic closing statement. Additionally, it violates the policy requirement to repeat the order number (NW-930555) when discussing a specific order.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2294.882166010211,
+      "prompt_tokens": 749,
+      "completion_tokens": 91,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-046",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately reflects the return policy for candles, correctly repeats the order number, avoids forbidden promises, maintains a professional tone, and directly answers the customer's question.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 1829.1184999980032,
+      "prompt_tokens": 818,
+      "completion_tokens": 59,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-047",
+      "verdict": "fail",
+      "failed_criteria": [
+        "policy_accuracy"
+      ],
+      "reason": "The reply incorrectly states that standard delivery takes 1 to 2 business days, whereas the policy specifies standard delivery takes 3 to 5 business days (1-2 days is for express delivery).",
+      "model": "qwen3.5:35b",
+      "latency_ms": 1934.1336250072345,
+      "prompt_tokens": 770,
+      "completion_tokens": 69,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-048",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately reflects the policy for damaged items (requesting a photo, offering a free replacement without return), repeats the order number provided by the customer, avoids forbidden promises, maintains a professional tone, and directly answers the customer's question.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2062.0714579999913,
+      "prompt_tokens": 782,
+      "completion_tokens": 74,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-049",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately states the policy regarding personalised items, repeats the correct order number provided by the customer, and maintains a professional tone while addressing the refund question.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 1698.6172920005629,
+      "prompt_tokens": 789,
+      "completion_tokens": 57,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-050",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately reflects the standard delivery policy, repeats the correct order number provided by the customer, maintains a professional tone, and directly addresses the customer's query about the order status without making forbidden promises.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 1778.6757089925231,
+      "prompt_tokens": 785,
+      "completion_tokens": 66,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-051",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately reflects the return policy (30-day window, free returns over \u00a350), repeats the correct order number, avoids forbidden promises, maintains a professional tone, and directly answers the customer's question about returning a non-personalised item.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2160.36675000214,
+      "prompt_tokens": 799,
+      "completion_tokens": 77,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-052",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately states the standard delivery window per policy, repeats the correct order number, avoids forbidden promises, maintains a professional tone, and directly answers the customer's question about arrival time.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 1686.407290995703,
+      "prompt_tokens": 774,
+      "completion_tokens": 63,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-053",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately reflects the policy for damaged items (requesting a photo and order number for a free replacement without a return) and repeats the correct order number provided by the customer.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 1740.3509160067188,
+      "prompt_tokens": 767,
+      "completion_tokens": 62,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-054",
+      "verdict": "fail",
+      "failed_criteria": [
+        "forbidden_promise"
+      ],
+      "reason": "The reply promises to refund the non-faulty personalized item 'as a one-off', which directly contradicts the policy that such items cannot be returned or refunded unless faulty or damaged.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2086.6824580007233,
+      "prompt_tokens": 813,
+      "completion_tokens": 68,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-055",
+      "verdict": "fail",
+      "failed_criteria": [
+        "forbidden_promise"
+      ],
+      "reason": "The reply falsely promises to arrange 'same-day delivery', which the policy explicitly states is not offered. Additionally, stating the item is 'on its way' after 'dispatch' when the customer only asked for status without confirming dispatch details may also misrepresent the delivery timeline.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2323.5600410116604,
+      "prompt_tokens": 795,
+      "completion_tokens": 85,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-056",
+      "verdict": "fail",
+      "failed_criteria": [
+        "policy_accuracy",
+        "forbidden_promise"
+      ],
+      "reason": "The reply incorrectly promises 'same-day delivery', which is explicitly forbidden by the policy stating 'We do not offer same-day delivery'. Additionally, the policy requires repeating the order number when discussing a specific order, which was done correctly in the first sentence and later in the reply, so the only failures are the false promise regarding delivery speed and the potential confusion on policy accuracy if interpreted as a universal service.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2780.847999994876,
+      "prompt_tokens": 832,
+      "completion_tokens": 115,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-057",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately states the standard delivery window (3-5 business days), repeats the customer's order number, avoids forbidden promises, maintains a professional tone, and directly answers the customer's question.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 1839.728249993641,
+      "prompt_tokens": 770,
+      "completion_tokens": 65,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-058",
+      "verdict": "fail",
+      "failed_criteria": [
+        "policy_accuracy",
+        "forbidden_promise"
+      ],
+      "reason": "The reply violates policy by offering a 20% discount code instead of the mandated full free replacement (or refund if out of stock) for damaged items. Additionally, it inaccurately states the policy process which requires only a photo and order number to initiate the replacement/refund workflow. Furthermore, promising a discount code is a forbidden promise not supported by the policy for damaged items.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 2747.24983300257,
+      "prompt_tokens": 786,
+      "completion_tokens": 111,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-059",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately reflects the policy regarding non-returnable personalized items, repeats the correct order number provided by the customer, avoids forbidden promises, maintains a professional tone, and directly answers the refund question.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 1867.1753329981584,
+      "prompt_tokens": 784,
+      "completion_tokens": 65,
+      "error": null,
+      "failed": false
+    },
+    {
+      "case_id": "case-060",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply accurately reflects the standard delivery window, repeats the order number provided by the customer, maintains a professional tone, and directly answers the customer's inquiry about the order status.",
+      "model": "qwen3.5:35b",
+      "latency_ms": 1727.0520409947494,
+      "prompt_tokens": 783,
+      "completion_tokens": 61,
+      "error": null,
+      "failed": false
+    }
+  ]
+}
