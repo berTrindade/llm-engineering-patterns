@@ -3,9 +3,9 @@
 No LLM involved. Each thread plants four facts (account id, plan name, error code,
 time zone) in the first two exchanges, fills the middle with unrelated support
 back-and-forth that never repeats those facts, then closes with a customer question
-that needs them. Full-history threads target roughly 50,000-62,000 characters (about
-12,000-16,000 real tokens on qwen3:8b, verified with `make calibrate`), so at 2000,
-4000 and 8000 token budgets the trimming strategies actually have to trim something.
+that needs them. Full-history threads land at roughly 34,000-40,000 characters (about
+14,000-17,000 tokens by the fit in data/calibration.json), so at 2000, 4000 and 8000
+token budgets the trimming strategies actually have to trim something.
 Everything is invented; see data/README.md.
 """
 
@@ -252,10 +252,11 @@ def _filler_pair(rng: random.Random) -> tuple[dict, dict]:
     )
 
 
-# Character target for a full thread: chosen so that, verified against real API usage
-# via `make calibrate`, full history lands around 12,000-16,000 tokens, well above the
-# largest 8,000 token budget under test.
-TARGET_CHARS_RANGE = (50_000, 62_000)
+# Character target for a full thread, applied before the final padding step, which
+# carries threads somewhat past it: actual output is roughly 34,000-40,000 characters,
+# about 14,000-17,000 tokens by the fit in data/calibration.json. That is well above
+# the largest 8,000 token budget under test.
+TARGET_CHARS_RANGE = (28_000, 36_000)
 MIN_FILLER_PAIRS, MAX_FILLER_PAIRS = 18, 37
 
 

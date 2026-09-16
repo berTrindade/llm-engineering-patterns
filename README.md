@@ -37,14 +37,15 @@ across the dataset.
 ## How it works
 
 - **Dataset**: `src/context_window_poc/generate_threads.py` deterministically generates
-  20 invented ticket threads (roughly 53-69 turns each, seeded, no LLM involved). Each
+  20 invented ticket threads (41 to 43 turns each, seeded, no LLM involved). Each
   thread plants four facts (account ID, plan name, error code, time zone) in its first
   two exchanges, fills the rest with unrelated invented support conversation padded
   with pasted log excerpts and invoice line items (the way a real agent pastes logs
   while investigating), and closes with a customer question that needs those four
-  facts back. Full history lands at roughly 51,000-63,000 characters per thread,
-  around 12,000-16,000 real tokens on `qwen3:8b` (verified against local Ollama, whose
-  `context_length` for that model is 40960, so these prompts are not truncated). That
+  facts back. Full history lands at roughly 34,000-40,000 characters per thread, about
+  14,000-17,000 tokens by the fit in `data/calibration.json`. The local Ollama server
+  reports `context_length` 40960 for `qwen3:8b`, well above that, so these prompts are
+  not truncated. That
   puts every thread well above the 8,000 token budget, so `token_budget` and
   `summarise_older` actually have to trim or summarise something; a generator test
   asserts every thread clears the largest budget by a wide margin.

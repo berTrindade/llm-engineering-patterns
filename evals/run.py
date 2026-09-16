@@ -34,15 +34,16 @@ SYSTEM_PROMPT = (
 
 BUDGETED_STRATEGIES = ("last_n", "token_budget", "summarise_older")
 
-# Prompts here run to 12,000-16,000 real tokens; prefill takes longer than the
-# client default allows for, and Ollama serves one request at a time.
+# Full-history prompts here run to roughly 14,000-17,000 estimated tokens; prefill
+# takes longer than the client default allows for, and Ollama serves one request at
+# a time.
 CHAT_CALL_TIMEOUT_S = 300.0
 
 # If real prompt_tokens comes back below this fraction of the estimate, the server
 # may have silently truncated the prompt rather than the estimator being off. qwen3:8b
-# on this deployment has context_length 40960 (verified by the lead), well above our
-# largest full-history prompt, so this should not trigger; it is recorded as a guard,
-# not assumed away.
+# on this deployment has context_length 40960 (reported by the local Ollama server),
+# well above our largest full-history prompt, so this should not trigger; it is
+# recorded as a guard, not assumed away.
 TRUNCATION_GUARD_FACTOR = 0.5
 
 

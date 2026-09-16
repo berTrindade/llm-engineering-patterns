@@ -1,17 +1,22 @@
 import math
+from pathlib import Path
 
 from context_window_poc.generate_threads import FACT_KEYS, generate_dataset, generate_thread
-from context_window_poc.tokens import DEFAULT_FIT, estimate_tokens_for
+from context_window_poc.tokens import estimate_tokens_for, load_calibration
 
 LARGEST_BUDGET = 8000
-# "Clear margin" over the largest budget: comfortably inside the 12,000-16,000 token
-# target range for full-history size, verified against real usage via `make calibrate`.
 MARGIN_FACTOR = 1.5
+
+# Measured with the committed calibration, the same fit the eval uses. DEFAULT_FIT is a
+# chars/4 fallback for when no calibration exists; it underestimates this corpus (dense
+# log lines, invoice rows and IDs) by around 40%, so it cannot say whether real prompts
+# clear the budget.
+FIT = load_calibration(Path(__file__).resolve().parent.parent / "data" / "calibration.json")
 
 
 def _estimated_tokens(thread) -> int:
     chars = sum(len(t["content"]) for t in thread.turns)
-    return estimate_tokens_for(chars=chars, n_messages=len(thread.turns) + 1, fit=DEFAULT_FIT)
+    return estimate_tokens_for(chars=chars, n_messages=len(thread.turns) + 1, fit=FIT)
 
 
 def test_thread_length_in_range():
