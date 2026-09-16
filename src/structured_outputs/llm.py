@@ -1,8 +1,7 @@
 """Thin httpx wrapper over an OpenAI-compatible /v1/chat/completions endpoint.
 
 reasoning_effort is always sent as "none": verified on 2026-09-15 against Ollama 0.34.0 that
-this stops qwen3 thinking tokens (a short reply dropped to 6 completion tokens; without it a
-20-token JSON answer reported 542 completion tokens).
+this stops qwen3 thinking tokens; a `/no_think` prompt suffix alone was not enough.
 """
 
 import os
