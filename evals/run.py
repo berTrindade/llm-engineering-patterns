@@ -224,33 +224,39 @@ def main() -> None:
     results: list[CaseResult] = []
     cache: dict = {}
 
-    for thread in threads:
+    out_path = Path(results_file)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    def write_results() -> None:
+        out_path.write_text(
+            json.dumps(
+                {
+                    "generated_at": datetime.now(UTC).date().isoformat(),
+                    "model": model,
+                    "budgets": budgets,
+                    "n_threads": len({r.thread_id for r in results}),
+                    "estimator_fit": {"a": fit.a, "b": fit.b, "c": fit.c},
+                    "rows": aggregate(results),
+                    "cases": [asdict(r) for r in results],
+                },
+                indent=2,
+            )
+            + "\n"
+        )
+
+    for i, thread in enumerate(threads, 1):
         results.append(_run_case(thread, "full_history", None, model, fit, cache))
         for strategy in BUDGETED_STRATEGIES:
             for budget in budgets:
                 results.append(_run_case(thread, strategy, budget, model, fit, cache))
+        # Written after every thread, so a run that stalls or is killed keeps the cases
+        # it already finished instead of discarding all of them.
+        write_results()
+        print(f"[{i}/{len(threads)}] {thread['thread_id']} done, {len(results)} cases", flush=True)
 
     rows = aggregate(results)
     table = format_table(rows)
     print(table)
-
-    out_path = Path(results_file)
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(
-        json.dumps(
-            {
-                "generated_at": datetime.now(UTC).date().isoformat(),
-                "model": model,
-                "budgets": budgets,
-                "n_threads": len(threads),
-                "estimator_fit": {"a": fit.a, "b": fit.b, "c": fit.c},
-                "rows": rows,
-                "cases": [asdict(r) for r in results],
-            },
-            indent=2,
-        )
-        + "\n"
-    )
     print(f"\nWrote {out_path}")
 
 
