@@ -27,7 +27,7 @@ ITEMS = [
     "a linen bedspread",
     "a wooden coffee table",
     "a set of glass tumblers",
-    "an engraved cheese board",
+    "a cheese board",
     "a wool throw",
     "a brass table lamp",
     "a set of kitchen knives",
@@ -59,7 +59,7 @@ SCENARIOS = [
         ),
         "good_reply": (
             "Hi, thanks for checking in on order {order}. Standard delivery takes 3 to 5 "
-            "business days, so {item} should be with you soon. We'll email you tracking "
+            "business days, so your {noun} should be with you soon. We'll email you tracking "
             "details once it's dispatched."
         ),
         "wrong_fact": ("3 to 5 business days", "1 to 2 business days"),
@@ -82,7 +82,7 @@ SCENARIOS = [
         ),
         "good_reply": (
             "Thanks for getting in touch about order {order}. Personalised items like your "
-            "engraved {item} can't be returned or refunded once made, unless it arrives "
+            "engraved {noun} can't be returned or refunded once made, unless it arrives "
             "faulty or damaged. Let us know if there's an issue with the item itself and "
             "we'll help from there."
         ),
@@ -98,7 +98,7 @@ SCENARIOS = [
             "heard anything."
         ),
         "good_reply": (
-            "Hi, thanks for checking on order {order}. Your {item} is on its way and, since "
+            "Hi, thanks for checking on order {order}. Your {noun} is on its way and, since "
             "you chose standard delivery, it should arrive within 3 to 5 business days of "
             "dispatch. Let us know if it doesn't turn up in that window."
         ),
@@ -122,14 +122,24 @@ def _apply_wrong_policy_fact(reply: str, wrong_fact: tuple[str, str]) -> str:
     return reply.replace(find, replace, 1)
 
 
+# Templates that say "your ..." need the item without its leading article.
+def _noun(item: str) -> str:
+    return item.split(" ", 1)[1]
+
+
 def _apply_missing_order_number(reply: str, order_number: str) -> str:
-    return reply.replace(order_number, "your order")
+    return (
+        reply.replace(f" ({order_number})", "")
+        .replace(f"order number {order_number}", "order number")
+        .replace(f"order {order_number}", "your order")
+        .replace(order_number, "your order")
+    )
 
 
 def _apply_forbidden_promise(reply: str, scenario_name: str, item: str) -> str:
     if scenario_name == "personalised":
         extra = (
-            f" As a one-off, we can still refund your personalised {item} even though it's "
+            f" As a one-off, we can still refund your personalised {_noun(item)} even though it's "
             "not faulty."
         )
     else:
@@ -171,8 +181,8 @@ def generate_dataset(seed: int = 42, n: int = 60) -> list[ReplyCase]:
         item = rng.choice(ITEMS)
         order_number = f"NW-{rng.randint(100000, 999999)}"
 
-        message = scenario["message"].format(item=item, order=order_number)
-        good_reply = scenario["good_reply"].format(item=item, order=order_number)
+        message = scenario["message"].format(item=item, noun=_noun(item), order=order_number)
+        good_reply = scenario["good_reply"].format(item=item, noun=_noun(item), order=order_number)
 
         if label == "pass":
             reply = good_reply

@@ -1,3 +1,5 @@
+import re
+
 from evals_judge.dataset import FLAW_TYPES, ReplyCase, generate_dataset, load_dataset
 
 
@@ -52,3 +54,12 @@ def test_load_dataset_round_trips_generated_file(tmp_path):
 
     loaded = load_dataset(path)
     assert loaded == written
+
+
+def test_replies_read_as_plain_english():
+    for case in generate_dataset(seed=42, n=60):
+        text = case.customer_message + " " + case.reply
+        assert not re.search(r"\b[Yy]our (a|an) ", text), case.id
+        assert "engraved engraved" not in text, case.id
+        assert "order your order" not in text, case.id
+        assert "number your order" not in text, case.id

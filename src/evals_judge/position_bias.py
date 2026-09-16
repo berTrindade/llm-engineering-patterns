@@ -19,6 +19,7 @@ from evals_judge.dataset import (
     _apply_missing_order_number,
     _apply_rude_tone,
     _apply_wrong_policy_fact,
+    _noun,
 )
 from evals_judge.judge import judge_pair
 
@@ -56,8 +57,8 @@ def generate_pairs(seed: int = 7, n: int = 20) -> list[Pair]:
         item = rng.choice(ITEMS)
         order_number = f"NW-{rng.randint(100000, 999999)}"
 
-        message = scenario["message"].format(item=item, order=order_number)
-        good_reply = scenario["good_reply"].format(item=item, order=order_number)
+        message = scenario["message"].format(item=item, noun=_noun(item), order=order_number)
+        good_reply = scenario["good_reply"].format(item=item, noun=_noun(item), order=order_number)
 
         if flaw_type == "missing_order_number":
             worse_reply = _apply_missing_order_number(good_reply, order_number)
