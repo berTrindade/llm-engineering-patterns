@@ -1,0 +1,117 @@
+{
+  "generated_at": "2026-09-16",
+  "model": "qwen3:8b",
+  "budgets": [
+    2000
+  ],
+  "n_threads": 1,
+  "estimator_fit": {
+    "a": 0.43823707559053143,
+    "b": -14.489508677042968,
+    "c": 6.658420914249078
+  },
+  "rows": [
+    {
+      "strategy": "full_history",
+      "budget": null,
+      "n": 1,
+      "failures": 0,
+      "possible_truncations": 0,
+      "fact_recall": 1.0,
+      "prompt_tokens_real": 26082.0,
+      "extra_tokens": 0.0,
+      "latency_ms": 60520.05758299492,
+      "estimator_error_pct": 0.27605244996549344
+    },
+    {
+      "strategy": "last_n",
+      "budget": 2000,
+      "n": 1,
+      "failures": 0,
+      "possible_truncations": 0,
+      "fact_recall": 0.0,
+      "prompt_tokens_real": 1672.0,
+      "extra_tokens": 0.0,
+      "latency_ms": 3868.4036250051577,
+      "estimator_error_pct": 1.8540669856459329
+    },
+    {
+      "strategy": "summarise_older",
+      "budget": 2000,
+      "n": 1,
+      "failures": 0,
+      "possible_truncations": 0,
+      "fact_recall": 1.0,
+      "prompt_tokens_real": 1796.0,
+      "extra_tokens": 24427.0,
+      "latency_ms": 3670.0821250124136,
+      "estimator_error_pct": 9.020044543429844
+    },
+    {
+      "strategy": "token_budget",
+      "budget": 2000,
+      "n": 1,
+      "failures": 0,
+      "possible_truncations": 0,
+      "fact_recall": 0.0,
+      "prompt_tokens_real": 1672.0,
+      "extra_tokens": 0.0,
+      "latency_ms": 854.0609999909066,
+      "estimator_error_pct": 1.8540669856459329
+    }
+  ],
+  "cases": [
+    {
+      "thread_id": "ticket-0001",
+      "strategy": "full_history",
+      "budget": null,
+      "fact_recall": 1.0,
+      "prompt_tokens_real": 26082,
+      "extra_tokens": 0,
+      "latency_ms": 60520.05758299492,
+      "estimator_error_pct": 0.27605244996549344,
+      "possible_truncation": false,
+      "failed": false,
+      "reason": null
+    },
+    {
+      "thread_id": "ticket-0001",
+      "strategy": "last_n",
+      "budget": 2000,
+      "fact_recall": 0.0,
+      "prompt_tokens_real": 1672,
+      "extra_tokens": 0,
+      "latency_ms": 3868.4036250051577,
+      "estimator_error_pct": 1.8540669856459329,
+      "possible_truncation": false,
+      "failed": false,
+      "reason": null
+    },
+    {
+      "thread_id": "ticket-0001",
+      "strategy": "token_budget",
+      "budget": 2000,
+      "fact_recall": 0.0,
+      "prompt_tokens_real": 1672,
+      "extra_tokens": 0,
+      "latency_ms": 854.0609999909066,
+      "estimator_error_pct": 1.8540669856459329,
+      "possible_truncation": false,
+      "failed": false,
+      "reason": null
+    },
+    {
+      "thread_id": "ticket-0001",
+      "strategy": "summarise_older",
+      "budget": 2000,
+      "fact_recall": 1.0,
+      "prompt_tokens_real": 1796,
+      "extra_tokens": 24427,
+      "latency_ms": 3670.0821250124136,
+      "estimator_error_pct": 9.020044543429844,
+      "possible_truncation": false,
+      "failed": false,
+      "reason": null
+    }
+  ]
+}
