@@ -22,8 +22,8 @@ make test    # pytest, no network or model
 make lint    # ruff check
 ```
 
-Needs a local Ollama with `qwen3:8b`, `qwen3.5:35b` and `nomic-embed-text` pulled, or any
-OpenAI-compatible endpoint configured through `.env` (copy `.env.example`).
+Needs a local Ollama with `qwen3:8b` and `nomic-embed-text` pulled, or any OpenAI-compatible
+endpoint configured through `.env` (copy `.env.example`).
 
 ## Result
 

@@ -2,8 +2,7 @@
 
 Verified locally on 2026-09-15 against Ollama 0.34.0: usage is reported, response_format with
 json_schema returns valid JSON, and a `/no_think` prompt suffix alone does not stop qwen3
-thinking (a 20-token JSON answer reported 542 completion tokens). `reasoning_effort: "none"` does
-stop it, so it is sent by default on every chat call.
+thinking. `reasoning_effort: "none"` does stop it, so it is sent by default on every chat call.
 """
 
 import os
