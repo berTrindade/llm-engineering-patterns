@@ -135,29 +135,39 @@ def main() -> None:
     chunks_by_id = {r["id"]: Chunk(**{k: v for k, v in r.items() if k != "fetch_date"}) for r in records}
     entries = load_index(INDEX_PATH)
 
-    results = [
-        run_case(case, entries, chunks_by_id, cheap_model=cheap_model, embed_model=embed_model, threshold=0.3)
-        for case in cases
-    ]
-    metrics = compute_metrics(results)
-    _print_table(metrics)
-
     RESULTS_DIR.mkdir(exist_ok=True)
     today = datetime.datetime.now(tz=datetime.UTC).date().isoformat()
     filename = f"smoke-{today}.json" if eval_limit else f"{today}.json"
     output_path = RESULTS_DIR / filename
-    output_path.write_text(
-        json.dumps(
-            {
-                "metrics": metrics,
-                "cases": [r.model_dump() for r in results],
-                "cheap_model": cheap_model,
-                "embed_model": embed_model,
-                "smoke": bool(eval_limit),
-            },
-            indent=2,
+
+    results: list[CaseResult] = []
+
+    def write_results(complete: bool) -> dict:
+        metrics = compute_metrics(results)
+        output_path.write_text(
+            json.dumps(
+                {
+                    "metrics": metrics,
+                    "cases": [r.model_dump() for r in results],
+                    "cheap_model": cheap_model,
+                    "embed_model": embed_model,
+                    "smoke": bool(eval_limit),
+                    "complete": complete,
+                },
+                indent=2,
+            )
         )
-    )
+        return metrics
+
+    for case in cases:
+        results.append(
+            run_case(case, entries, chunks_by_id, cheap_model=cheap_model, embed_model=embed_model, threshold=0.3)
+        )
+        # Written after every case, so a run that stalls or is killed keeps what it finished.
+        write_results(complete=False)
+
+    metrics = write_results(complete=True)
+    _print_table(metrics)
     print(f"wrote {output_path}")
 
 
