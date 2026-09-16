@@ -95,6 +95,16 @@ across the dataset.
   the fit in `data/calibration.json` only covers the ~16 prompts it was trained and
   tested on, not the full dataset. The held-out error percentage reported by
   `make calibrate` is the honest ceiling on how far to trust it.
+- The fitted `b` (tokens per message) came out negative (`-14.49`) on the calibration
+  run committed here, which is not a physically meaningful "each extra message removes
+  tokens" effect. It is because the calibration samples were built as growing prefixes
+  of real threads, so character count and message count are highly correlated in that
+  sample, and least squares can trade the two off against each other rather than
+  identify each one separately. Held-out error stayed at 0.9%, so the fit still
+  predicts well within the range it was calibrated on, but `a` and `b` individually
+  should not be read as "chars cost this many tokens, messages cost that many"; only
+  the combined prediction is trustworthy, and only inside the ~200-35,000 character
+  range it was fitted on.
 - The truncation guard (real `prompt_tokens` well below the estimate) only catches
   truncation large enough to look like estimator error; a small silent truncation could
   still hide inside normal estimator noise.
