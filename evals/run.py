@@ -139,18 +139,26 @@ def build_report(outcomes: list[TaskOutcome]) -> dict:
 
     failures_by_type = Counter(o.failure_type for o in outcomes if o.failure_type)
 
+    # A task that died on a model error never ran, so its zero latency, tokens and tool
+    # calls would drag these means down. It still counts in success_rate and
+    # failures_by_type.
+    ran = [o for o in outcomes if o.failure_type != "model_error"]
+
+    def mean_of(attr: str) -> float:
+        return sum(getattr(o, attr) for o in ran) / len(ran) if ran else 0.0
+
     return {
         "task_count": n,
         "success_count": success_count,
         "success_rate": success_count / n if n else 0.0,
         "by_category": by_category,
-        "mean_tool_calls": sum(o.tool_call_count for o in outcomes) / n if n else 0.0,
-        "mean_iterations": sum(o.iterations for o in outcomes) / n if n else 0.0,
+        "mean_tool_calls": mean_of("tool_call_count"),
+        "mean_iterations": mean_of("iterations"),
         "recovered_error_count": sum(o.recovered_error_count for o in outcomes),
         "failures_by_type": dict(failures_by_type),
-        "mean_latency_ms": sum(o.latency_ms for o in outcomes) / n if n else 0.0,
-        "mean_prompt_tokens": sum(o.prompt_tokens for o in outcomes) / n if n else 0.0,
-        "mean_completion_tokens": sum(o.completion_tokens for o in outcomes) / n if n else 0.0,
+        "mean_latency_ms": mean_of("latency_ms"),
+        "mean_prompt_tokens": mean_of("prompt_tokens"),
+        "mean_completion_tokens": mean_of("completion_tokens"),
         "tasks": [asdict(o) for o in outcomes],
     }
 
@@ -165,8 +173,8 @@ def print_table(report: dict) -> None:
     for category, stats in report["by_category"].items():
         print(f"  {category:12s} {stats['success']}/{stats['total']} ({stats['success_rate']:.0%})")
     print()
-    print(f"Mean tool calls per task: {report['mean_tool_calls']:.2f}")
-    print(f"Mean iterations per task: {report['mean_iterations']:.2f}")
+    print(f"Mean tool calls per task that ran: {report['mean_tool_calls']:.2f}")
+    print(f"Mean iterations per task that ran: {report['mean_iterations']:.2f}")
     print(f"Recovered-from-error count: {report['recovered_error_count']}")
     print()
     print("Failures by type:")
@@ -176,9 +184,9 @@ def print_table(report: dict) -> None:
     else:
         print("  none")
     print()
-    print(f"Mean latency per task: {report['mean_latency_ms']:.0f} ms")
-    print(f"Mean prompt tokens per task: {report['mean_prompt_tokens']:.0f}")
-    print(f"Mean completion tokens per task: {report['mean_completion_tokens']:.0f}")
+    print(f"Mean latency per task that ran: {report['mean_latency_ms']:.0f} ms")
+    print(f"Mean prompt tokens per task that ran: {report['mean_prompt_tokens']:.0f}")
+    print(f"Mean completion tokens per task that ran: {report['mean_completion_tokens']:.0f}")
 
 
 def main() -> None:
