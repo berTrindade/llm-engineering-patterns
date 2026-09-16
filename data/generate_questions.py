@@ -21,10 +21,15 @@ class Question(TypedDict):
     difficulty: str
 
 
+# Each fact is a separate required entry (count, then size or weight) so an answer is
+# not marked wrong for wording the same facts differently from the policy table.
 FARE_BAGGAGE = {
-    "Basic": ("1 small bag (40 x 20 x 25 cm)", "0"),
-    "Standard": ("1 cabin bag (55 x 40 x 23 cm)", "1 bag up to 23 kg"),
-    "Flex": ("1 cabin bag (55 x 40 x 23 cm)", "2 bags up to 23 kg each"),
+    "Basic": (
+        ["1 small", "40 x 20 x 25 cm"],
+        ["0 checked bag|no checked bag|not include any checked|no checked luggage"],
+    ),
+    "Standard": (["1 cabin bag", "55 x 40 x 23 cm"], ["1 checked bag|1 bag", "23 kg"]),
+    "Flex": (["1 cabin bag", "55 x 40 x 23 cm"], ["2 checked bags|2 bags", "23 kg"]),
 }
 
 FARE_CANCELLATION = {
@@ -36,12 +41,12 @@ FARE_CANCELLATION = {
 FARE_CHANGE = {
     "Basic": (
         "changes not permitted|cannot be changed|no changes allowed|"
-        "changes are not allowed|changing is not permitted"
+        "changes are not allowed|changes are not permitted|changing is not permitted"
     ),
     "Standard": "£45",
     "Flex": (
         "no change fee|change fee is waived|no fee to change|£0 change fee|"
-        "change fee does not apply"
+        "change fee does not apply|is £0"
     ),
 }
 
@@ -53,7 +58,7 @@ def _simple_lookup_questions() -> list[Question]:
             {
                 "id": f"baggage-checked-{fare.lower()}",
                 "question": f"How many checked bags are included with a {fare} fare?",
-                "required_facts": [checked],
+                "required_facts": checked,
                 "difficulty": "simple_lookup",
             }
         )
@@ -61,7 +66,7 @@ def _simple_lookup_questions() -> list[Question]:
             {
                 "id": f"baggage-cabin-{fare.lower()}",
                 "question": f"What cabin bag am I allowed on a {fare} fare?",
-                "required_facts": [cabin],
+                "required_facts": cabin,
                 "difficulty": "simple_lookup",
             }
         )
@@ -343,10 +348,10 @@ def _multi_step_questions() -> list[Question]:
         {
             "id": "multi-refund-window-after-cancellation",
             "question": (
-                "Fernway cancels my flight on 1 March. By what date must I submit my "
-                "refund request, counting the 28-day window from the original departure date?"
+                "My flight was due to depart on 1 March and Fernway cancelled it. By what "
+                "date must I submit my refund request?"
             ),
-            "required_facts": ["28 days"],
+            "required_facts": ["29 march|march 29"],
             "difficulty": "multi_step_calculation",
         },
         {
@@ -521,8 +526,8 @@ def _policy_exception_questions() -> list[Question]:
             ),
             "required_facts": [
                 "full refund|refunded in full|100% refund|entire fare refunded",
-                "regardless of fare type|even for a Basic fare|no matter the fare type|"
-                "applies to all fare types",
+                "regardless of fare type|regardless of the fare type|even for a Basic fare|"
+                "no matter the fare type|applies to all fare types|rule does not apply",
             ],
             "difficulty": "policy_exception",
         },

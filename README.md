@@ -89,6 +89,10 @@ Not yet run in full. Run `make eval`.
   and accepts a wrong answer. What this cannot catch is an answer that contains the right fact
   alongside a wrong claim elsewhere in the same answer, since a match only checks that the fact
   is present, not that the rest of the answer is consistent with it.
+- Substring matching also cannot express an exact short answer. The Basic checked-bag
+  question requires wording such as "no checked bags" or "0 checked bags", so a reply that
+  is only "0" scores as wrong even though it is correct; accepting a bare "0" would also
+  accept any answer that happens to contain a zero.
 - The smoke command (`EVAL_LIMIT=3 STRONG_MODEL=qwen3:8b`) sets the cheap and strong model to
   the same model so the 35B model is not loaded during development; its cost and escalation
   figures are not meaningful, only `make eval`'s full run with distinct models is.
