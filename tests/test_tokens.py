@@ -1,43 +1,52 @@
 import json
 
-from context_window_poc.calibrate import fit_ratio
 from context_window_poc.tokens import (
-    DEFAULT_CHARS_PER_TOKEN,
+    DEFAULT_FIT,
+    CalibrationFit,
     estimate_messages_tokens,
     estimate_tokens,
+    estimate_tokens_for,
     load_calibration,
 )
 
 
-def test_estimate_tokens_uses_ratio():
-    assert estimate_tokens("a" * 40, chars_per_token=4.0) == 10
+def test_estimate_tokens_for_uses_fit():
+    fit = CalibrationFit(a=0.25, b=10.0, c=2.0)
+    # 400 chars * 0.25 + 1 message * 10 + 2 = 100 + 10 + 2 = 112
+    assert estimate_tokens_for(chars=400, n_messages=1, fit=fit) == 112
 
 
-def test_estimate_tokens_rounds_and_floors_at_one():
-    assert estimate_tokens("", chars_per_token=4.0) == 1
-    assert estimate_tokens("ab", chars_per_token=4.0) == 1
+def test_estimate_tokens_for_rounds_and_floors_at_one():
+    fit = CalibrationFit(a=0.0, b=0.0, c=0.0)
+    assert estimate_tokens_for(chars=0, n_messages=0, fit=fit) == 1
 
 
-def test_estimate_messages_tokens_sums_content():
+def test_estimate_tokens_treats_text_as_one_message():
+    fit = CalibrationFit(a=0.25, b=10.0, c=2.0)
+    assert estimate_tokens("a" * 400, fit=fit) == 112
+
+
+def test_estimate_messages_tokens_sums_content_and_counts_messages():
+    fit = CalibrationFit(a=0.25, b=10.0, c=2.0)
     messages = [
         {"role": "system", "content": "a" * 40},
         {"role": "user", "content": "a" * 20},
     ]
-    assert estimate_messages_tokens(messages, chars_per_token=4.0) == 15
+    # 60 chars * 0.25 + 2 messages * 10 + 2 = 15 + 20 + 2 = 37
+    assert estimate_messages_tokens(messages, fit=fit) == 37
+
+
+def test_estimate_messages_tokens_uses_default_fit_when_none_given():
+    messages = [{"role": "user", "content": "a" * 40}]
+    assert estimate_messages_tokens(messages) == estimate_messages_tokens(messages, DEFAULT_FIT)
 
 
 def test_load_calibration_defaults_when_missing(tmp_path):
     missing = tmp_path / "calibration.json"
-    assert load_calibration(missing) == DEFAULT_CHARS_PER_TOKEN
+    assert load_calibration(missing) == DEFAULT_FIT
 
 
-def test_load_calibration_reads_stored_ratio(tmp_path):
+def test_load_calibration_reads_stored_fit(tmp_path):
     path = tmp_path / "calibration.json"
-    path.write_text(json.dumps({"chars_per_token": 3.5}))
-    assert load_calibration(path) == 3.5
-
-
-def test_fit_ratio_sums_chars_over_tokens():
-    samples = [("a" * 40, 10), ("a" * 20, 10)]
-    # total chars 60, total tokens 20 -> ratio 3.0
-    assert fit_ratio(samples) == 3.0
+    path.write_text(json.dumps({"a": 0.3, "b": 12.0, "c": 5.0}))
+    assert load_calibration(path) == CalibrationFit(a=0.3, b=12.0, c=5.0)
