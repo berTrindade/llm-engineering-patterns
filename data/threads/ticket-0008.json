@@ -9,7 +9,7 @@
   "turns": [
     {
       "role": "user",
-      "content": "Hello, we need help on our Growth plan. For reference our account ID is ACC-6659."
+      "content": "Hi, I'm having trouble with our account. Our account ID is ACC-6659 and we're on the Growth plan."
     },
     {
       "role": "assistant",
@@ -17,7 +17,7 @@
     },
     {
       "role": "user",
-      "content": "The error code was ERR-399 and we're in the Europe/Lisbon time zone."
+      "content": "It showed ERR-399. Our time zone is Europe/Lisbon."
     },
     {
       "role": "assistant",
@@ -29,119 +29,23 @@
     },
     {
       "role": "assistant",
-      "content": "Not yet, it's on our roadmap but I don't have a date to share."
+      "content": "Not yet, it's on our roadmap but I don't have a date to share.\n\nHere's what I'm seeing in the logs:\n2026-11-16T16:37:03Z [INFO] invoicing-api: deduplicated 3 identical events\n2026-11-16T16:37:25Z [WARN] invoicing-api: health check passed\n2026-11-16T16:38:01Z [ERROR] export-service: request timed out after 30s\n2026-11-16T16:38:14Z [DEBUG] export-service: successfully processed batch of 24 records\n2026-11-16T16:38:41Z [WARN] billing-worker: deduplicated 3 identical events\n2026-11-16T16:38:48Z [ERROR] export-service: health check passed\n2026-11-16T16:38:52Z [ERROR] pdf-renderer: health check passed\n2026-11-16T16:39:36Z [WARN] scheduler: token refresh succeeded\n2026-11-16T16:40:09Z [DEBUG] auth-service: rate limit exceeded, backing off\n2026-11-16T16:40:22Z [WARN] billing-worker: token refresh succeeded\n2026-11-16T16:40:38Z [DEBUG] pdf-renderer: retrying operation (attempt 2 of 3)\n2026-11-16T16:40:54Z [INFO] scheduler: queue depth exceeded threshold\n2026-11-16T16:41:15Z [INFO] billing-worker: unexpected null value in response\n2026-11-16T16:41:34Z [WARN] invoicing-api: circuit breaker opened for downstream call\n2026-11-16T16:42:16Z [DEBUG] invoicing-api: scheduled job completed in 842ms\n2026-11-16T16:43:00Z [ERROR] notification-queue: deduplicated 3 identical events\n2026-11-16T16:43:38Z [DEBUG] auth-service: unexpected null value in response\n2026-11-16T16:44:13Z [INFO] auth-service: unexpected null value in response\n2026-11-16T16:44:14Z [INFO] billing-worker: queue depth exceeded threshold\n2026-11-16T16:44:17Z [DEBUG] scheduler: cache miss, falling back to database\n2026-11-16T16:44:43Z [INFO] billing-worker: deduplicated 3 identical events"
     },
     {
       "role": "user",
-      "content": "Can I change the currency symbol on my invoice template?"
+      "content": "Is there a way to send a payment reminder automatically?\n\nFor reference, here are the line items in question:\n12 x Data migration - GBP 195.00\n4 x Training session - GBP 264.00\n5 x Priority support - GBP 265.00\n2 x Training session - GBP 171.00\n7 x Monthly retainer - GBP 101.00\n5 x API usage overage - GBP 419.00\n9 x Onboarding session - GBP 36.00\n6 x Consulting hours - GBP 54.00\n2 x API usage overage - GBP 323.00\n12 x API usage overage - GBP 358.00\n12 x Support hours - GBP 410.00\n5 x Priority support - GBP 418.00\n8 x Data migration - GBP 328.00\n12 x Priority support - GBP 29.00"
     },
     {
       "role": "assistant",
-      "content": "Yes, under Settings > Invoice Template there's a currency dropdown."
+      "content": "Yes, reminders can be scheduled 3, 7 and 14 days after the due date.\n\nHere's what I'm seeing in the logs:\n2026-01-17T15:41:22Z [ERROR] auth-service: retrying operation (attempt 2 of 3)\n2026-01-17T15:42:04Z [DEBUG] export-service: deduplicated 3 identical events\n2026-01-17T15:42:11Z [WARN] pdf-renderer: health check passed\n2026-01-17T15:42:39Z [INFO] invoicing-api: cache miss, falling back to database\n2026-01-17T15:43:23Z [ERROR] auth-service: successfully processed batch of 24 records\n2026-01-17T15:43:51Z [INFO] export-service: payload exceeded max size\n2026-01-17T15:44:24Z [ERROR] webhook-dispatcher: connection reset by peer\n2026-01-17T15:44:47Z [INFO] webhook-dispatcher: payload exceeded max size\n2026-01-17T15:45:03Z [WARN] billing-worker: rate limit exceeded, backing off\n2026-01-17T15:45:10Z [INFO] notification-queue: validation failed for field 'amount'\n2026-01-17T15:45:43Z [INFO] webhook-dispatcher: deduplicated 3 identical events\n2026-01-17T15:45:55Z [INFO] billing-worker: validation failed for field 'amount'\n2026-01-17T15:46:22Z [DEBUG] notification-queue: deduplicated 3 identical events\n2026-01-17T15:46:43Z [INFO] webhook-dispatcher: retrying operation (attempt 2 of 3)\n2026-01-17T15:47:18Z [INFO] notification-queue: unexpected null value in response\n2026-01-17T15:47:40Z [ERROR] invoicing-api: token refresh succeeded\n2026-01-17T15:47:55Z [WARN] auth-service: validation failed for field 'amount'\n2026-01-17T15:48:15Z [INFO] billing-worker: unexpected null value in response\n2026-01-17T15:48:22Z [DEBUG] export-service: health check passed\n2026-01-17T15:48:54Z [INFO] billing-worker: connection reset by peer\n2026-01-17T15:49:34Z [ERROR] export-service: successfully processed batch of 24 records"
     },
     {
       "role": "user",
-      "content": "Is there a dark mode in the Ledgerline app?"
+      "content": "Is there a way to send a payment reminder automatically?"
     },
     {
       "role": "assistant",
-      "content": "Not yet, it's on our roadmap but I don't have a date to share."
-    },
-    {
-      "role": "user",
-      "content": "How do refunds show up on the client's statement?"
-    },
-    {
-      "role": "assistant",
-      "content": "Refunds appear as a negative line item on the next statement we generate."
-    },
-    {
-      "role": "user",
-      "content": "Can I add a second team member to review invoices before they go out?"
-    },
-    {
-      "role": "assistant",
-      "content": "Yes, go to Settings > Team and send an invite with the Reviewer role."
-    },
-    {
-      "role": "user",
-      "content": "Is there a dark mode in the Ledgerline app?"
-    },
-    {
-      "role": "assistant",
-      "content": "Not yet, it's on our roadmap but I don't have a date to share."
-    },
-    {
-      "role": "user",
-      "content": "What's the limit on how many clients I can add?"
-    },
-    {
-      "role": "assistant",
-      "content": "There's no hard limit on the number of clients you can add."
-    },
-    {
-      "role": "user",
-      "content": "Do you support VAT reverse charge for EU clients?"
-    },
-    {
-      "role": "assistant",
-      "content": "Yes, tick the reverse charge box on the client's tax settings."
-    },
-    {
-      "role": "user",
-      "content": "Quick one while we're at it: can I export my invoices as CSV instead of PDF?"
-    },
-    {
-      "role": "assistant",
-      "content": "Yes, the invoice list has an Export as CSV option in the top right corner."
-    },
-    {
-      "role": "user",
-      "content": "Can I customise the email subject line when sending an invoice?"
-    },
-    {
-      "role": "assistant",
-      "content": "Yes, under Settings > Email Templates you can edit the subject line."
-    },
-    {
-      "role": "user",
-      "content": "What's the limit on how many clients I can add?"
-    },
-    {
-      "role": "assistant",
-      "content": "There's no hard limit on the number of clients you can add."
-    },
-    {
-      "role": "user",
-      "content": "Quick one while we're at it: can I export my invoices as CSV instead of PDF?"
-    },
-    {
-      "role": "assistant",
-      "content": "Yes, the invoice list has an Export as CSV option in the top right corner."
-    },
-    {
-      "role": "user",
-      "content": "Can I change the currency symbol on my invoice template?"
-    },
-    {
-      "role": "assistant",
-      "content": "Yes, under Settings > Invoice Template there's a currency dropdown."
-    },
-    {
-      "role": "user",
-      "content": "Do you have an API for pulling invoice data into our own dashboard?"
-    },
-    {
-      "role": "assistant",
-      "content": "Yes, there's a REST API, the docs are linked from the Developer settings page."
-    },
-    {
-      "role": "user",
-      "content": "What's the limit on how many clients I can add?"
-    },
-    {
-      "role": "assistant",
-      "content": "There's no hard limit on the number of clients you can add."
+      "content": "Yes, reminders can be scheduled 3, 7 and 14 days after the due date.\n\nHere's what I'm seeing in the logs:\n2026-04-09T10:49:38Z [WARN] scheduler: rate limit exceeded, backing off\n2026-04-09T10:50:02Z [WARN] pdf-renderer: circuit breaker opened for downstream call\n2026-04-09T10:50:16Z [DEBUG] notification-queue: retrying operation (attempt 2 of 3)\n2026-04-09T10:50:41Z [WARN] notification-queue: request timed out after 30s\n2026-04-09T10:50:57Z [WARN] scheduler: validation failed for field 'amount'\n2026-04-09T10:51:15Z [INFO] auth-service: payload exceeded max size\n2026-04-09T10:51:18Z [WARN] pdf-renderer: deduplicated 3 identical events\n2026-04-09T10:51:34Z [WARN] billing-worker: cache miss, falling back to database\n2026-04-09T10:51:38Z [WARN] export-service: scheduled job completed in 842ms\n2026-04-09T10:52:12Z [INFO] export-service: deduplicated 3 identical events\n2026-04-09T10:52:28Z [ERROR] billing-worker: retrying operation (attempt 2 of 3)\n2026-04-09T10:53:01Z [INFO] scheduler: scheduled job completed in 842ms\n2026-04-09T10:53:32Z [WARN] auth-service: cache miss, falling back to database\n2026-04-09T10:53:43Z [ERROR] auth-service: rate limit exceeded, backing off\n2026-04-09T10:54:16Z [WARN] notification-queue: request timed out after 30s\n2026-04-09T10:54:22Z [DEBUG] invoicing-api: validation failed for field 'amount'\n2026-04-09T10:54:37Z [WARN] billing-worker: unexpected null value in response\n2026-04-09T10:54:56Z [WARN] auth-service: validation failed for field 'amount'\n2026-04-09T10:55:28Z [ERROR] webhook-dispatcher: queue depth exceeded threshold\n2026-04-09T10:56:09Z [INFO] export-service: retrying operation (attempt 2 of 3)\n2026-04-09T10:56:50Z [ERROR] pdf-renderer: rate limit exceeded, backing off\n2026-04-09T10:57:34Z [INFO] notification-queue: health check passed\n2026-04-09T10:57:49Z [DEBUG] webhook-dispatcher: scheduled job completed in 842ms\n2026-04-09T10:58:11Z [INFO] billing-worker: validation failed for field 'amount'\n2026-04-09T10:58:34Z [WARN] pdf-renderer: retrying operation (attempt 2 of 3)\n2026-04-09T10:59:16Z [WARN] scheduler: retrying operation (attempt 2 of 3)\n2026-04-09T10:59:52Z [INFO] scheduler: retrying operation (attempt 2 of 3)"
     },
     {
       "role": "user",
@@ -149,23 +53,7 @@
     },
     {
       "role": "assistant",
-      "content": "Yes, each team member can enable it individually under their profile."
-    },
-    {
-      "role": "user",
-      "content": "How long do you keep sent invoices in the archive?"
-    },
-    {
-      "role": "assistant",
-      "content": "Sent invoices are kept indefinitely unless you delete them yourself."
-    },
-    {
-      "role": "user",
-      "content": "Is there a way to send a payment reminder automatically?"
-    },
-    {
-      "role": "assistant",
-      "content": "Yes, reminders can be scheduled 3, 7 and 14 days after the due date."
+      "content": "Yes, each team member can enable it individually under their profile.\n\nHere's what I'm seeing in the logs:\n2026-10-25T11:59:44Z [WARN] webhook-dispatcher: retrying operation (attempt 2 of 3)\n2026-10-25T12:00:11Z [DEBUG] invoicing-api: scheduled job completed in 842ms\n2026-10-25T12:00:13Z [INFO] billing-worker: unexpected null value in response\n2026-10-25T12:00:57Z [DEBUG] pdf-renderer: health check passed\n2026-10-25T12:01:22Z [ERROR] pdf-renderer: rate limit exceeded, backing off\n2026-10-25T12:01:54Z [ERROR] billing-worker: connection reset by peer\n2026-10-25T12:02:27Z [DEBUG] auth-service: successfully processed batch of 24 records\n2026-10-25T12:03:10Z [DEBUG] notification-queue: token refresh succeeded\n2026-10-25T12:03:52Z [INFO] auth-service: health check passed\n2026-10-25T12:04:26Z [ERROR] export-service: rate limit exceeded, backing off\n2026-10-25T12:04:49Z [ERROR] invoicing-api: deduplicated 3 identical events\n2026-10-25T12:05:28Z [WARN] webhook-dispatcher: token refresh succeeded\n2026-10-25T12:06:08Z [DEBUG] auth-service: payload exceeded max size\n2026-10-25T12:06:41Z [DEBUG] scheduler: payload exceeded max size\n2026-10-25T12:06:46Z [ERROR] pdf-renderer: unexpected null value in response\n2026-10-25T12:07:13Z [INFO] pdf-renderer: rate limit exceeded, backing off\n2026-10-25T12:07:58Z [WARN] pdf-renderer: deduplicated 3 identical events\n2026-10-25T12:08:42Z [INFO] notification-queue: successfully processed batch of 24 records\n2026-10-25T12:08:46Z [INFO] billing-worker: connection reset by peer\n2026-10-25T12:09:05Z [INFO] scheduler: successfully processed batch of 24 records\n2026-10-25T12:09:10Z [WARN] billing-worker: queue depth exceeded threshold\n2026-10-25T12:09:31Z [INFO] webhook-dispatcher: connection reset by peer\n2026-10-25T12:09:42Z [ERROR] pdf-renderer: validation failed for field 'amount'\n2026-10-25T12:10:24Z [WARN] scheduler: cache miss, falling back to database\n2026-10-25T12:10:31Z [INFO] auth-service: health check passed\n2026-10-25T12:10:56Z [DEBUG] invoicing-api: deduplicated 3 identical events\n2026-10-25T12:11:12Z [WARN] billing-worker: payload exceeded max size\n2026-10-25T12:11:55Z [DEBUG] scheduler: connection reset by peer\n2026-10-25T12:12:18Z [ERROR] pdf-renderer: connection reset by peer\n2026-10-25T12:12:32Z [DEBUG] notification-queue: successfully processed batch of 24 records"
     },
     {
       "role": "user",
@@ -173,23 +61,7 @@
     },
     {
       "role": "assistant",
-      "content": "It does, you can set a monthly or weekly schedule when creating an invoice."
-    },
-    {
-      "role": "user",
-      "content": "Can I attach a PDF contract to an invoice?"
-    },
-    {
-      "role": "assistant",
-      "content": "Yes, the attachment option is below the line items when you edit an invoice."
-    },
-    {
-      "role": "user",
-      "content": "What's the limit on how many clients I can add?"
-    },
-    {
-      "role": "assistant",
-      "content": "There's no hard limit on the number of clients you can add."
+      "content": "It does, you can set a monthly or weekly schedule when creating an invoice.\n\nHere's what I'm seeing in the logs:\n2026-07-01T02:31:11Z [ERROR] scheduler: unexpected null value in response\n2026-07-01T02:31:35Z [WARN] billing-worker: retrying operation (attempt 2 of 3)\n2026-07-01T02:31:37Z [ERROR] scheduler: health check passed\n2026-07-01T02:32:02Z [WARN] billing-worker: payload exceeded max size\n2026-07-01T02:32:17Z [DEBUG] webhook-dispatcher: unexpected null value in response\n2026-07-01T02:32:44Z [INFO] export-service: circuit breaker opened for downstream call\n2026-07-01T02:33:25Z [ERROR] billing-worker: cache miss, falling back to database\n2026-07-01T02:33:53Z [WARN] notification-queue: connection reset by peer\n2026-07-01T02:34:33Z [INFO] webhook-dispatcher: unexpected null value in response\n2026-07-01T02:35:15Z [WARN] export-service: token refresh succeeded\n2026-07-01T02:35:22Z [INFO] notification-queue: connection reset by peer\n2026-07-01T02:35:51Z [INFO] invoicing-api: successfully processed batch of 24 records\n2026-07-01T02:36:24Z [DEBUG] webhook-dispatcher: unexpected null value in response\n2026-07-01T02:36:34Z [INFO] export-service: unexpected null value in response\n2026-07-01T02:36:45Z [WARN] invoicing-api: health check passed"
     },
     {
       "role": "user",
@@ -197,7 +69,111 @@
     },
     {
       "role": "assistant",
-      "content": "Not yet, it's on our roadmap but I don't have a date to share."
+      "content": "Not yet, it's on our roadmap but I don't have a date to share.\n\nHere's what I'm seeing in the logs:\n2026-02-24T06:55:12Z [ERROR] notification-queue: connection reset by peer\n2026-02-24T06:55:48Z [DEBUG] export-service: rate limit exceeded, backing off\n2026-02-24T06:56:08Z [ERROR] auth-service: deduplicated 3 identical events\n2026-02-24T06:56:36Z [WARN] scheduler: connection reset by peer\n2026-02-24T06:56:49Z [DEBUG] pdf-renderer: queue depth exceeded threshold\n2026-02-24T06:56:58Z [ERROR] auth-service: deduplicated 3 identical events\n2026-02-24T06:57:36Z [DEBUG] webhook-dispatcher: circuit breaker opened for downstream call\n2026-02-24T06:58:17Z [INFO] pdf-renderer: connection reset by peer\n2026-02-24T06:58:26Z [DEBUG] export-service: request timed out after 30s\n2026-02-24T06:59:01Z [INFO] invoicing-api: scheduled job completed in 842ms\n2026-02-24T06:59:21Z [DEBUG] billing-worker: validation failed for field 'amount'\n2026-02-24T07:00:05Z [INFO] billing-worker: scheduled job completed in 842ms\n2026-02-24T07:00:22Z [DEBUG] pdf-renderer: successfully processed batch of 24 records\n2026-02-24T07:01:05Z [WARN] auth-service: cache miss, falling back to database\n2026-02-24T07:01:28Z [WARN] pdf-renderer: request timed out after 30s\n2026-02-24T07:01:58Z [INFO] export-service: retrying operation (attempt 2 of 3)\n2026-02-24T07:01:59Z [ERROR] auth-service: token refresh succeeded\n2026-02-24T07:02:44Z [DEBUG] billing-worker: scheduled job completed in 842ms\n2026-02-24T07:03:28Z [INFO] auth-service: health check passed\n2026-02-24T07:04:07Z [DEBUG] notification-queue: deduplicated 3 identical events\n2026-02-24T07:04:11Z [INFO] invoicing-api: cache miss, falling back to database\n2026-02-24T07:04:40Z [WARN] notification-queue: retrying operation (attempt 2 of 3)\n2026-02-24T07:05:13Z [ERROR] export-service: queue depth exceeded threshold\n2026-02-24T07:05:52Z [ERROR] webhook-dispatcher: retrying operation (attempt 2 of 3)\n2026-02-24T07:05:54Z [DEBUG] webhook-dispatcher: successfully processed batch of 24 records\n2026-02-24T07:06:34Z [DEBUG] scheduler: successfully processed batch of 24 records\n2026-02-24T07:06:55Z [INFO] export-service: health check passed\n2026-02-24T07:07:01Z [INFO] auth-service: queue depth exceeded threshold"
+    },
+    {
+      "role": "user",
+      "content": "How do refunds show up on the client's statement?"
+    },
+    {
+      "role": "assistant",
+      "content": "Refunds appear as a negative line item on the next statement we generate.\n\nHere's what I'm seeing in the logs:\n2026-01-23T13:06:51Z [WARN] billing-worker: scheduled job completed in 842ms\n2026-01-23T13:07:16Z [INFO] auth-service: connection reset by peer\n2026-01-23T13:07:30Z [INFO] notification-queue: unexpected null value in response\n2026-01-23T13:07:57Z [ERROR] export-service: scheduled job completed in 842ms\n2026-01-23T13:08:42Z [WARN] auth-service: rate limit exceeded, backing off\n2026-01-23T13:09:17Z [DEBUG] export-service: connection reset by peer\n2026-01-23T13:09:35Z [DEBUG] invoicing-api: payload exceeded max size\n2026-01-23T13:09:36Z [WARN] billing-worker: unexpected null value in response\n2026-01-23T13:10:04Z [WARN] billing-worker: validation failed for field 'amount'\n2026-01-23T13:10:21Z [WARN] webhook-dispatcher: validation failed for field 'amount'\n2026-01-23T13:10:32Z [INFO] export-service: circuit breaker opened for downstream call\n2026-01-23T13:11:10Z [ERROR] export-service: queue depth exceeded threshold\n2026-01-23T13:11:23Z [INFO] webhook-dispatcher: token refresh succeeded\n2026-01-23T13:12:06Z [DEBUG] invoicing-api: queue depth exceeded threshold\n2026-01-23T13:12:20Z [INFO] notification-queue: deduplicated 3 identical events"
+    },
+    {
+      "role": "user",
+      "content": "How do refunds show up on the client's statement?"
+    },
+    {
+      "role": "assistant",
+      "content": "Refunds appear as a negative line item on the next statement we generate.\n\nHere's what I'm seeing in the logs:\n2026-08-04T12:45:23Z [DEBUG] pdf-renderer: deduplicated 3 identical events\n2026-08-04T12:45:32Z [DEBUG] billing-worker: payload exceeded max size\n2026-08-04T12:46:00Z [INFO] notification-queue: scheduled job completed in 842ms\n2026-08-04T12:46:35Z [DEBUG] pdf-renderer: unexpected null value in response\n2026-08-04T12:47:15Z [DEBUG] pdf-renderer: connection reset by peer\n2026-08-04T12:47:17Z [ERROR] webhook-dispatcher: cache miss, falling back to database\n2026-08-04T12:47:45Z [WARN] pdf-renderer: rate limit exceeded, backing off\n2026-08-04T12:48:29Z [ERROR] export-service: payload exceeded max size\n2026-08-04T12:49:00Z [DEBUG] auth-service: queue depth exceeded threshold\n2026-08-04T12:49:24Z [WARN] scheduler: token refresh succeeded\n2026-08-04T12:49:38Z [ERROR] auth-service: request timed out after 30s\n2026-08-04T12:50:01Z [WARN] webhook-dispatcher: request timed out after 30s\n2026-08-04T12:50:41Z [WARN] invoicing-api: circuit breaker opened for downstream call\n2026-08-04T12:51:10Z [ERROR] invoicing-api: circuit breaker opened for downstream call\n2026-08-04T12:51:18Z [DEBUG] webhook-dispatcher: successfully processed batch of 24 records\n2026-08-04T12:51:29Z [INFO] webhook-dispatcher: request timed out after 30s\n2026-08-04T12:52:11Z [INFO] scheduler: cache miss, falling back to database\n2026-08-04T12:52:56Z [INFO] export-service: retrying operation (attempt 2 of 3)\n2026-08-04T12:53:19Z [INFO] pdf-renderer: validation failed for field 'amount'\n2026-08-04T12:53:45Z [INFO] billing-worker: circuit breaker opened for downstream call\n2026-08-04T12:54:00Z [DEBUG] webhook-dispatcher: cache miss, falling back to database\n2026-08-04T12:54:35Z [WARN] pdf-renderer: queue depth exceeded threshold\n2026-08-04T12:54:55Z [ERROR] webhook-dispatcher: token refresh succeeded\n2026-08-04T12:55:16Z [WARN] webhook-dispatcher: retrying operation (attempt 2 of 3)\n2026-08-04T12:55:17Z [INFO] webhook-dispatcher: queue depth exceeded threshold\n2026-08-04T12:55:45Z [WARN] auth-service: circuit breaker opened for downstream call\n2026-08-04T12:56:20Z [DEBUG] billing-worker: unexpected null value in response\n2026-08-04T12:56:25Z [WARN] scheduler: unexpected null value in response\n2026-08-04T12:57:00Z [ERROR] billing-worker: circuit breaker opened for downstream call"
+    },
+    {
+      "role": "user",
+      "content": "Can I add a second team member to review invoices before they go out?\n\nFor reference, here are the line items in question:\n2 x Training session - GBP 170.00\n3 x Data migration - GBP 20.00\n11 x Data migration - GBP 121.00\n9 x Priority support - GBP 251.00\n4 x Design review - GBP 62.00\n10 x Priority support - GBP 267.00\n9 x Data migration - GBP 237.00\n1 x Integration setup - GBP 262.00\n4 x Support hours - GBP 327.00\n2 x Integration setup - GBP 149.00\n9 x Onboarding session - GBP 188.00"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, go to Settings > Team and send an invite with the Reviewer role.\n\nHere's what I'm seeing in the logs:\n2026-10-11T21:30:48Z [WARN] webhook-dispatcher: payload exceeded max size\n2026-10-11T21:30:53Z [ERROR] scheduler: validation failed for field 'amount'\n2026-10-11T21:31:27Z [DEBUG] pdf-renderer: connection reset by peer\n2026-10-11T21:31:34Z [DEBUG] auth-service: health check passed\n2026-10-11T21:31:52Z [DEBUG] export-service: rate limit exceeded, backing off\n2026-10-11T21:32:27Z [ERROR] pdf-renderer: retrying operation (attempt 2 of 3)\n2026-10-11T21:33:02Z [WARN] auth-service: cache miss, falling back to database\n2026-10-11T21:33:36Z [INFO] auth-service: unexpected null value in response\n2026-10-11T21:33:46Z [INFO] export-service: circuit breaker opened for downstream call\n2026-10-11T21:33:48Z [WARN] invoicing-api: deduplicated 3 identical events\n2026-10-11T21:34:31Z [WARN] webhook-dispatcher: successfully processed batch of 24 records\n2026-10-11T21:34:51Z [DEBUG] webhook-dispatcher: successfully processed batch of 24 records\n2026-10-11T21:35:03Z [INFO] invoicing-api: deduplicated 3 identical events\n2026-10-11T21:35:28Z [WARN] billing-worker: token refresh succeeded\n2026-10-11T21:35:37Z [WARN] pdf-renderer: cache miss, falling back to database"
+    },
+    {
+      "role": "user",
+      "content": "Is there a dark mode in the Ledgerline app?\n\nFor reference, here are the line items in question:\n7 x Software licence - GBP 189.00\n2 x Training session - GBP 430.00\n9 x Consulting hours - GBP 399.00\n9 x Priority support - GBP 87.00\n4 x Design review - GBP 122.00\n4 x Custom report - GBP 387.00\n6 x Design review - GBP 259.00\n5 x Data migration - GBP 200.00\n12 x Software licence - GBP 358.00\n10 x Data migration - GBP 393.00\n8 x Custom report - GBP 408.00\n11 x Consulting hours - GBP 443.00\n2 x Data migration - GBP 338.00"
+    },
+    {
+      "role": "assistant",
+      "content": "Not yet, it's on our roadmap but I don't have a date to share.\n\nHere's what I'm seeing in the logs:\n2026-02-05T19:43:30Z [INFO] billing-worker: token refresh succeeded\n2026-02-05T19:43:31Z [INFO] billing-worker: token refresh succeeded\n2026-02-05T19:43:54Z [INFO] billing-worker: queue depth exceeded threshold\n2026-02-05T19:44:21Z [DEBUG] billing-worker: token refresh succeeded\n2026-02-05T19:44:44Z [ERROR] invoicing-api: successfully processed batch of 24 records\n2026-02-05T19:45:13Z [ERROR] auth-service: validation failed for field 'amount'\n2026-02-05T19:45:40Z [ERROR] invoicing-api: connection reset by peer\n2026-02-05T19:45:52Z [DEBUG] pdf-renderer: queue depth exceeded threshold\n2026-02-05T19:46:01Z [WARN] invoicing-api: unexpected null value in response\n2026-02-05T19:46:32Z [WARN] invoicing-api: queue depth exceeded threshold\n2026-02-05T19:46:42Z [ERROR] export-service: health check passed\n2026-02-05T19:47:14Z [WARN] auth-service: validation failed for field 'amount'\n2026-02-05T19:47:36Z [DEBUG] invoicing-api: token refresh succeeded\n2026-02-05T19:47:47Z [ERROR] scheduler: scheduled job completed in 842ms\n2026-02-05T19:48:27Z [INFO] billing-worker: health check passed\n2026-02-05T19:48:37Z [ERROR] notification-queue: validation failed for field 'amount'\n2026-02-05T19:49:10Z [ERROR] pdf-renderer: connection reset by peer\n2026-02-05T19:49:39Z [ERROR] scheduler: connection reset by peer\n2026-02-05T19:49:54Z [ERROR] billing-worker: unexpected null value in response\n2026-02-05T19:50:11Z [DEBUG] invoicing-api: rate limit exceeded, backing off\n2026-02-05T19:50:48Z [WARN] notification-queue: retrying operation (attempt 2 of 3)\n2026-02-05T19:51:33Z [WARN] pdf-renderer: health check passed\n2026-02-05T19:51:39Z [INFO] export-service: validation failed for field 'amount'\n2026-02-05T19:52:05Z [ERROR] export-service: retrying operation (attempt 2 of 3)\n2026-02-05T19:52:26Z [WARN] invoicing-api: circuit breaker opened for downstream call\n2026-02-05T19:52:49Z [ERROR] pdf-renderer: queue depth exceeded threshold\n2026-02-05T19:52:54Z [ERROR] notification-queue: rate limit exceeded, backing off\n2026-02-05T19:53:06Z [DEBUG] invoicing-api: rate limit exceeded, backing off\n2026-02-05T19:53:19Z [WARN] export-service: payload exceeded max size\n2026-02-05T19:53:39Z [DEBUG] auth-service: health check passed"
+    },
+    {
+      "role": "user",
+      "content": "Do you have an API for pulling invoice data into our own dashboard?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, there's a REST API, the docs are linked from the Developer settings page.\n\nHere's what I'm seeing in the logs:\n2026-11-23T18:11:50Z [WARN] notification-queue: health check passed\n2026-11-23T18:12:32Z [DEBUG] invoicing-api: cache miss, falling back to database\n2026-11-23T18:12:33Z [DEBUG] scheduler: deduplicated 3 identical events\n2026-11-23T18:13:17Z [DEBUG] auth-service: rate limit exceeded, backing off\n2026-11-23T18:13:43Z [DEBUG] auth-service: retrying operation (attempt 2 of 3)\n2026-11-23T18:14:00Z [INFO] export-service: scheduled job completed in 842ms\n2026-11-23T18:14:04Z [ERROR] auth-service: cache miss, falling back to database\n2026-11-23T18:14:26Z [DEBUG] auth-service: token refresh succeeded\n2026-11-23T18:14:58Z [INFO] notification-queue: rate limit exceeded, backing off\n2026-11-23T18:15:22Z [WARN] webhook-dispatcher: retrying operation (attempt 2 of 3)\n2026-11-23T18:15:42Z [WARN] export-service: retrying operation (attempt 2 of 3)\n2026-11-23T18:16:06Z [DEBUG] auth-service: rate limit exceeded, backing off\n2026-11-23T18:16:32Z [INFO] export-service: token refresh succeeded\n2026-11-23T18:16:46Z [WARN] scheduler: deduplicated 3 identical events\n2026-11-23T18:17:22Z [ERROR] billing-worker: request timed out after 30s\n2026-11-23T18:17:24Z [ERROR] auth-service: health check passed\n2026-11-23T18:17:51Z [INFO] webhook-dispatcher: token refresh succeeded\n2026-11-23T18:18:04Z [INFO] export-service: connection reset by peer\n2026-11-23T18:18:38Z [INFO] billing-worker: queue depth exceeded threshold\n2026-11-23T18:19:02Z [ERROR] scheduler: request timed out after 30s\n2026-11-23T18:19:41Z [ERROR] auth-service: scheduled job completed in 842ms\n2026-11-23T18:20:18Z [DEBUG] export-service: connection reset by peer\n2026-11-23T18:20:30Z [ERROR] auth-service: health check passed"
+    },
+    {
+      "role": "user",
+      "content": "Does Ledgerline support recurring invoices for retainer clients?"
+    },
+    {
+      "role": "assistant",
+      "content": "It does, you can set a monthly or weekly schedule when creating an invoice.\n\nHere's what I'm seeing in the logs:\n2026-09-24T05:55:51Z [DEBUG] export-service: rate limit exceeded, backing off\n2026-09-24T05:56:24Z [ERROR] scheduler: retrying operation (attempt 2 of 3)\n2026-09-24T05:56:58Z [DEBUG] scheduler: request timed out after 30s\n2026-09-24T05:57:27Z [WARN] billing-worker: retrying operation (attempt 2 of 3)\n2026-09-24T05:57:36Z [WARN] pdf-renderer: queue depth exceeded threshold\n2026-09-24T05:57:40Z [ERROR] invoicing-api: request timed out after 30s\n2026-09-24T05:58:17Z [WARN] invoicing-api: payload exceeded max size\n2026-09-24T05:58:20Z [ERROR] pdf-renderer: deduplicated 3 identical events\n2026-09-24T05:58:51Z [WARN] webhook-dispatcher: cache miss, falling back to database\n2026-09-24T05:59:03Z [DEBUG] scheduler: token refresh succeeded\n2026-09-24T05:59:39Z [ERROR] pdf-renderer: circuit breaker opened for downstream call\n2026-09-24T06:00:24Z [WARN] notification-queue: validation failed for field 'amount'\n2026-09-24T06:00:35Z [WARN] invoicing-api: retrying operation (attempt 2 of 3)\n2026-09-24T06:00:47Z [WARN] billing-worker: retrying operation (attempt 2 of 3)\n2026-09-24T06:01:08Z [DEBUG] pdf-renderer: deduplicated 3 identical events\n2026-09-24T06:01:36Z [INFO] export-service: queue depth exceeded threshold"
+    },
+    {
+      "role": "user",
+      "content": "Quick one while we're at it: can I export my invoices as CSV instead of PDF?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, the invoice list has an Export as CSV option in the top right corner.\n\nHere's what I'm seeing in the logs:\n2026-01-22T10:23:19Z [DEBUG] billing-worker: circuit breaker opened for downstream call\n2026-01-22T10:23:59Z [INFO] pdf-renderer: request timed out after 30s\n2026-01-22T10:24:15Z [INFO] billing-worker: circuit breaker opened for downstream call\n2026-01-22T10:24:38Z [WARN] notification-queue: request timed out after 30s\n2026-01-22T10:25:16Z [DEBUG] invoicing-api: validation failed for field 'amount'\n2026-01-22T10:25:51Z [ERROR] notification-queue: token refresh succeeded\n2026-01-22T10:25:52Z [INFO] auth-service: queue depth exceeded threshold\n2026-01-22T10:26:05Z [WARN] auth-service: cache miss, falling back to database\n2026-01-22T10:26:19Z [INFO] billing-worker: request timed out after 30s\n2026-01-22T10:26:41Z [DEBUG] webhook-dispatcher: circuit breaker opened for downstream call\n2026-01-22T10:27:12Z [INFO] notification-queue: queue depth exceeded threshold\n2026-01-22T10:27:51Z [INFO] scheduler: retrying operation (attempt 2 of 3)\n2026-01-22T10:28:26Z [INFO] notification-queue: deduplicated 3 identical events\n2026-01-22T10:28:40Z [DEBUG] invoicing-api: rate limit exceeded, backing off\n2026-01-22T10:29:11Z [ERROR] pdf-renderer: circuit breaker opened for downstream call\n2026-01-22T10:29:30Z [ERROR] export-service: queue depth exceeded threshold\n2026-01-22T10:29:51Z [ERROR] invoicing-api: deduplicated 3 identical events\n2026-01-22T10:30:10Z [ERROR] export-service: queue depth exceeded threshold"
+    },
+    {
+      "role": "user",
+      "content": "Can I customise the email subject line when sending an invoice?\n\nFor reference, here are the line items in question:\n12 x Design review - GBP 114.00\n7 x Training session - GBP 52.00\n11 x Integration setup - GBP 257.00\n6 x Training session - GBP 46.00\n4 x Custom report - GBP 175.00\n3 x Support hours - GBP 89.00\n10 x Onboarding session - GBP 300.00\n10 x Monthly retainer - GBP 98.00\n12 x Priority support - GBP 85.00\n4 x Training session - GBP 248.00\n4 x Consulting hours - GBP 442.00"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, under Settings > Email Templates you can edit the subject line.\n\nHere's what I'm seeing in the logs:\n2026-04-01T07:54:32Z [ERROR] pdf-renderer: health check passed\n2026-04-01T07:54:54Z [WARN] webhook-dispatcher: successfully processed batch of 24 records\n2026-04-01T07:55:08Z [INFO] notification-queue: successfully processed batch of 24 records\n2026-04-01T07:55:20Z [DEBUG] invoicing-api: successfully processed batch of 24 records\n2026-04-01T07:55:36Z [INFO] pdf-renderer: rate limit exceeded, backing off\n2026-04-01T07:55:43Z [INFO] billing-worker: rate limit exceeded, backing off\n2026-04-01T07:56:12Z [WARN] invoicing-api: request timed out after 30s\n2026-04-01T07:56:51Z [DEBUG] webhook-dispatcher: retrying operation (attempt 2 of 3)\n2026-04-01T07:57:27Z [WARN] auth-service: scheduled job completed in 842ms\n2026-04-01T07:57:41Z [WARN] webhook-dispatcher: unexpected null value in response\n2026-04-01T07:57:52Z [ERROR] billing-worker: scheduled job completed in 842ms\n2026-04-01T07:57:58Z [ERROR] auth-service: validation failed for field 'amount'\n2026-04-01T07:58:35Z [WARN] export-service: cache miss, falling back to database\n2026-04-01T07:58:50Z [INFO] webhook-dispatcher: circuit breaker opened for downstream call\n2026-04-01T07:59:01Z [DEBUG] export-service: connection reset by peer\n2026-04-01T07:59:11Z [INFO] invoicing-api: retrying operation (attempt 2 of 3)\n2026-04-01T07:59:44Z [DEBUG] webhook-dispatcher: unexpected null value in response\n2026-04-01T08:00:07Z [DEBUG] billing-worker: circuit breaker opened for downstream call\n2026-04-01T08:00:48Z [WARN] pdf-renderer: queue depth exceeded threshold\n2026-04-01T08:00:55Z [INFO] auth-service: scheduled job completed in 842ms\n2026-04-01T08:01:09Z [DEBUG] invoicing-api: validation failed for field 'amount'\n2026-04-01T08:01:37Z [WARN] billing-worker: cache miss, falling back to database\n2026-04-01T08:01:46Z [DEBUG] export-service: successfully processed batch of 24 records\n2026-04-01T08:02:00Z [ERROR] pdf-renderer: successfully processed batch of 24 records\n2026-04-01T08:02:19Z [WARN] auth-service: unexpected null value in response\n2026-04-01T08:02:38Z [ERROR] pdf-renderer: successfully processed batch of 24 records\n2026-04-01T08:02:53Z [DEBUG] webhook-dispatcher: unexpected null value in response"
+    },
+    {
+      "role": "user",
+      "content": "Is there a mobile app or is it browser only right now?\n\nFor reference, here are the line items in question:\n12 x Training session - GBP 123.00\n11 x Integration setup - GBP 31.00\n11 x Consulting hours - GBP 395.00\n11 x Integration setup - GBP 344.00\n10 x Consulting hours - GBP 194.00\n7 x Consulting hours - GBP 263.00\n6 x Software licence - GBP 337.00\n11 x Custom report - GBP 419.00\n6 x Data migration - GBP 378.00\n11 x Integration setup - GBP 112.00\n8 x Support hours - GBP 21.00\n9 x Consulting hours - GBP 275.00\n9 x Custom report - GBP 258.00\n2 x Monthly retainer - GBP 272.00\n3 x Custom report - GBP 167.00"
+    },
+    {
+      "role": "assistant",
+      "content": "Browser only for now, but the pages are responsive on mobile.\n\nHere's what I'm seeing in the logs:\n2026-08-02T16:26:23Z [INFO] notification-queue: successfully processed batch of 24 records\n2026-08-02T16:26:57Z [ERROR] scheduler: deduplicated 3 identical events\n2026-08-02T16:27:24Z [ERROR] webhook-dispatcher: circuit breaker opened for downstream call\n2026-08-02T16:27:54Z [INFO] export-service: request timed out after 30s\n2026-08-02T16:28:30Z [ERROR] notification-queue: cache miss, falling back to database\n2026-08-02T16:28:41Z [ERROR] billing-worker: cache miss, falling back to database\n2026-08-02T16:29:06Z [INFO] invoicing-api: cache miss, falling back to database\n2026-08-02T16:29:16Z [ERROR] auth-service: connection reset by peer\n2026-08-02T16:29:41Z [DEBUG] export-service: validation failed for field 'amount'\n2026-08-02T16:29:51Z [WARN] pdf-renderer: health check passed\n2026-08-02T16:30:28Z [WARN] billing-worker: validation failed for field 'amount'\n2026-08-02T16:31:01Z [INFO] auth-service: queue depth exceeded threshold\n2026-08-02T16:31:02Z [DEBUG] pdf-renderer: unexpected null value in response\n2026-08-02T16:31:07Z [WARN] webhook-dispatcher: token refresh succeeded\n2026-08-02T16:31:24Z [INFO] webhook-dispatcher: health check passed\n2026-08-02T16:31:48Z [ERROR] auth-service: retrying operation (attempt 2 of 3)\n2026-08-02T16:32:12Z [WARN] webhook-dispatcher: unexpected null value in response\n2026-08-02T16:32:30Z [INFO] billing-worker: scheduled job completed in 842ms\n2026-08-02T16:32:52Z [INFO] billing-worker: queue depth exceeded threshold\n2026-08-02T16:33:27Z [DEBUG] notification-queue: successfully processed batch of 24 records\n2026-08-02T16:34:11Z [DEBUG] invoicing-api: health check passed\n2026-08-02T16:34:33Z [DEBUG] notification-queue: unexpected null value in response\n2026-08-02T16:34:48Z [ERROR] auth-service: payload exceeded max size\n2026-08-02T16:35:04Z [ERROR] notification-queue: deduplicated 3 identical events"
+    },
+    {
+      "role": "user",
+      "content": "Do you support VAT reverse charge for EU clients?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, tick the reverse charge box on the client's tax settings.\n\nHere's what I'm seeing in the logs:\n2026-09-24T21:28:10Z [ERROR] notification-queue: payload exceeded max size\n2026-09-24T21:28:33Z [DEBUG] notification-queue: connection reset by peer\n2026-09-24T21:28:50Z [DEBUG] notification-queue: successfully processed batch of 24 records\n2026-09-24T21:29:32Z [WARN] notification-queue: health check passed\n2026-09-24T21:30:03Z [ERROR] pdf-renderer: payload exceeded max size\n2026-09-24T21:30:19Z [WARN] invoicing-api: health check passed\n2026-09-24T21:30:39Z [DEBUG] webhook-dispatcher: successfully processed batch of 24 records\n2026-09-24T21:31:22Z [INFO] export-service: queue depth exceeded threshold\n2026-09-24T21:31:56Z [DEBUG] notification-queue: validation failed for field 'amount'\n2026-09-24T21:32:13Z [WARN] notification-queue: scheduled job completed in 842ms\n2026-09-24T21:32:21Z [ERROR] export-service: retrying operation (attempt 2 of 3)\n2026-09-24T21:32:51Z [ERROR] notification-queue: payload exceeded max size\n2026-09-24T21:33:35Z [ERROR] auth-service: cache miss, falling back to database\n2026-09-24T21:34:17Z [DEBUG] invoicing-api: unexpected null value in response\n2026-09-24T21:34:25Z [INFO] billing-worker: payload exceeded max size\n2026-09-24T21:34:31Z [ERROR] export-service: unexpected null value in response"
+    },
+    {
+      "role": "user",
+      "content": "Is there a dark mode in the Ledgerline app?"
+    },
+    {
+      "role": "assistant",
+      "content": "Not yet, it's on our roadmap but I don't have a date to share.\n\nHere's what I'm seeing in the logs:\n2026-10-09T09:16:00Z [INFO] scheduler: rate limit exceeded, backing off\n2026-10-09T09:16:36Z [DEBUG] export-service: cache miss, falling back to database\n2026-10-09T09:16:39Z [DEBUG] scheduler: retrying operation (attempt 2 of 3)\n2026-10-09T09:17:20Z [DEBUG] export-service: token refresh succeeded\n2026-10-09T09:17:53Z [DEBUG] notification-queue: deduplicated 3 identical events\n2026-10-09T09:18:06Z [DEBUG] notification-queue: validation failed for field 'amount'\n2026-10-09T09:18:18Z [DEBUG] notification-queue: retrying operation (attempt 2 of 3)\n2026-10-09T09:18:28Z [ERROR] webhook-dispatcher: queue depth exceeded threshold\n2026-10-09T09:18:32Z [ERROR] notification-queue: deduplicated 3 identical events\n2026-10-09T09:19:04Z [DEBUG] export-service: connection reset by peer\n2026-10-09T09:19:33Z [ERROR] pdf-renderer: cache miss, falling back to database\n2026-10-09T09:19:35Z [WARN] notification-queue: connection reset by peer\n2026-10-09T09:19:55Z [WARN] webhook-dispatcher: queue depth exceeded threshold\n2026-10-09T09:20:33Z [INFO] scheduler: validation failed for field 'amount'\n2026-10-09T09:21:15Z [ERROR] invoicing-api: cache miss, falling back to database\n2026-10-09T09:21:44Z [DEBUG] scheduler: deduplicated 3 identical events\n2026-10-09T09:22:03Z [DEBUG] billing-worker: cache miss, falling back to database"
+    },
+    {
+      "role": "user",
+      "content": "Can late fees be added automatically to overdue invoices?\n\nFor reference, here are the line items in question:\n4 x Software licence - GBP 211.00\n1 x API usage overage - GBP 402.00\n1 x Training session - GBP 256.00\n9 x API usage overage - GBP 188.00\n4 x Monthly retainer - GBP 289.00\n12 x Training session - GBP 138.00"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, you can set a flat fee or a percentage under Settings > Late Fees.\n\nHere's what I'm seeing in the logs:\n2026-08-22T19:00:51Z [INFO] export-service: health check passed\n2026-08-22T19:01:18Z [INFO] notification-queue: queue depth exceeded threshold\n2026-08-22T19:01:45Z [DEBUG] pdf-renderer: payload exceeded max size\n2026-08-22T19:02:12Z [ERROR] notification-queue: payload exceeded max size\n2026-08-22T19:02:44Z [WARN] auth-service: circuit breaker opened for downstream call\n2026-08-22T19:03:20Z [ERROR] billing-worker: payload exceeded max size\n2026-08-22T19:03:23Z [DEBUG] webhook-dispatcher: unexpected null value in response\n2026-08-22T19:04:07Z [ERROR] notification-queue: token refresh succeeded\n2026-08-22T19:04:31Z [DEBUG] billing-worker: deduplicated 3 identical events\n2026-08-22T19:05:09Z [WARN] billing-worker: unexpected null value in response\n2026-08-22T19:05:45Z [INFO] scheduler: rate limit exceeded, backing off\n2026-08-22T19:06:20Z [WARN] pdf-renderer: rate limit exceeded, backing off\n2026-08-22T19:06:35Z [DEBUG] webhook-dispatcher: queue depth exceeded threshold\n2026-08-22T19:06:39Z [WARN] notification-queue: token refresh succeeded\n2026-08-22T19:06:41Z [DEBUG] webhook-dispatcher: payload exceeded max size\n2026-08-22T19:06:42Z [INFO] billing-worker: rate limit exceeded, backing off\n2026-08-22T19:06:58Z [INFO] auth-service: deduplicated 3 identical events\n2026-08-22T19:07:32Z [WARN] pdf-renderer: circuit breaker opened for downstream call\n2026-08-22T19:08:07Z [ERROR] scheduler: retrying operation (attempt 2 of 3)\n2026-08-22T19:08:25Z [INFO] export-service: request timed out after 30s\n2026-08-22T19:08:56Z [ERROR] export-service: cache miss, falling back to database\n2026-08-22T19:09:28Z [INFO] scheduler: unexpected null value in response\n2026-08-22T19:10:10Z [WARN] webhook-dispatcher: validation failed for field 'amount'\n2026-08-22T19:10:16Z [ERROR] invoicing-api: health check passed\n2026-08-22T19:10:40Z [ERROR] pdf-renderer: unexpected null value in response"
+    },
+    {
+      "role": "user",
+      "content": "How long do you keep sent invoices in the archive?\n\nFor reference, here are the line items in question:\n2 x Data migration - GBP 197.00\n3 x Software licence - GBP 72.00\n6 x Training session - GBP 179.00\n7 x Software licence - GBP 94.00\n2 x Consulting hours - GBP 450.00\n2 x Design review - GBP 214.00\n9 x Integration setup - GBP 421.00\n10 x Custom report - GBP 67.00\n8 x Monthly retainer - GBP 448.00\n6 x Integration setup - GBP 180.00\n5 x Design review - GBP 227.00\n6 x Onboarding session - GBP 313.00\n3 x Monthly retainer - GBP 242.00\n2 x Design review - GBP 400.00\n4 x Software licence - GBP 161.00"
+    },
+    {
+      "role": "assistant",
+      "content": "Sent invoices are kept indefinitely unless you delete them yourself.\n\nHere's what I'm seeing in the logs:\n2026-09-24T08:30:39Z [DEBUG] webhook-dispatcher: retrying operation (attempt 2 of 3)\n2026-09-24T08:31:01Z [ERROR] export-service: circuit breaker opened for downstream call\n2026-09-24T08:31:14Z [WARN] scheduler: unexpected null value in response\n2026-09-24T08:31:25Z [DEBUG] auth-service: token refresh succeeded\n2026-09-24T08:31:54Z [ERROR] pdf-renderer: payload exceeded max size\n2026-09-24T08:32:38Z [DEBUG] pdf-renderer: cache miss, falling back to database\n2026-09-24T08:32:46Z [ERROR] export-service: health check passed\n2026-09-24T08:33:17Z [INFO] scheduler: request timed out after 30s\n2026-09-24T08:34:00Z [DEBUG] pdf-renderer: deduplicated 3 identical events\n2026-09-24T08:34:29Z [DEBUG] notification-queue: scheduled job completed in 842ms\n2026-09-24T08:35:03Z [WARN] notification-queue: connection reset by peer\n2026-09-24T08:35:13Z [INFO] auth-service: unexpected null value in response\n2026-09-24T08:35:34Z [DEBUG] auth-service: health check passed\n2026-09-24T08:35:42Z [WARN] pdf-renderer: retrying operation (attempt 2 of 3)\n2026-09-24T08:36:23Z [WARN] pdf-renderer: cache miss, falling back to database\n2026-09-24T08:36:45Z [WARN] export-service: rate limit exceeded, backing off"
     },
     {
       "role": "user",
@@ -205,7 +181,7 @@
     },
     {
       "role": "assistant",
-      "content": "Yes, reminders can be scheduled 3, 7 and 14 days after the due date."
+      "content": "Yes, reminders can be scheduled 3, 7 and 14 days after the due date.\n\nHere's what I'm seeing in the logs:\n2026-12-10T20:39:44Z [WARN] export-service: queue depth exceeded threshold\n2026-12-10T20:39:52Z [ERROR] billing-worker: validation failed for field 'amount'\n2026-12-10T20:40:26Z [INFO] webhook-dispatcher: connection reset by peer\n2026-12-10T20:41:05Z [DEBUG] pdf-renderer: scheduled job completed in 842ms\n2026-12-10T20:41:30Z [ERROR] webhook-dispatcher: request timed out after 30s\n2026-12-10T20:42:00Z [DEBUG] webhook-dispatcher: successfully processed batch of 24 records\n2026-12-10T20:42:32Z [DEBUG] billing-worker: circuit breaker opened for downstream call\n2026-12-10T20:43:17Z [INFO] scheduler: deduplicated 3 identical events\n2026-12-10T20:43:44Z [ERROR] scheduler: unexpected null value in response\n2026-12-10T20:43:54Z [ERROR] scheduler: deduplicated 3 identical events\n2026-12-10T20:44:39Z [DEBUG] notification-queue: health check passed\n2026-12-10T20:45:21Z [ERROR] scheduler: cache miss, falling back to database\n2026-12-10T20:45:31Z [INFO] auth-service: retrying operation (attempt 2 of 3)\n2026-12-10T20:46:04Z [DEBUG] billing-worker: retrying operation (attempt 2 of 3)\n2026-12-10T20:46:24Z [INFO] export-service: rate limit exceeded, backing off\n2026-12-10T20:47:03Z [DEBUG] invoicing-api: successfully processed batch of 24 records\n2026-12-10T20:47:41Z [ERROR] pdf-renderer: successfully processed batch of 24 records\n2026-12-10T20:48:01Z [DEBUG] pdf-renderer: deduplicated 3 identical events\n2026-12-10T20:48:36Z [INFO] auth-service: successfully processed batch of 24 records\n2026-12-10T20:49:19Z [ERROR] invoicing-api: successfully processed batch of 24 records\n2026-12-10T20:50:03Z [INFO] export-service: request timed out after 30s\n2026-12-10T20:50:22Z [DEBUG] billing-worker: unexpected null value in response\n2026-12-10T20:50:30Z [WARN] webhook-dispatcher: unexpected null value in response\n2026-12-10T20:51:15Z [DEBUG] scheduler: request timed out after 30s\n2026-12-10T20:51:26Z [INFO] auth-service: successfully processed batch of 24 records\n2026-12-10T20:51:29Z [DEBUG] invoicing-api: request timed out after 30s\n2026-12-10T20:52:14Z [INFO] billing-worker: successfully processed batch of 24 records\n2026-12-10T20:52:56Z [ERROR] export-service: request timed out after 30s\n2026-12-10T20:53:15Z [ERROR] notification-queue: request timed out after 30s\n2026-12-10T20:53:32Z [ERROR] webhook-dispatcher: deduplicated 3 identical events"
     },
     {
       "role": "user",
@@ -213,19 +189,75 @@
     },
     {
       "role": "assistant",
-      "content": "Sent invoices are kept indefinitely unless you delete them yourself."
+      "content": "Sent invoices are kept indefinitely unless you delete them yourself.\n\nHere's what I'm seeing in the logs:\n2026-06-21T15:02:34Z [WARN] webhook-dispatcher: rate limit exceeded, backing off\n2026-06-21T15:03:04Z [DEBUG] pdf-renderer: health check passed\n2026-06-21T15:03:42Z [DEBUG] notification-queue: cache miss, falling back to database\n2026-06-21T15:03:49Z [WARN] webhook-dispatcher: health check passed\n2026-06-21T15:04:32Z [INFO] auth-service: rate limit exceeded, backing off\n2026-06-21T15:04:46Z [WARN] billing-worker: token refresh succeeded\n2026-06-21T15:05:08Z [WARN] auth-service: successfully processed batch of 24 records\n2026-06-21T15:05:14Z [ERROR] billing-worker: payload exceeded max size\n2026-06-21T15:05:39Z [INFO] pdf-renderer: payload exceeded max size\n2026-06-21T15:05:44Z [DEBUG] scheduler: validation failed for field 'amount'\n2026-06-21T15:06:04Z [INFO] export-service: rate limit exceeded, backing off\n2026-06-21T15:06:23Z [ERROR] auth-service: request timed out after 30s\n2026-06-21T15:06:25Z [INFO] invoicing-api: scheduled job completed in 842ms\n2026-06-21T15:06:42Z [WARN] webhook-dispatcher: rate limit exceeded, backing off\n2026-06-21T15:07:13Z [INFO] invoicing-api: request timed out after 30s\n2026-06-21T15:07:53Z [ERROR] auth-service: retrying operation (attempt 2 of 3)\n2026-06-21T15:08:36Z [ERROR] notification-queue: connection reset by peer\n2026-06-21T15:09:14Z [INFO] billing-worker: health check passed\n2026-06-21T15:09:52Z [DEBUG] invoicing-api: connection reset by peer\n2026-06-21T15:10:09Z [DEBUG] export-service: unexpected null value in response\n2026-06-21T15:10:14Z [DEBUG] scheduler: queue depth exceeded threshold\n2026-06-21T15:10:58Z [DEBUG] auth-service: rate limit exceeded, backing off\n2026-06-21T15:11:43Z [ERROR] notification-queue: queue depth exceeded threshold"
     },
     {
       "role": "user",
-      "content": "Is there a mobile app or is it browser only right now?"
+      "content": "Can I add a second team member to review invoices before they go out?"
     },
     {
       "role": "assistant",
-      "content": "Browser only for now, but the pages are responsive on mobile."
+      "content": "Yes, go to Settings > Team and send an invite with the Reviewer role.\n\nHere's what I'm seeing in the logs:\n2026-11-19T13:34:34Z [ERROR] webhook-dispatcher: token refresh succeeded\n2026-11-19T13:34:52Z [DEBUG] pdf-renderer: connection reset by peer\n2026-11-19T13:35:16Z [INFO] export-service: token refresh succeeded\n2026-11-19T13:35:27Z [INFO] auth-service: token refresh succeeded\n2026-11-19T13:35:53Z [DEBUG] billing-worker: unexpected null value in response\n2026-11-19T13:36:13Z [INFO] scheduler: unexpected null value in response\n2026-11-19T13:36:27Z [WARN] billing-worker: successfully processed batch of 24 records\n2026-11-19T13:36:54Z [ERROR] auth-service: request timed out after 30s\n2026-11-19T13:37:01Z [WARN] webhook-dispatcher: successfully processed batch of 24 records\n2026-11-19T13:37:31Z [ERROR] pdf-renderer: request timed out after 30s\n2026-11-19T13:38:02Z [WARN] notification-queue: retrying operation (attempt 2 of 3)\n2026-11-19T13:38:28Z [WARN] export-service: successfully processed batch of 24 records\n2026-11-19T13:39:05Z [WARN] pdf-renderer: connection reset by peer\n2026-11-19T13:39:11Z [DEBUG] billing-worker: circuit breaker opened for downstream call\n2026-11-19T13:39:17Z [DEBUG] export-service: queue depth exceeded threshold\n2026-11-19T13:39:37Z [WARN] notification-queue: queue depth exceeded threshold\n2026-11-19T13:39:47Z [DEBUG] auth-service: connection reset by peer\n2026-11-19T13:40:06Z [DEBUG] invoicing-api: unexpected null value in response\n2026-11-19T13:40:16Z [WARN] billing-worker: health check passed\n2026-11-19T13:41:01Z [INFO] invoicing-api: deduplicated 3 identical events\n2026-11-19T13:41:46Z [DEBUG] webhook-dispatcher: connection reset by peer\n2026-11-19T13:42:12Z [WARN] pdf-renderer: health check passed\n2026-11-19T13:42:46Z [ERROR] billing-worker: payload exceeded max size\n2026-11-19T13:43:19Z [INFO] export-service: request timed out after 30s\n2026-11-19T13:43:45Z [INFO] webhook-dispatcher: health check passed\n2026-11-19T13:44:00Z [WARN] webhook-dispatcher: circuit breaker opened for downstream call\n2026-11-19T13:44:21Z [ERROR] scheduler: payload exceeded max size\n2026-11-19T13:44:26Z [WARN] webhook-dispatcher: unexpected null value in response"
     },
     {
       "role": "user",
-      "content": "Can you confirm for our records what account ID, plan, error code and time zone you have noted for this ticket?"
+      "content": "Can I add a second team member to review invoices before they go out?"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, go to Settings > Team and send an invite with the Reviewer role.\n\nHere's what I'm seeing in the logs:\n2026-02-20T18:31:45Z [DEBUG] invoicing-api: scheduled job completed in 842ms\n2026-02-20T18:32:20Z [ERROR] notification-queue: queue depth exceeded threshold\n2026-02-20T18:32:59Z [ERROR] notification-queue: deduplicated 3 identical events\n2026-02-20T18:33:32Z [DEBUG] scheduler: retrying operation (attempt 2 of 3)\n2026-02-20T18:33:52Z [DEBUG] invoicing-api: token refresh succeeded\n2026-02-20T18:34:06Z [INFO] notification-queue: request timed out after 30s\n2026-02-20T18:34:18Z [WARN] export-service: validation failed for field 'amount'\n2026-02-20T18:34:27Z [INFO] export-service: health check passed\n2026-02-20T18:34:46Z [INFO] scheduler: circuit breaker opened for downstream call\n2026-02-20T18:35:11Z [INFO] notification-queue: rate limit exceeded, backing off\n2026-02-20T18:35:22Z [DEBUG] export-service: retrying operation (attempt 2 of 3)\n2026-02-20T18:35:42Z [DEBUG] scheduler: rate limit exceeded, backing off\n2026-02-20T18:35:47Z [DEBUG] export-service: request timed out after 30s\n2026-02-20T18:35:58Z [DEBUG] auth-service: deduplicated 3 identical events\n2026-02-20T18:36:29Z [ERROR] auth-service: connection reset by peer\n2026-02-20T18:36:56Z [INFO] pdf-renderer: payload exceeded max size\n2026-02-20T18:37:19Z [ERROR] export-service: payload exceeded max size\n2026-02-20T18:37:49Z [INFO] scheduler: connection reset by peer\n2026-02-20T18:38:31Z [ERROR] auth-service: cache miss, falling back to database\n2026-02-20T18:38:35Z [INFO] webhook-dispatcher: scheduled job completed in 842ms\n2026-02-20T18:38:50Z [INFO] notification-queue: unexpected null value in response\n2026-02-20T18:39:19Z [INFO] invoicing-api: validation failed for field 'amount'\n2026-02-20T18:39:49Z [WARN] webhook-dispatcher: circuit breaker opened for downstream call\n2026-02-20T18:39:53Z [ERROR] scheduler: successfully processed batch of 24 records\n2026-02-20T18:40:12Z [ERROR] invoicing-api: cache miss, falling back to database\n2026-02-20T18:40:18Z [DEBUG] billing-worker: payload exceeded max size\n2026-02-20T18:40:26Z [WARN] notification-queue: unexpected null value in response\n2026-02-20T18:40:51Z [INFO] scheduler: successfully processed batch of 24 records\n2026-02-20T18:41:26Z [WARN] billing-worker: health check passed\n2026-02-20T18:42:02Z [INFO] notification-queue: deduplicated 3 identical events"
+    },
+    {
+      "role": "user",
+      "content": "How long do you keep sent invoices in the archive?\n\nFor reference, here are the line items in question:\n11 x Integration setup - GBP 94.00\n8 x Software licence - GBP 390.00\n4 x Support hours - GBP 128.00\n11 x Design review - GBP 363.00\n6 x Support hours - GBP 129.00\n6 x Training session - GBP 430.00\n3 x Training session - GBP 153.00\n5 x Data migration - GBP 145.00\n5 x Consulting hours - GBP 132.00\n8 x Priority support - GBP 179.00\n10 x Consulting hours - GBP 438.00\n11 x Integration setup - GBP 418.00\n7 x Monthly retainer - GBP 81.00\n8 x API usage overage - GBP 80.00\n9 x Priority support - GBP 353.00\n10 x Software licence - GBP 30.00"
+    },
+    {
+      "role": "assistant",
+      "content": "Sent invoices are kept indefinitely unless you delete them yourself.\n\nHere's what I'm seeing in the logs:\n2026-03-27T16:54:44Z [WARN] invoicing-api: request timed out after 30s\n2026-03-27T16:54:49Z [ERROR] export-service: circuit breaker opened for downstream call\n2026-03-27T16:55:00Z [WARN] billing-worker: scheduled job completed in 842ms\n2026-03-27T16:55:25Z [DEBUG] pdf-renderer: queue depth exceeded threshold\n2026-03-27T16:55:30Z [ERROR] notification-queue: validation failed for field 'amount'\n2026-03-27T16:55:56Z [ERROR] notification-queue: payload exceeded max size\n2026-03-27T16:56:14Z [ERROR] auth-service: validation failed for field 'amount'\n2026-03-27T16:56:41Z [WARN] auth-service: request timed out after 30s\n2026-03-27T16:57:02Z [INFO] invoicing-api: health check passed\n2026-03-27T16:57:25Z [INFO] export-service: health check passed\n2026-03-27T16:57:33Z [INFO] webhook-dispatcher: cache miss, falling back to database\n2026-03-27T16:58:01Z [INFO] billing-worker: queue depth exceeded threshold\n2026-03-27T16:58:30Z [DEBUG] scheduler: request timed out after 30s\n2026-03-27T16:58:47Z [ERROR] export-service: rate limit exceeded, backing off\n2026-03-27T16:59:14Z [DEBUG] invoicing-api: token refresh succeeded\n2026-03-27T16:59:56Z [ERROR] scheduler: circuit breaker opened for downstream call\n2026-03-27T17:00:15Z [INFO] auth-service: queue depth exceeded threshold\n2026-03-27T17:00:57Z [DEBUG] notification-queue: request timed out after 30s\n2026-03-27T17:01:23Z [ERROR] billing-worker: queue depth exceeded threshold"
+    },
+    {
+      "role": "user",
+      "content": "How do refunds show up on the client's statement?"
+    },
+    {
+      "role": "assistant",
+      "content": "Refunds appear as a negative line item on the next statement we generate.\n\nHere's what I'm seeing in the logs:\n2026-01-02T20:15:42Z [WARN] billing-worker: queue depth exceeded threshold\n2026-01-02T20:16:14Z [DEBUG] scheduler: deduplicated 3 identical events\n2026-01-02T20:16:46Z [ERROR] webhook-dispatcher: queue depth exceeded threshold\n2026-01-02T20:16:53Z [INFO] export-service: retrying operation (attempt 2 of 3)\n2026-01-02T20:17:20Z [WARN] auth-service: connection reset by peer\n2026-01-02T20:17:33Z [WARN] scheduler: rate limit exceeded, backing off\n2026-01-02T20:17:47Z [ERROR] notification-queue: payload exceeded max size\n2026-01-02T20:18:21Z [INFO] invoicing-api: retrying operation (attempt 2 of 3)\n2026-01-02T20:18:47Z [INFO] webhook-dispatcher: cache miss, falling back to database\n2026-01-02T20:19:08Z [WARN] export-service: rate limit exceeded, backing off\n2026-01-02T20:19:37Z [WARN] export-service: token refresh succeeded\n2026-01-02T20:20:09Z [ERROR] auth-service: cache miss, falling back to database\n2026-01-02T20:20:18Z [ERROR] webhook-dispatcher: queue depth exceeded threshold\n2026-01-02T20:20:56Z [WARN] auth-service: payload exceeded max size\n2026-01-02T20:20:59Z [ERROR] billing-worker: unexpected null value in response\n2026-01-02T20:21:38Z [ERROR] notification-queue: circuit breaker opened for downstream call\n2026-01-02T20:21:47Z [ERROR] webhook-dispatcher: token refresh succeeded\n2026-01-02T20:22:19Z [WARN] billing-worker: circuit breaker opened for downstream call\n2026-01-02T20:22:47Z [ERROR] scheduler: cache miss, falling back to database\n2026-01-02T20:23:26Z [DEBUG] export-service: payload exceeded max size\n2026-01-02T20:23:38Z [INFO] invoicing-api: validation failed for field 'amount'\n2026-01-02T20:23:47Z [WARN] export-service: token refresh succeeded\n2026-01-02T20:23:51Z [ERROR] export-service: payload exceeded max size\n2026-01-02T20:23:53Z [DEBUG] webhook-dispatcher: connection reset by peer\n2026-01-02T20:24:13Z [ERROR] billing-worker: token refresh succeeded\n2026-01-02T20:24:16Z [WARN] export-service: cache miss, falling back to database\n2026-01-02T20:24:25Z [ERROR] invoicing-api: rate limit exceeded, backing off\n2026-01-02T20:24:50Z [ERROR] pdf-renderer: validation failed for field 'amount'\n2026-01-02T20:25:18Z [WARN] billing-worker: circuit breaker opened for downstream call"
+    },
+    {
+      "role": "user",
+      "content": "How do refunds show up on the client's statement?"
+    },
+    {
+      "role": "assistant",
+      "content": "Refunds appear as a negative line item on the next statement we generate.\n\nHere's what I'm seeing in the logs:\n2026-02-22T05:05:57Z [INFO] invoicing-api: request timed out after 30s\n2026-02-22T05:06:21Z [INFO] webhook-dispatcher: payload exceeded max size\n2026-02-22T05:06:51Z [DEBUG] pdf-renderer: payload exceeded max size\n2026-02-22T05:07:29Z [WARN] invoicing-api: successfully processed batch of 24 records\n2026-02-22T05:07:52Z [ERROR] notification-queue: cache miss, falling back to database\n2026-02-22T05:08:33Z [DEBUG] notification-queue: cache miss, falling back to database\n2026-02-22T05:08:42Z [WARN] webhook-dispatcher: validation failed for field 'amount'\n2026-02-22T05:09:03Z [DEBUG] scheduler: deduplicated 3 identical events\n2026-02-22T05:09:19Z [INFO] notification-queue: rate limit exceeded, backing off\n2026-02-22T05:09:32Z [INFO] auth-service: successfully processed batch of 24 records\n2026-02-22T05:10:03Z [INFO] scheduler: queue depth exceeded threshold\n2026-02-22T05:10:39Z [DEBUG] pdf-renderer: cache miss, falling back to database\n2026-02-22T05:10:40Z [ERROR] invoicing-api: deduplicated 3 identical events\n2026-02-22T05:11:07Z [INFO] export-service: unexpected null value in response\n2026-02-22T05:11:36Z [DEBUG] auth-service: cache miss, falling back to database\n2026-02-22T05:11:42Z [INFO] scheduler: rate limit exceeded, backing off\n2026-02-22T05:12:23Z [INFO] webhook-dispatcher: unexpected null value in response\n2026-02-22T05:13:05Z [DEBUG] pdf-renderer: health check passed\n2026-02-22T05:13:33Z [WARN] pdf-renderer: deduplicated 3 identical events\n2026-02-22T05:14:16Z [ERROR] invoicing-api: unexpected null value in response\n2026-02-22T05:14:52Z [INFO] billing-worker: token refresh succeeded\n2026-02-22T05:15:01Z [DEBUG] invoicing-api: rate limit exceeded, backing off\n2026-02-22T05:15:26Z [INFO] auth-service: circuit breaker opened for downstream call\n2026-02-22T05:15:51Z [ERROR] invoicing-api: cache miss, falling back to database\n2026-02-22T05:16:33Z [ERROR] webhook-dispatcher: request timed out after 30s\n2026-02-22T05:17:02Z [DEBUG] export-service: rate limit exceeded, backing off\n2026-02-22T05:17:26Z [WARN] notification-queue: successfully processed batch of 24 records\n2026-02-22T05:18:00Z [INFO] invoicing-api: token refresh succeeded"
+    },
+    {
+      "role": "user",
+      "content": "Can I add a second team member to review invoices before they go out?\n\nFor reference, here are the line items in question:\n8 x Training session - GBP 112.00\n3 x Training session - GBP 273.00\n4 x Design review - GBP 148.00\n12 x Support hours - GBP 375.00\n2 x Monthly retainer - GBP 314.00\n4 x Training session - GBP 410.00\n4 x Consulting hours - GBP 314.00"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, go to Settings > Team and send an invite with the Reviewer role.\n\nHere's what I'm seeing in the logs:\n2026-03-01T12:32:35Z [WARN] webhook-dispatcher: validation failed for field 'amount'\n2026-03-01T12:32:38Z [ERROR] scheduler: retrying operation (attempt 2 of 3)\n2026-03-01T12:32:58Z [ERROR] auth-service: health check passed\n2026-03-01T12:33:04Z [INFO] scheduler: retrying operation (attempt 2 of 3)\n2026-03-01T12:33:40Z [DEBUG] auth-service: request timed out after 30s\n2026-03-01T12:34:25Z [INFO] scheduler: connection reset by peer\n2026-03-01T12:35:06Z [ERROR] export-service: connection reset by peer\n2026-03-01T12:35:36Z [DEBUG] pdf-renderer: request timed out after 30s\n2026-03-01T12:36:03Z [ERROR] pdf-renderer: request timed out after 30s\n2026-03-01T12:36:20Z [WARN] notification-queue: connection reset by peer\n2026-03-01T12:37:00Z [ERROR] export-service: token refresh succeeded\n2026-03-01T12:37:19Z [WARN] auth-service: queue depth exceeded threshold\n2026-03-01T12:37:47Z [WARN] billing-worker: scheduled job completed in 842ms\n2026-03-01T12:38:17Z [DEBUG] auth-service: circuit breaker opened for downstream call\n2026-03-01T12:38:43Z [DEBUG] billing-worker: deduplicated 3 identical events\n2026-03-01T12:39:02Z [DEBUG] webhook-dispatcher: rate limit exceeded, backing off\n2026-03-01T12:39:42Z [DEBUG] export-service: deduplicated 3 identical events\n2026-03-01T12:39:44Z [ERROR] billing-worker: rate limit exceeded, backing off\n2026-03-01T12:39:53Z [DEBUG] auth-service: rate limit exceeded, backing off\n2026-03-01T12:40:01Z [DEBUG] billing-worker: circuit breaker opened for downstream call\n2026-03-01T12:40:02Z [ERROR] invoicing-api: queue depth exceeded threshold\n2026-03-01T12:40:36Z [DEBUG] invoicing-api: validation failed for field 'amount'\n2026-03-01T12:41:19Z [DEBUG] billing-worker: queue depth exceeded threshold"
+    },
+    {
+      "role": "user",
+      "content": "Can I customise the email subject line when sending an invoice?\n\nFor reference, here are the line items in question:\n9 x Data migration - GBP 260.00\n1 x Consulting hours - GBP 405.00\n2 x Design review - GBP 98.00\n12 x Data migration - GBP 187.00\n6 x Custom report - GBP 403.00\n8 x Integration setup - GBP 190.00\n3 x Training session - GBP 175.00\n10 x Integration setup - GBP 133.00\n12 x Custom report - GBP 390.00\n5 x Data migration - GBP 393.00\n7 x Priority support - GBP 157.00\n5 x Custom report - GBP 253.00"
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, under Settings > Email Templates you can edit the subject line.\n\nHere's what I'm seeing in the logs:\n2026-06-09T18:06:27Z [INFO] notification-queue: request timed out after 30s\n2026-06-09T18:06:47Z [ERROR] pdf-renderer: request timed out after 30s\n2026-06-09T18:07:06Z [INFO] notification-queue: circuit breaker opened for downstream call\n2026-06-09T18:07:24Z [ERROR] billing-worker: scheduled job completed in 842ms\n2026-06-09T18:07:48Z [INFO] notification-queue: validation failed for field 'amount'\n2026-06-09T18:08:12Z [ERROR] auth-service: payload exceeded max size\n2026-06-09T18:08:30Z [INFO] auth-service: payload exceeded max size\n2026-06-09T18:09:14Z [ERROR] invoicing-api: circuit breaker opened for downstream call\n2026-06-09T18:09:38Z [DEBUG] invoicing-api: token refresh succeeded\n2026-06-09T18:10:12Z [ERROR] billing-worker: successfully processed batch of 24 records\n2026-06-09T18:10:38Z [INFO] scheduler: queue depth exceeded threshold\n2026-06-09T18:11:15Z [WARN] webhook-dispatcher: request timed out after 30s\n2026-06-09T18:11:24Z [DEBUG] notification-queue: scheduled job completed in 842ms\n2026-06-09T18:11:32Z [WARN] pdf-renderer: health check passed\n2026-06-09T18:12:00Z [WARN] scheduler: connection reset by peer\n2026-06-09T18:12:09Z [WARN] notification-queue: unexpected null value in response\n2026-06-09T18:12:34Z [INFO] scheduler: rate limit exceeded, backing off\n2026-06-09T18:12:58Z [DEBUG] notification-queue: deduplicated 3 identical events"
+    },
+    {
+      "role": "user",
+      "content": "Does Ledgerline support recurring invoices for retainer clients?\n\nFor reference, here are the line items in question:\n1 x Software licence - GBP 424.00\n1 x Consulting hours - GBP 187.00\n12 x Priority support - GBP 445.00\n12 x Consulting hours - GBP 301.00\n1 x Consulting hours - GBP 92.00\n3 x Software licence - GBP 229.00\n5 x Data migration - GBP 332.00\n1 x API usage overage - GBP 340.00\n9 x Priority support - GBP 350.00\n2 x Software licence - GBP 364.00"
+    },
+    {
+      "role": "assistant",
+      "content": "It does, you can set a monthly or weekly schedule when creating an invoice.\n\nHere's what I'm seeing in the logs:\n2026-09-26T14:47:51Z [INFO] pdf-renderer: connection reset by peer\n2026-09-26T14:48:15Z [DEBUG] auth-service: validation failed for field 'amount'\n2026-09-26T14:48:24Z [DEBUG] auth-service: token refresh succeeded\n2026-09-26T14:48:53Z [INFO] pdf-renderer: token refresh succeeded\n2026-09-26T14:49:07Z [INFO] pdf-renderer: validation failed for field 'amount'\n2026-09-26T14:49:31Z [ERROR] billing-worker: health check passed\n2026-09-26T14:49:44Z [DEBUG] scheduler: cache miss, falling back to database\n2026-09-26T14:49:56Z [DEBUG] notification-queue: queue depth exceeded threshold\n2026-09-26T14:50:10Z [DEBUG] billing-worker: rate limit exceeded, backing off\n2026-09-26T14:50:22Z [WARN] invoicing-api: connection reset by peer\n2026-09-26T14:50:58Z [DEBUG] auth-service: successfully processed batch of 24 records\n2026-09-26T14:51:21Z [INFO] billing-worker: retrying operation (attempt 2 of 3)\n2026-09-26T14:51:57Z [DEBUG] export-service: health check passed\n2026-09-26T14:52:14Z [WARN] export-service: queue depth exceeded threshold\n2026-09-26T14:52:16Z [ERROR] pdf-renderer: cache miss, falling back to database\n2026-09-26T14:52:28Z [INFO] notification-queue: request timed out after 30s\n2026-09-26T14:52:46Z [DEBUG] pdf-renderer: scheduled job completed in 842ms\n2026-09-26T14:53:27Z [DEBUG] scheduler: queue depth exceeded threshold\n2026-09-26T14:53:41Z [ERROR] export-service: successfully processed batch of 24 records\n2026-09-26T14:54:07Z [ERROR] export-service: token refresh succeeded\n2026-09-26T14:54:35Z [INFO] invoicing-api: health check passed\n2026-09-26T14:54:37Z [DEBUG] auth-service: request timed out after 30s\n2026-09-26T14:54:39Z [WARN] pdf-renderer: circuit breaker opened for downstream call\n2026-09-26T14:54:43Z [ERROR] invoicing-api: unexpected null value in response\n2026-09-26T14:55:25Z [ERROR] pdf-renderer: cache miss, falling back to database\n2026-09-26T14:55:43Z [ERROR] auth-service: cache miss, falling back to database\n2026-09-26T14:56:26Z [WARN] invoicing-api: unexpected null value in response\n2026-09-26T14:56:35Z [DEBUG] webhook-dispatcher: deduplicated 3 identical events\n2026-09-26T14:56:56Z [INFO] webhook-dispatcher: token refresh succeeded"
+    },
+    {
+      "role": "user",
+      "content": "Before we close this out, can you confirm the account ID, the plan we're on, the original error code you logged, and the time zone you have on file for us?"
     }
   ],
   "expected_facts": [

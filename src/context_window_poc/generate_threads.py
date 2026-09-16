@@ -3,7 +3,10 @@
 No LLM involved. Each thread plants four facts (account id, plan name, error code,
 time zone) in the first two exchanges, fills the middle with unrelated support
 back-and-forth that never repeats those facts, then closes with a customer question
-that needs them. Everything is invented; see data/README.md.
+that needs them. Full-history threads target roughly 50,000-62,000 characters (about
+12,000-16,000 real tokens on qwen3:8b, verified with `make calibrate`), so at 2000,
+4000 and 8000 token budgets the trimming strategies actually have to trim something.
+Everything is invented; see data/README.md.
 """
 
 from __future__ import annotations
@@ -125,6 +128,81 @@ CLOSING_QUESTION_TEMPLATES = [
     "Can you confirm for our records what account ID, plan, error code and time zone you have noted for this ticket?",
 ]
 
+# Pasted content pools used to pad filler turns to a realistic length (pasted log
+# excerpts, pasted invoice line items). None of these reference account ids, plan
+# names, error codes or time zones.
+LOG_LEVELS = ["INFO", "WARN", "ERROR", "DEBUG"]
+LOG_COMPONENTS = [
+    "invoicing-api",
+    "auth-service",
+    "pdf-renderer",
+    "webhook-dispatcher",
+    "billing-worker",
+    "export-service",
+    "notification-queue",
+    "scheduler",
+]
+LOG_MESSAGES = [
+    "request timed out after 30s",
+    "retrying operation (attempt 2 of 3)",
+    "connection reset by peer",
+    "validation failed for field 'amount'",
+    "queue depth exceeded threshold",
+    "cache miss, falling back to database",
+    "rate limit exceeded, backing off",
+    "payload exceeded max size",
+    "unexpected null value in response",
+    "successfully processed batch of 24 records",
+    "token refresh succeeded",
+    "scheduled job completed in 842ms",
+    "health check passed",
+    "circuit breaker opened for downstream call",
+    "deduplicated 3 identical events",
+]
+
+INVOICE_ITEMS = [
+    "Consulting hours",
+    "Design review",
+    "Monthly retainer",
+    "Software licence",
+    "Onboarding session",
+    "Support hours",
+    "API usage overage",
+    "Custom report",
+    "Training session",
+    "Data migration",
+    "Priority support",
+    "Integration setup",
+]
+
+
+def _log_excerpt(rng: random.Random, n_lines: int) -> str:
+    lines = []
+    hour, minute, second = rng.randint(0, 23), rng.randint(0, 59), rng.randint(0, 59)
+    day, month = rng.randint(1, 28), rng.randint(1, 12)
+    for _ in range(n_lines):
+        timestamp = f"2026-{month:02d}-{day:02d}T{hour:02d}:{minute:02d}:{second:02d}Z"
+        level = rng.choice(LOG_LEVELS)
+        component = rng.choice(LOG_COMPONENTS)
+        message = rng.choice(LOG_MESSAGES)
+        lines.append(f"{timestamp} [{level}] {component}: {message}")
+        second += rng.randint(1, 45)
+        minute += second // 60
+        second %= 60
+        hour = (hour + minute // 60) % 24
+        minute %= 60
+    return "\n".join(lines)
+
+
+def _invoice_lines(rng: random.Random, n_lines: int) -> str:
+    lines = []
+    for _ in range(n_lines):
+        qty = rng.randint(1, 12)
+        item = rng.choice(INVOICE_ITEMS)
+        amount = rng.randint(20, 450)
+        lines.append(f"{qty} x {item} - GBP {amount}.00")
+    return "\n".join(lines)
+
 
 @dataclass(frozen=True)
 class Thread:
@@ -155,26 +233,63 @@ def _opening_turns(rng: random.Random, facts: dict[str, str]) -> list[dict]:
     ]
 
 
-def _filler_turns(rng: random.Random, n_pairs: int) -> list[dict]:
-    turns: list[dict] = []
-    for _ in range(n_pairs):
-        user_text, assistant_text = rng.choice(FILLER_PAIRS)
-        turns.append({"role": "user", "content": user_text})
-        turns.append({"role": "assistant", "content": assistant_text})
-    return turns
+def _filler_pair(rng: random.Random) -> tuple[dict, dict]:
+    user_text, assistant_text = rng.choice(FILLER_PAIRS)
+
+    # Realistic bulk: a pasted log excerpt on most replies (this is what actually
+    # makes threads long, the way a real agent pastes logs while investigating), and
+    # sometimes a pasted invoice on the customer's side too.
+    log_block = _log_excerpt(rng, rng.randint(15, 30))
+    assistant_text = f"{assistant_text}\n\nHere's what I'm seeing in the logs:\n{log_block}"
+
+    if rng.random() < 0.3:
+        invoice_block = _invoice_lines(rng, rng.randint(6, 16))
+        user_text = f"{user_text}\n\nFor reference, here are the line items in question:\n{invoice_block}"
+
+    return (
+        {"role": "user", "content": user_text},
+        {"role": "assistant", "content": assistant_text},
+    )
+
+
+# Character target for a full thread: chosen so that, verified against real API usage
+# via `make calibrate`, full history lands around 12,000-16,000 tokens, well above the
+# largest 8,000 token budget under test.
+TARGET_CHARS_RANGE = (50_000, 62_000)
+MIN_FILLER_PAIRS, MAX_FILLER_PAIRS = 18, 37
 
 
 def generate_thread(seed: int, index: int) -> Thread:
     rng = random.Random(seed + index)
     facts = _make_facts(rng)
 
-    # Odd total in [41, 79] keeps the final turn's index even (role "user").
-    total_turns = rng.choice(range(41, 80, 2))
     opening = _opening_turns(rng, facts)
-    filler_pairs = (total_turns - len(opening) - 1) // 2
-    filler = _filler_turns(rng, filler_pairs)
     closing = [{"role": "user", "content": rng.choice(CLOSING_QUESTION_TEMPLATES)}]
+    target_chars = rng.randint(*TARGET_CHARS_RANGE)
 
+    filler: list[dict] = []
+    current_chars = sum(len(t["content"]) for t in opening + closing)
+    pairs_built = 0
+    while True:
+        user_turn, assistant_turn = _filler_pair(rng)
+        filler.append(user_turn)
+        filler.append(assistant_turn)
+        current_chars += len(user_turn["content"]) + len(assistant_turn["content"])
+        pairs_built += 1
+        if pairs_built >= MAX_FILLER_PAIRS:
+            break
+        if pairs_built >= MIN_FILLER_PAIRS and current_chars >= target_chars:
+            break
+
+    if current_chars < target_chars:
+        # Turn-count ceiling reached before the character target: pad the last turn
+        # with more pasted log lines rather than adding more turns.
+        deficit = target_chars - current_chars
+        extra_lines = max(5, deficit // 55)
+        filler[-1]["content"] += "\n\nAdditional log context:\n" + _log_excerpt(rng, extra_lines)
+
+    # Total turns = 4 opening + 2*pairs_built filler + 1 closing, always odd, so the
+    # final turn's index is even and its role is "user".
     turns = opening + filler + closing
     expected_facts = [facts[key] for key in FACT_KEYS]
 

@@ -1,6 +1,17 @@
 import math
 
 from context_window_poc.generate_threads import FACT_KEYS, generate_dataset, generate_thread
+from context_window_poc.tokens import DEFAULT_FIT, estimate_tokens_for
+
+LARGEST_BUDGET = 8000
+# "Clear margin" over the largest budget: comfortably inside the 12,000-16,000 token
+# target range for full-history size, verified against real usage via `make calibrate`.
+MARGIN_FACTOR = 1.5
+
+
+def _estimated_tokens(thread) -> int:
+    chars = sum(len(t["content"]) for t in thread.turns)
+    return estimate_tokens_for(chars=chars, n_messages=len(thread.turns) + 1, fit=DEFAULT_FIT)
 
 
 def test_thread_length_in_range():
@@ -58,3 +69,13 @@ def test_generate_dataset_produces_twenty_unique_threads():
     assert len(ids) == 20
     account_ids = {t.facts["account_id"] for t in threads}
     assert len(account_ids) > 1
+
+
+def test_every_thread_exceeds_the_largest_budget_by_a_clear_margin():
+    threads = generate_dataset(n=20, base_seed=20260915)
+    for thread in threads:
+        estimated = _estimated_tokens(thread)
+        assert estimated > LARGEST_BUDGET * MARGIN_FACTOR, (
+            f"{thread.thread_id} estimated at {estimated} tokens, "
+            f"not clearly above {LARGEST_BUDGET * MARGIN_FACTOR:.0f}"
+        )
