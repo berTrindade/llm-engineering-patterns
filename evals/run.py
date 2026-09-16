@@ -23,7 +23,7 @@ from context_window_poc.strategies import (
     summarise_older,
     token_budget,
 )
-from context_window_poc.tokens import estimate_messages_tokens, load_calibration
+from context_window_poc.tokens import CalibrationFit, estimate_messages_tokens, load_calibration
 
 SYSTEM_PROMPT = (
     "You are a Ledgerline support agent. Ledgerline is small-business invoicing "
@@ -33,6 +33,17 @@ SYSTEM_PROMPT = (
 )
 
 BUDGETED_STRATEGIES = ("last_n", "token_budget", "summarise_older")
+
+# Prompts here run to 12,000-16,000 real tokens; prefill takes longer than the
+# client default allows for, and Ollama serves one request at a time.
+CHAT_CALL_TIMEOUT_S = 300.0
+
+# If real prompt_tokens comes back below this fraction of the estimate, the server
+# may have silently truncated the prompt rather than the estimator being off. qwen3:8b
+# on this deployment has context_length 40960 (verified by the lead), well above our
+# largest full-history prompt, so this should not trigger; it is recorded as a guard,
+# not assumed away.
+TRUNCATION_GUARD_FACTOR = 0.5
 
 
 @dataclass
@@ -45,6 +56,7 @@ class CaseResult:
     extra_tokens: int
     latency_ms: float | None
     estimator_error_pct: float | None
+    possible_truncation: bool | None
     failed: bool
     reason: str | None
 
@@ -68,6 +80,7 @@ def aggregate(results: list[CaseResult]) -> list[dict]:
                 "budget": budget,
                 "n": len(group),
                 "failures": sum(1 for r in group if r.failed),
+                "possible_truncations": sum(1 for r in group if r.possible_truncation),
                 "fact_recall": _mean(recalls),
                 "prompt_tokens_real": _mean([r.prompt_tokens_real for r in successes]),
                 "extra_tokens": _mean([r.extra_tokens for r in group]),
@@ -89,6 +102,7 @@ def format_table(rows: list[dict]) -> str:
         "latency_ms",
         "estimator_error_pct",
         "failures",
+        "possible_truncations",
     ]
     lines = [" | ".join(headers)]
     for row in rows:
@@ -103,23 +117,29 @@ def format_table(rows: list[dict]) -> str:
                     f"{row['latency_ms']:.0f}" if row["latency_ms"] is not None else "-",
                     f"{row['estimator_error_pct']:.1f}" if row["estimator_error_pct"] is not None else "-",
                     str(row["failures"]),
+                    str(row["possible_truncations"]),
                 ]
             )
         )
     return "\n".join(lines)
 
 
-def _run_case(thread: dict, strategy: str, budget: int | None, model: str, ratio: float, cache: dict) -> CaseResult:
+def _run_case(
+    thread: dict, strategy: str, budget: int | None, model: str, fit: CalibrationFit, cache: dict
+) -> CaseResult:
     turns = thread["turns"]
+
+    def estimator(messages: list[dict]) -> int:
+        return estimate_messages_tokens(messages, fit)
 
     if strategy == "full_history":
         messages = full_history(SYSTEM_PROMPT, turns)
         extra_tokens = 0
     elif strategy == "last_n":
-        messages = last_n(SYSTEM_PROMPT, turns, budget, estimate_messages_tokens)
+        messages = last_n(SYSTEM_PROMPT, turns, budget, estimator)
         extra_tokens = 0
     elif strategy == "token_budget":
-        messages = token_budget(SYSTEM_PROMPT, turns, budget, estimate_messages_tokens)
+        messages = token_budget(SYSTEM_PROMPT, turns, budget, estimator)
         extra_tokens = 0
     elif strategy == "summarise_older":
 
@@ -134,21 +154,20 @@ def _run_case(thread: dict, strategy: str, budget: int | None, model: str, ratio
                     }
                 ],
                 model=model,
+                timeout=CHAT_CALL_TIMEOUT_S,
             )
             return response.content, response.prompt_tokens + response.completion_tokens
 
         cache_key = f"{thread['thread_id']}:{budget}"
-        messages = summarise_older(
-            SYSTEM_PROMPT, turns, budget, estimate_messages_tokens, summarise_fn, cache, cache_key
-        )
+        messages = summarise_older(SYSTEM_PROMPT, turns, budget, estimator, summarise_fn, cache, cache_key)
         extra_tokens = cache.get(cache_key, {}).get("tokens", 0)
     else:
         raise ValueError(f"unknown strategy: {strategy}")
 
-    estimated = estimate_messages_tokens(messages, ratio)
+    estimated = estimate_messages_tokens(messages, fit)
 
     try:
-        response = chat_completion(messages=messages, model=model)
+        response = chat_completion(messages=messages, model=model, timeout=CHAT_CALL_TIMEOUT_S)
     except Exception as exc:  # noqa: BLE001 - recorded, not swallowed
         return CaseResult(
             thread_id=thread["thread_id"],
@@ -159,6 +178,7 @@ def _run_case(thread: dict, strategy: str, budget: int | None, model: str, ratio
             extra_tokens=extra_tokens,
             latency_ms=None,
             estimator_error_pct=None,
+            possible_truncation=None,
             failed=True,
             reason=str(exc),
         )
@@ -168,6 +188,9 @@ def _run_case(thread: dict, strategy: str, budget: int | None, model: str, ratio
         abs(estimated - response.prompt_tokens) / response.prompt_tokens * 100
         if response.prompt_tokens
         else None
+    )
+    possible_truncation = (
+        response.prompt_tokens < estimated * TRUNCATION_GUARD_FACTOR if estimated else False
     )
 
     return CaseResult(
@@ -179,6 +202,7 @@ def _run_case(thread: dict, strategy: str, budget: int | None, model: str, ratio
         extra_tokens=extra_tokens,
         latency_ms=response.latency_ms,
         estimator_error_pct=error_pct,
+        possible_truncation=possible_truncation,
         failed=False,
         reason=None,
     )
@@ -190,7 +214,7 @@ def main() -> None:
     budgets = [int(b) for b in os.environ.get("EVAL_BUDGETS", "2000,4000,8000").split(",")]
     results_file = os.environ.get("RESULTS_FILE", f"results/{datetime.now(UTC).date().isoformat()}.json")
 
-    ratio = load_calibration()
+    fit = load_calibration()
 
     thread_paths = sorted(Path("data/threads").glob("*.json"))
     if limit:
@@ -201,10 +225,10 @@ def main() -> None:
     cache: dict = {}
 
     for thread in threads:
-        results.append(_run_case(thread, "full_history", None, model, ratio, cache))
+        results.append(_run_case(thread, "full_history", None, model, fit, cache))
         for strategy in BUDGETED_STRATEGIES:
             for budget in budgets:
-                results.append(_run_case(thread, strategy, budget, model, ratio, cache))
+                results.append(_run_case(thread, strategy, budget, model, fit, cache))
 
     rows = aggregate(results)
     table = format_table(rows)
@@ -219,7 +243,7 @@ def main() -> None:
                 "model": model,
                 "budgets": budgets,
                 "n_threads": len(threads),
-                "estimator_chars_per_token": ratio,
+                "estimator_fit": {"a": fit.a, "b": fit.b, "c": fit.c},
                 "rows": rows,
                 "cases": [asdict(r) for r in results],
             },
