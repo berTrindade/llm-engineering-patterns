@@ -209,6 +209,19 @@ def _run_case(
     )
 
 
+def load_completed(out_path: Path, resume: bool) -> tuple[list[CaseResult], set[str]]:
+    """Cases already recorded in out_path, and the thread ids they cover.
+
+    Returns nothing unless resume is set, so a plain run always starts clean rather than
+    quietly building on an older results file.
+    """
+    if not (resume and out_path.exists()):
+        return [], set()
+    prior = json.loads(out_path.read_text())
+    cases = [CaseResult(**case) for case in prior.get("cases", [])]
+    return cases, {case.thread_id for case in cases}
+
+
 def main() -> None:
     model = os.environ.get("CHEAP_MODEL", "qwen3:8b")
     limit = os.environ.get("EVAL_LIMIT")
@@ -222,11 +235,17 @@ def main() -> None:
         thread_paths = thread_paths[: int(limit)]
     threads = [json.loads(p.read_text()) for p in thread_paths]
 
-    results: list[CaseResult] = []
     cache: dict = {}
 
     out_path = Path(results_file)
     out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    # EVAL_RESUME=1 keeps the cases already in results_file and runs only the threads
+    # missing from it, so an interrupted run does not repeat finished work. Off by
+    # default: a plain `make eval` should never quietly reuse an older run.
+    results, done_ids = load_completed(out_path, os.environ.get("EVAL_RESUME") == "1")
+    if done_ids:
+        print(f"resuming: {len(done_ids)} threads already complete", flush=True)
 
     def write_results() -> None:
         out_path.write_text(
@@ -246,6 +265,8 @@ def main() -> None:
         )
 
     for i, thread in enumerate(threads, 1):
+        if thread["thread_id"] in done_ids:
+            continue
         results.append(_run_case(thread, "full_history", None, model, fit, cache))
         for strategy in BUDGETED_STRATEGIES:
             for budget in budgets:
