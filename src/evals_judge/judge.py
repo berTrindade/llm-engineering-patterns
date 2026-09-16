@@ -55,6 +55,7 @@ class JudgeVerdict:
     prompt_tokens: int = 0
     completion_tokens: int = 0
     error: str | None = None
+    failed: bool = False
 
 
 @dataclass
@@ -64,6 +65,7 @@ class PairVerdict:
     model: str = ""
     latency_ms: float = 0.0
     error: str | None = None
+    failed: bool = False
 
 
 def _rubric_text() -> str:
@@ -81,7 +83,13 @@ def judge_case(case: ReplyCase, policy_text: str, model: str) -> JudgeVerdict:
     try:
         response = chat(messages, model=model, response_format=JUDGE_SCHEMA)
     except Exception as exc:  # noqa: BLE001 - recorded, not swallowed
-        return JudgeVerdict(case_id=case.id, verdict=None, model=model, error=str(exc))
+        return JudgeVerdict(
+            case_id=case.id,
+            verdict=None,
+            model=model,
+            error=f"{type(exc).__name__}: {exc}",
+            failed=True,
+        )
 
     try:
         data = json.loads(response.content)
@@ -135,7 +143,13 @@ def judge_pair(
     try:
         response = chat(messages, model=model, response_format=PAIR_SCHEMA)
     except Exception as exc:  # noqa: BLE001 - recorded, not swallowed
-        return PairVerdict(pair_id=pair_id, winner=None, model=model, error=str(exc))
+        return PairVerdict(
+            pair_id=pair_id,
+            winner=None,
+            model=model,
+            error=f"{type(exc).__name__}: {exc}",
+            failed=True,
+        )
 
     try:
         data = json.loads(response.content)

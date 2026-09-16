@@ -76,8 +76,11 @@ def generate_pairs(seed: int = 7, n: int = 20) -> list[Pair]:
     return pairs
 
 
-def run_position_bias(pairs: list[Pair], policy_text: str, model: str, judge_pair_fn=judge_pair) -> dict:
+def run_position_bias(
+    pairs: list[Pair], policy_text: str, model: str, judge_pair_fn=judge_pair, on_record=None
+) -> dict:
     records = []
+    failures = 0
     flips = 0
     flip_denominator = 0
     a_wins = 0
@@ -96,6 +99,7 @@ def run_position_bias(pairs: list[Pair], policy_text: str, model: str, judge_pai
         run1_winner = {"A": "better", "B": "worse"}.get(r1.winner)
         run2_winner = {"B": "better", "A": "worse"}.get(r2.winner)
 
+        failures += r1.failed + r2.failed
         for verdict in (r1, r2):
             if verdict.winner in ("A", "B"):
                 valid_trials += 1
@@ -120,9 +124,12 @@ def run_position_bias(pairs: list[Pair], policy_text: str, model: str, judge_pai
                 "flipped": flipped,
             }
         )
+        if on_record is not None:
+            on_record(records)
 
     return {
         "flip_rate": flips / flip_denominator if flip_denominator else 0.0,
         "first_position_win_share": a_wins / valid_trials if valid_trials else 0.0,
+        "failures": failures,
         "records": records,
     }

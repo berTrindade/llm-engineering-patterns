@@ -78,6 +78,7 @@ def build_summary(
         "per_scorer_agreement": per_scorer_agreement,
         "judge_vs_designed_agreement": judge_vs_designed_agreement,
         "judge_errors": judge_errors,
+        "judge_failures": sum(1 for v in judge_results if v.failed),
         "human_labelled_count": len(human_labels),
         "human_kappa": human_kappa,
         "human_status": human_status,
@@ -85,6 +86,7 @@ def build_summary(
         "position_bias_first_position_win_share": position_bias.get(
             "first_position_win_share", 0.0
         ),
+        "position_bias_failures": position_bias.get("failures", 0),
         "judge_mean_latency_ms": mean_latency,
         "judge_mean_prompt_tokens": mean_prompt_tokens,
         "judge_mean_completion_tokens": mean_completion_tokens,
@@ -99,7 +101,8 @@ def format_table(summary: dict) -> str:
     lines.append("")
     lines.append(
         f"Judge vs designed labels agreement: {summary['judge_vs_designed_agreement']:.1%}"
-        f" (judge errors: {summary['judge_errors']})"
+        f" (judge errors: {summary['judge_errors']},"
+        f" of which call failures: {summary['judge_failures']})"
     )
     lines.append("")
     lines.append(summary["human_status"])
@@ -108,6 +111,7 @@ def format_table(summary: dict) -> str:
     lines.append(
         f"First-position win share: {summary['position_bias_first_position_win_share']:.1%}"
     )
+    lines.append(f"Position bias call failures: {summary['position_bias_failures']}")
     lines.append("")
     lines.append(f"Judge mean latency: {summary['judge_mean_latency_ms']:.0f} ms")
     lines.append(f"Judge mean prompt tokens: {summary['judge_mean_prompt_tokens']:.1f}")
@@ -127,31 +131,47 @@ def main() -> None:
     judge_model = os.environ.get("JUDGE_MODEL") or os.environ.get("STRONG_MODEL", "qwen3.5:35b")
 
     scorer_results = {scorer.__name__: [scorer(c) for c in cases] for scorer in SCORERS}
-    judge_results = [judge_case(c, policy_text, judge_model) for c in cases]
-
-    pairs = generate_pairs(n=20)
-    if is_smoke:
-        pairs = pairs[: int(limit)]
-    position_bias_result = run_position_bias(pairs, policy_text, judge_model)
-
     human_labels = load_labels(LABELS_PATH)
-
-    summary = build_summary(cases, scorer_results, judge_results, human_labels, position_bias_result)
-    print(format_table(summary))
 
     RESULTS_DIR.mkdir(exist_ok=True)
     date_str = datetime.datetime.now(tz=datetime.UTC).date().isoformat()
     filename = f"smoke-{date_str}.json" if is_smoke else f"{date_str}.json"
-    output = {
-        "summary": summary,
-        "judge_model": judge_model,
-        "n_cases": len(cases),
-        "smoke": is_smoke,
-        "position_bias": position_bias_result,
-        "judge_results": [dataclasses.asdict(v) for v in judge_results],
-    }
     out_path = RESULTS_DIR / filename
-    out_path.write_text(json.dumps(output, indent=2))
+
+    judge_results: list[JudgeVerdict] = []
+
+    # Rewritten after every judge call and every position-bias pair, so a run that dies or
+    # is killed keeps what it finished. complete stays false until the last write.
+    def write_results(position_bias: dict, complete: bool = False) -> dict:
+        summary = build_summary(cases, scorer_results, judge_results, human_labels, position_bias)
+        output = {
+            "summary": summary,
+            "judge_model": judge_model,
+            "n_cases": len(cases),
+            "smoke": is_smoke,
+            "complete": complete,
+            "position_bias": position_bias,
+            "judge_results": [dataclasses.asdict(v) for v in judge_results],
+        }
+        out_path.write_text(json.dumps(output, indent=2))
+        return summary
+
+    for case in cases:
+        judge_results.append(judge_case(case, policy_text, judge_model))
+        write_results({"records": []})
+
+    pairs = generate_pairs(n=20)
+    if is_smoke:
+        pairs = pairs[: int(limit)]
+    position_bias_result = run_position_bias(
+        pairs,
+        policy_text,
+        judge_model,
+        on_record=lambda records: write_results({"records": records}),
+    )
+
+    summary = write_results(position_bias_result, complete=True)
+    print(format_table(summary))
     print(f"\nWrote {out_path}")
 
 

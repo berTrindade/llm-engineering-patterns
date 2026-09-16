@@ -1,6 +1,8 @@
+import httpx
+
 from evals.run import build_summary, format_table
 from evals_judge.dataset import ReplyCase
-from evals_judge.judge import JudgeVerdict
+from evals_judge.judge import JudgeVerdict, judge_case
 from evals_judge.scorers import ScorerResult
 
 
@@ -90,3 +92,23 @@ def test_format_table_renders_without_raising():
     table = format_table(summary)
     assert "order_number_echoed" in table
     assert "Human labels" in table
+
+
+def test_judge_call_failure_is_recorded_and_counted(monkeypatch):
+    def timed_out(*args, **kwargs):
+        raise httpx.ReadTimeout("timed out")
+
+    monkeypatch.setattr("evals_judge.judge.chat", timed_out)
+    failed = judge_case(_cases()[1], "policy", "fake-model")
+
+    assert failed.failed is True
+    assert failed.verdict is None
+    assert failed.error == "ReadTimeout: timed out"
+
+    summary = build_summary(
+        _cases(), _scorer_results(), [_judge_results()[0], failed], {}, _position_bias()
+    )
+    assert summary["judge_failures"] == 1
+    assert summary["judge_errors"] == 1
+    assert summary["judge_vs_designed_agreement"] == 1.0
+    assert "call failures: 1" in format_table(summary)
