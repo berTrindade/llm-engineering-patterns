@@ -196,14 +196,20 @@ def main() -> None:
     def chat_fn(**kwargs):
         return chat_completion(base_url=config.llm_base_url, api_key=config.llm_api_key, **kwargs)
 
-    outcomes = [run_task(task, seed_state, chat_fn, model) for task in tasks]
-    report = build_report(outcomes)
-    print_table(report)
-
     RESULTS_DIR.mkdir(exist_ok=True)
     date_str = datetime.now(UTC).strftime("%Y-%m-%d")
     filename = f"smoke-{date_str}.json" if is_smoke else f"{date_str}.json"
     out_path = RESULTS_DIR / filename
+
+    outcomes: list[TaskOutcome] = []
+    for task in tasks:
+        outcomes.append(run_task(task, seed_state, chat_fn, model))
+        # Written after every task, so a run that stalls or is killed keeps what it finished.
+        out_path.write_text(json.dumps({**build_report(outcomes), "complete": False}, indent=2))
+
+    report = {**build_report(outcomes), "complete": True}
+    print_table(report)
+
     out_path.write_text(json.dumps(report, indent=2))
     print(f"\nWrote {out_path}")
 
