@@ -1,0 +1,97 @@
+{
+  "summary": {
+    "n_cases": 3,
+    "per_scorer_agreement": {
+      "order_number_echoed": 0.6666666666666666,
+      "no_forbidden_promise": 0.6666666666666666,
+      "length_within_bounds": 0.6666666666666666
+    },
+    "judge_vs_designed_agreement": 0.6666666666666666,
+    "judge_errors": 0,
+    "human_labelled_count": 0,
+    "human_kappa": null,
+    "human_status": "Human labels: 0 of 3, run `make label`",
+    "position_bias_flip_rate": 0.0,
+    "position_bias_first_position_win_share": 0.5,
+    "judge_mean_latency_ms": 12434.975471997555,
+    "judge_mean_prompt_tokens": 775.3333333333334,
+    "judge_mean_completion_tokens": 80
+  },
+  "judge_model": "qwen3:8b",
+  "n_cases": 3,
+  "smoke": true,
+  "position_bias": {
+    "flip_rate": 0.0,
+    "first_position_win_share": 0.5,
+    "records": [
+      {
+        "pair_id": "pair-001",
+        "flaw_type": "forbidden_promise",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-002",
+        "flaw_type": "wrong_policy_fact",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      },
+      {
+        "pair_id": "pair-003",
+        "flaw_type": "missing_order_number",
+        "run1_winner": "better",
+        "run2_winner": "better",
+        "run1_error": null,
+        "run2_error": null,
+        "flipped": false
+      }
+    ]
+  },
+  "judge_results": [
+    {
+      "case_id": "case-001",
+      "verdict": "fail",
+      "failed_criteria": [
+        "policy_accuracy",
+        "forbidden_promise"
+      ],
+      "reason": "The reply incorrectly states that the return postage is free without confirming the order total was over GBP 50. It also fails to mention that personalised or made-to-order items cannot be returned unless faulty or damaged, even though the candles might be considered personalised or made-to-order.",
+      "model": "qwen3:8b",
+      "latency_ms": 4286.128292005742,
+      "prompt_tokens": 799,
+      "completion_tokens": 86,
+      "error": null
+    },
+    {
+      "case_id": "case-002",
+      "verdict": "fail",
+      "failed_criteria": [
+        "tone",
+        "answers_question"
+      ],
+      "reason": "The reply has a dismissive tone by saying 'Honestly, this is obvious if you'd checked our policy first', which violates the tone criteria. Additionally, it does not directly answer the customer's question about the delivery timeline for their specific order, failing the answers_question criterion.",
+      "model": "qwen3:8b",
+      "latency_ms": 7126.007415994536,
+      "prompt_tokens": 762,
+      "completion_tokens": 83,
+      "error": null
+    },
+    {
+      "case_id": "case-003",
+      "verdict": "pass",
+      "failed_criteria": [],
+      "reason": "The reply adheres to all criteria: it accurately reflects the policy for damaged items, repeats the order number back to the customer, makes no forbidden promises, maintains a professional and courteous tone, and directly addresses the customer's question about damaged goods.",
+      "model": "qwen3:8b",
+      "latency_ms": 25892.79070799239,
+      "prompt_tokens": 765,
+      "completion_tokens": 71,
+      "error": null
+    }
+  ]
+}
