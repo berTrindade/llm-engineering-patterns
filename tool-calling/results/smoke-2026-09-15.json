@@ -1,0 +1,212 @@
+{
+  "task_count": 3,
+  "success_count": 2,
+  "success_rate": 0.6666666666666666,
+  "by_category": {
+    "simple": {
+      "total": 3,
+      "success": 2,
+      "success_rate": 0.6666666666666666
+    }
+  },
+  "mean_tool_calls": 3.0,
+  "mean_iterations": 4.0,
+  "recovered_error_count": 0,
+  "failures_by_type": {
+    "wrong_end_state": 1
+  },
+  "mean_latency_ms": 7761.410236669083,
+  "mean_prompt_tokens": 4920.666666666667,
+  "mean_completion_tokens": 277.0,
+  "tasks": [
+    {
+      "task_id": "s01",
+      "category": "simple",
+      "success": false,
+      "failure_type": "wrong_end_state",
+      "reason": "meeting_exists check failed, no meeting matched: {'type': 'meeting_exists', 'attendees': ['p03', 'p09'], 'room_id': 'room-3', 'title_contains': 'Contract review', 'duration_minutes': 30}",
+      "tool_call_count": 3,
+      "iterations": 4,
+      "recovered_error_count": 0,
+      "prompt_tokens": 4737,
+      "completion_tokens": 268,
+      "latency_ms": 9796.224251011154,
+      "final_message": "The meeting titled \"Contract review\" has been successfully booked for Carla Nunes (p03) and Isla Fraser (p10) in the Gannet room (room-3) on Wednesday, 16 September 2026, at 11:00 UTC for 30 minutes.",
+      "stopped_reason": "final_message",
+      "trace": [
+        {
+          "tool_name": "list_rooms",
+          "arguments": {
+            "min_capacity": 2,
+            "needs": [
+              "none"
+            ]
+          },
+          "result_or_error": "[]",
+          "is_error": false
+        },
+        {
+          "tool_name": "find_free_slots",
+          "arguments": {
+            "attendees": [
+              "p03",
+              "p10"
+            ],
+            "duration_minutes": 30,
+            "earliest": "2026-09-16T11:00:00+00:00",
+            "latest": "2026-09-16T11:30:00+00:00"
+          },
+          "result_or_error": "[{\"start\": \"2026-09-16T11:00:00+00:00\", \"end\": \"2026-09-16T11:30:00+00:00\"}]",
+          "is_error": false
+        },
+        {
+          "tool_name": "book_meeting",
+          "arguments": {
+            "title": "Contract review",
+            "attendees": [
+              "p03",
+              "p10"
+            ],
+            "room_id": "room-3",
+            "start": "2026-09-16T11:00:00+00:00",
+            "duration_minutes": 30
+          },
+          "result_or_error": "{\"id\": \"m-94e2d956\", \"title\": \"Contract review\", \"attendees\": [\"p03\", \"p10\"], \"room_id\": \"room-3\", \"start\": \"2026-09-16T11:00:00Z\", \"duration_minutes\": 30}",
+          "is_error": false
+        },
+        {
+          "tool_name": null,
+          "arguments": null,
+          "result_or_error": "The meeting titled \"Contract review\" has been successfully booked for Carla Nunes (p03) and Isla Fraser (p10) in the Gannet room (room-3) on Wednesday, 16 September 2026, at 11:00 UTC for 30 minutes.",
+          "is_error": false
+        }
+      ]
+    },
+    {
+      "task_id": "s02",
+      "category": "simple",
+      "success": true,
+      "failure_type": null,
+      "reason": null,
+      "tool_call_count": 3,
+      "iterations": 4,
+      "recovered_error_count": 0,
+      "prompt_tokens": 4957,
+      "completion_tokens": 297,
+      "latency_ms": 5681.35166700813,
+      "final_message": "The meeting titled \"Sprint planning\" has been successfully booked for Dev Patel (p04) and Hassan Iqbal (p08) in the Cormorant room (room-5) on Wednesday, 16 September 2026, at 10:00 UTC for 45 minutes. The meeting ID is **m-18031706**.",
+      "stopped_reason": "final_message",
+      "trace": [
+        {
+          "tool_name": "list_rooms",
+          "arguments": {
+            "min_capacity": 6,
+            "needs": [
+              "whiteboard"
+            ]
+          },
+          "result_or_error": "[{\"id\": \"room-4\", \"name\": \"Tern\", \"capacity\": 12, \"equipment\": [\"screen\", \"whiteboard\", \"video_conference\"]}, {\"id\": \"room-5\", \"name\": \"Cormorant\", \"capacity\": 6, \"equipment\": [\"whiteboard\"]}]",
+          "is_error": false
+        },
+        {
+          "tool_name": "find_free_slots",
+          "arguments": {
+            "attendees": [
+              "p04",
+              "p08"
+            ],
+            "duration_minutes": 45,
+            "earliest": "2026-09-16T10:00:00+00:00",
+            "latest": "2026-09-16T10:45:00+00:00"
+          },
+          "result_or_error": "[{\"start\": \"2026-09-16T10:00:00+00:00\", \"end\": \"2026-09-16T10:45:00+00:00\"}]",
+          "is_error": false
+        },
+        {
+          "tool_name": "book_meeting",
+          "arguments": {
+            "title": "Sprint planning",
+            "attendees": [
+              "p04",
+              "p08"
+            ],
+            "room_id": "room-5",
+            "start": "2026-09-16T10:00:00+00:00",
+            "duration_minutes": 45
+          },
+          "result_or_error": "{\"id\": \"m-18031706\", \"title\": \"Sprint planning\", \"attendees\": [\"p04\", \"p08\"], \"room_id\": \"room-5\", \"start\": \"2026-09-16T10:00:00Z\", \"duration_minutes\": 45}",
+          "is_error": false
+        },
+        {
+          "tool_name": null,
+          "arguments": null,
+          "result_or_error": "The meeting titled \"Sprint planning\" has been successfully booked for Dev Patel (p04) and Hassan Iqbal (p08) in the Cormorant room (room-5) on Wednesday, 16 September 2026, at 10:00 UTC for 45 minutes. The meeting ID is **m-18031706**.",
+          "is_error": false
+        }
+      ]
+    },
+    {
+      "task_id": "s03",
+      "category": "simple",
+      "success": true,
+      "failure_type": null,
+      "reason": null,
+      "tool_call_count": 3,
+      "iterations": 4,
+      "recovered_error_count": 0,
+      "prompt_tokens": 5068,
+      "completion_tokens": 266,
+      "latency_ms": 7806.654791987967,
+      "final_message": "The meeting \"Budget check-in\" has been successfully booked for Ben Ochieng and Femi Adeyemi in the Kittiwake room at 12:00 UTC on Thursday, 17 September 2026, for 30 minutes.",
+      "stopped_reason": "final_message",
+      "trace": [
+        {
+          "tool_name": "list_rooms",
+          "arguments": {
+            "min_capacity": 2,
+            "needs": [
+              "screen"
+            ]
+          },
+          "result_or_error": "[{\"id\": \"room-1\", \"name\": \"Kittiwake\", \"capacity\": 4, \"equipment\": [\"screen\"]}, {\"id\": \"room-2\", \"name\": \"Puffin\", \"capacity\": 8, \"equipment\": [\"screen\", \"video_conference\"]}, {\"id\": \"room-4\", \"name\": \"Tern\", \"capacity\": 12, \"equipment\": [\"screen\", \"whiteboard\", \"video_conference\"]}]",
+          "is_error": false
+        },
+        {
+          "tool_name": "find_free_slots",
+          "arguments": {
+            "latest": "2026-09-17T12:30:00+00:00",
+            "attendees": [
+              "p02",
+              "p06"
+            ],
+            "duration_minutes": 30,
+            "earliest": "2026-09-17T12:00:00+00:00"
+          },
+          "result_or_error": "[{\"start\": \"2026-09-17T12:00:00+00:00\", \"end\": \"2026-09-17T12:30:00+00:00\"}]",
+          "is_error": false
+        },
+        {
+          "tool_name": "book_meeting",
+          "arguments": {
+            "title": "Budget check-in",
+            "attendees": [
+              "p02",
+              "p06"
+            ],
+            "room_id": "room-1",
+            "start": "2026-09-17T12:00:00+00:00",
+            "duration_minutes": 30
+          },
+          "result_or_error": "{\"id\": \"m-14f2fd7a\", \"title\": \"Budget check-in\", \"attendees\": [\"p02\", \"p06\"], \"room_id\": \"room-1\", \"start\": \"2026-09-17T12:00:00Z\", \"duration_minutes\": 30}",
+          "is_error": false
+        },
+        {
+          "tool_name": null,
+          "arguments": null,
+          "result_or_error": "The meeting \"Budget check-in\" has been successfully booked for Ben Ochieng and Femi Adeyemi in the Kittiwake room at 12:00 UTC on Thursday, 17 September 2026, for 30 minutes.",
+          "is_error": false
+        }
+      ]
+    }
+  ]
+}
