@@ -1,0 +1,7 @@
+{
+  "content": "The refund to your original payment method takes 7 business days.",
+  "prompt_tokens": 100,
+  "completion_tokens": 20,
+  "latency_ms": 900.0,
+  "model": "strong-test"
+}
