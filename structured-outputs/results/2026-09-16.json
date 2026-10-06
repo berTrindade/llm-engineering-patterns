@@ -1,0 +1,38 @@
+{
+  "generated_at": "2026-09-16T09:49:29.685370+00:00",
+  "model": "qwen3:8b",
+  "n_cases": 50,
+  "complete": true,
+  "approaches": {
+    "prompt_only": {
+      "valid_first_try_rate": 0.98,
+      "valid_after_repair_rate": 1.0,
+      "field_accuracy": 0.984,
+      "mean_latency_ms": 7275.150958340382,
+      "mean_prompt_tokens": 282.28,
+      "mean_completion_tokens": 220.2,
+      "failures": 0,
+      "failing_case_ids": []
+    },
+    "json_mode": {
+      "valid_first_try_rate": 0.98,
+      "valid_after_repair_rate": 1.0,
+      "field_accuracy": 0.978,
+      "mean_latency_ms": 6098.320878339,
+      "mean_prompt_tokens": 279.58,
+      "mean_completion_tokens": 220.04,
+      "failures": 0,
+      "failing_case_ids": []
+    },
+    "json_schema": {
+      "valid_first_try_rate": 0.94,
+      "valid_after_repair_rate": 1.0,
+      "field_accuracy": 0.976,
+      "mean_latency_ms": 6092.198581700795,
+      "mean_prompt_tokens": 313.78,
+      "mean_completion_tokens": 229.04,
+      "failures": 0,
+      "failing_case_ids": []
+    }
+  }
+}
