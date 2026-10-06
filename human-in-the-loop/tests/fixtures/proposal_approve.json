@@ -1,0 +1,6 @@
+{
+  "content": "{\"action\": \"approve\", \"amount\": 42.5, \"policy_clauses\": [\"travel limit \\u00a3500\"], \"rationale\": \"within category limit, receipt provided\"}",
+  "prompt_tokens": 210,
+  "completion_tokens": 38,
+  "model": "qwen3:8b"
+}

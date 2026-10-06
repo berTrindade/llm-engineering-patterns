@@ -1,0 +1,41 @@
+{
+  "summary": {
+    "cases_run": 3,
+    "proposal_accuracy": 0.6666666666666666,
+    "invalid_output_rate": 0.0,
+    "mean_latency_ms": 4108.963791334342,
+    "mean_total_tokens": 581.6666666666666
+  },
+  "cases": [
+    {
+      "id": "exp-e1",
+      "expected_action": "approve",
+      "actual_action": "approve",
+      "correct": true,
+      "invalid": false,
+      "error": null,
+      "latency_ms": 2948.0773329996737,
+      "total_tokens": 545
+    },
+    {
+      "id": "exp-e2",
+      "expected_action": "partial_refund",
+      "actual_action": "partial_refund",
+      "correct": true,
+      "invalid": false,
+      "error": null,
+      "latency_ms": 5315.469958004542,
+      "total_tokens": 633
+    },
+    {
+      "id": "exp-e3",
+      "expected_action": "approve",
+      "actual_action": "reject",
+      "correct": false,
+      "invalid": false,
+      "error": null,
+      "latency_ms": 4063.3440829988103,
+      "total_tokens": 567
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "exp-002",
+  "type": "expense",
+  "category": "meals",
+  "amount": 38.0,
+  "receipt_provided": false,
+  "description": "client lunch, receipt lost",
+  "submitted_by": "Jordan Reyes"
+}

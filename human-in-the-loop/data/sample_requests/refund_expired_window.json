@@ -1,0 +1,12 @@
+{
+  "id": "ref-002",
+  "type": "refund",
+  "reason": "changed mind",
+  "amount": 29.0,
+  "purchase_price": 29.0,
+  "purchase_date": "2026-07-01",
+  "request_date": "2026-09-10",
+  "sale_item": true,
+  "description": "clearance cushion cover, no longer wanted",
+  "submitted_by": "Sam Okafor"
+}

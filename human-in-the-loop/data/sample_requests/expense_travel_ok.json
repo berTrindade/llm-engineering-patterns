@@ -1,0 +1,9 @@
+{
+  "id": "exp-001",
+  "type": "expense",
+  "category": "travel",
+  "amount": 42.5,
+  "receipt_provided": true,
+  "description": "train ticket to client site",
+  "submitted_by": "Alex Novak"
+}
